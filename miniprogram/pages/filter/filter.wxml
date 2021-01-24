@@ -1,2 +1,6 @@
 <!--miniprogram/pages/filter/filter.wxml-->
-<text>miniprogram/pages/filter/filter.wxml</text>
+<view style="margin-top: 4px;">
+  <view class="filter-row" wx:for="{{4}}" wx:for-index="i1">
+    <button size="mini" hover-class="none" class="{{selectionDisplay[i1][i2]}}" wx:for="{{optionCount[i1]}}" wx:for-index="i2" bindtap="selectTag" data-row="{{i1}}" data-option="{{i2}}">{{optionText[i1][i2]}}</button>
+  </view>
+</view>

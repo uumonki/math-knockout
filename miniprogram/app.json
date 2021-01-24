@@ -30,22 +30,26 @@
     "borderStyle": "black",
     "list": [
       {
-        "iconPath": "",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home.png",
         "pagePath": "pages/index/index",
         "text": "首页"
       },
       {
-        "iconPath": "",
+        "iconPath": "images/filter.png",
+        "selectedIconPath": "images/filter.png",
         "pagePath": "pages/filter/filter",
         "text": "分类"
       },
       {
-        "iconPath": "",
+        "iconPath": "images/testPrep.png",
+        "selectedIconPath": "images/testPrep.png",
         "pagePath": "pages/testPrep/testPrep",
         "text": "复习"
       },
       {
-        "iconPath": "",
+        "iconPath": "images/scoreboard.png",
+        "selectedIconPath": "images/scoreboard.png",
         "pagePath": "pages/scoreboard/scoreboard",
         "text": "排行"
       }

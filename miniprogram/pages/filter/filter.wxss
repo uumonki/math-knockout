@@ -1,1 +1,27 @@
 /* miniprogram/pages/filter/filter.wxss */
+
+.filter-row {
+  height: 20px;
+  padding: 2px 5px;
+}
+
+.unselected {
+  height: 20px;
+  border: none;
+  margin-right: -5px;
+  font-weight: normal;
+  font-size: 10pt !important;
+  line-height: 20px !important;
+  display: inline-block;
+}
+
+.selected {
+  height: 20px;
+  border: none;
+  margin-right: -5px;
+  font-weight: normal;
+  font-size: 10pt !important;
+  line-height: 20px !important;
+  display: inline-block;
+  background-color: lightblue;
+}
