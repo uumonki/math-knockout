@@ -60,6 +60,7 @@ Page({
     tagsSelected[row] = option
     this.setData({tags: tagsSelected})
     this.updateDisplay()
+    console.log(this.data.tags)
   },
 
   updateDisplay: function() {
@@ -94,3 +95,4 @@ Page({
 
   }
 })
+

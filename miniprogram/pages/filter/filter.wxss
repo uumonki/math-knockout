@@ -12,7 +12,6 @@
   font-weight: normal;
   font-size: 10pt !important;
   line-height: 20px !important;
-  display: inline-block;
 }
 
 .selected {
@@ -22,6 +21,5 @@
   font-weight: normal;
   font-size: 10pt !important;
   line-height: 20px !important;
-  display: inline-block;
   background-color: lightblue;
 }
