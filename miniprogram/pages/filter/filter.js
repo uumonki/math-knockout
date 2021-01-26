@@ -5,17 +5,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    tags: [0, 0, 0, 0],
-    optionCount: [6, 3, 6, 4],
+    tags: [0, 0, 0, 0], 
+    /* EACH ELEMENT IN tags REPRESENTS THE OPTION CHOSEN FOR A ROW
+     * OPTIONS ARE REPRESENTED WITH 0 ~ 5 FROM LEFT TO RIGHT
+     * E.G. [5, 0, 2, 1] REPRESENTS 计算机, 全部题型, 二星, 未作答 */
+    selectionDisplay: [], // USED TO CONTROL UI
+    optionCount: [6, 3, 6, 4], // NUMBER OF OPTIONS FOR EACH ROW
     optionText: [["全部学科", "数学", "物理", "化学", "生物", "计算机"], ["全部题型", "选择题", "填空题"], ["全部星级", "一", "二", "三", "四", "五"], ["全部状态", "未作答", "已答对", "已答错"]],
-    selectionDisplay: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // initialize display
+    // INITIALIZE DISPLAY
     var display = []
     for (var i = 0; i < 4; i++) {
       let displayRow = ["selected"]
@@ -53,7 +56,7 @@ Page({
 
   },
 
-  selectTag: function(event) {
+  selectTag: function(event) { // UPDATES tags AND DISPLAY WHEN AN OPTION IS CHOSEN
     let row = event.currentTarget.dataset.row
     let option = event.currentTarget.dataset.option
     var tagsSelected = this.data.tags
@@ -62,7 +65,7 @@ Page({
     this.updateDisplay()
   },
 
-  updateDisplay: function() {
+  updateDisplay: function() { // CONTROLS UI FOR OPTION SELECTION
     var display = this.data.selectionDisplay
     for (var i = 0; i < 4; i++) {
       let displayRow = []
