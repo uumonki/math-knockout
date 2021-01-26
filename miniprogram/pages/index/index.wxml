@@ -14,5 +14,16 @@
       <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
     </view>
   </view>
+  <view class="userinfo-nickname-wrapper">
+      <button class="userinfo-nickname" bindtap="test">test</button>
+    </view>
+
+    <view class="userinfo-nickname-wrapper">
+      <button class="userinfo-nickname" bindtap="test2">test2</button>
+    </view>
+
+    <view class="userinfo-nickname-wrapper">
+      <button class="userinfo-nickname" bindtap="test3">test3</button>
+    </view>
 
 </view>
