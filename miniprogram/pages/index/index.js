@@ -34,6 +34,7 @@ Page({
         }
       }
     })
+    wx.showTabBar()
   },
 
   onGetUserInfo: function(e) {
