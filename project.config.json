@@ -44,16 +44,13 @@
   "simulatorPluginLibVersion": {},
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
-      "list": []
-    },
     "plugin": {
       "list": []
     },
     "game": {
+      "list": []
+    },
+    "gamePlugin": {
       "list": []
     },
     "miniprogram": {
@@ -61,7 +58,19 @@
         {
           "id": -1,
           "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide"
+          "pathName": "pages/databaseGuide/databaseGuide",
+          "query": ""
+        },
+        {
+          "name": "pages/scoreboard/scoreboard",
+          "pathName": "pages/scoreboard/scoreboard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "register",
+          "pathName": "pages/register/register",
+          "scene": null
         }
       ]
     }
