@@ -11,13 +11,8 @@ Page({
   },
 
   onLoad: function() {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return
-    }
 
+    
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -25,15 +20,66 @@ Page({
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
           wx.getUserInfo({
             success: res => {
+              console.log(res)
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
                 userInfo: res.userInfo
               })
+              app.globalData.userInfo = res.userInfo
             }
           })
         }
       }
     })
+  
+    wx.cloud.init({
+      env: 'shsid-3tx38'
+    })
+    const db = wx.cloud.database();
+
+    //get openid of user and store it in app.globalData.openid
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        //call 'login' cloud function
+        console.log('[云函数] [login] user openid: ', res.result.openid)
+        app.globalData.openid = res.result.openid
+        db.collection('userInfo').where({
+          _openid: app.globalData.openid
+        })
+          .get({
+            success: function (res) {
+              // if the user openid is not in database
+              console.log('userInfo ', res)
+              if (res.data.length == 0) {
+                // create new user object in database
+                db.collection('userInfo').add({
+                  data: {
+                    wechatInfo: app.globalData.userInfo,
+                    monthAnswer: 0
+                  },
+                  success: function (res) {
+                    //if success, log the new userinfo object
+                    console.log(res)
+                  }
+                })
+              }
+            }
+          })
+      },
+      fail: err => {
+        console.error('[云函数] [login] 调用失败', err)
+      }
+    })
+
+    
+
+    
+    
+
+    
+
     wx.showTabBar()
   },
 
@@ -47,26 +93,6 @@ Page({
     }
   },
 
-  onGetOpenid: function() {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
-      }
-    })
-  },
 
   // 上传图片
   doUpload: function () {
@@ -115,6 +141,7 @@ Page({
       }
     })
   },
+
   test: function() {
       wx.cloud.init({
         env: 'shsid-3tx38'
@@ -126,6 +153,7 @@ Page({
         }
       })
   },
+
   test2: function() {
     wx.cloud.callFunction({
       name: 'addUserInfo',
@@ -137,6 +165,7 @@ Page({
       }
     })
   },
+
   test3: function() {
     wx.cloud.callFunction({
       name: 'addUserInfo',
