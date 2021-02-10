@@ -1,29 +1,22 @@
 <!--index.wxml-->
 <view class="container">
 
-  <!-- 用户 openid -->
-  <view class="userinfo">
-    <button 
-      open-type="getUserInfo" 
-      bindgetuserinfo="onGetUserInfo"
-      class="userinfo-avatar"
-      style="background-image: url({{avatarUrl}})"
-      size="default"
-    ></button>
-    <view class="userinfo-nickname-wrapper">
-      <button class="userinfo-nickname" bindtap="onGetOpenid">点击获取 openid</button>
+  <view class="userStats">
+    <open-data type="userAvatarUrl" class="pfp"></open-data>
+    <open-data type="userNickName" class="nick"></open-data>
+  </view>
+
+  <view class="questionContainer" bindtouchstart="touchStart" bindtouchend="touchEnd">
+    <view class='overlay'>
+      <image mode="aspectFill" src="../../images/0.jpg" class="thumbnail"></image>
+    </view> 
+    <view class='imageText' style="top: 13px; left: 18px;">
+      <text style="font-size: 25pt; font-weight: 600;">每日三题</text>
+      <text style="font-size: 20pt; font-weight: 500; display: block;">695</text> 
+    </view>
+    <view class='imageText' style="bottom: 13px; left: 18px; width: 100%; height: 100%;">
+      <text class="subject" wx:for="{{subjects}}" wx:for-index="idx" wx:for-item="subject" style="opacity: {{opacity[idx]}};">{{subject}}</text>
     </view>
   </view>
-  <view class="userinfo-nickname-wrapper">
-      <button class="userinfo-nickname" bindtap="test">test</button>
-    </view>
-
-    <view class="userinfo-nickname-wrapper">
-      <button class="userinfo-nickname" bindtap="test2">test2</button>
-    </view>
-
-    <view class="userinfo-nickname-wrapper">
-      <button class="userinfo-nickname" bindtap="test3">test3</button>
-    </view>
 
 </view>

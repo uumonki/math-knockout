@@ -7,7 +7,10 @@ Page({
     userInfo: {},
     logged: false,
     takeSession: false,
-    requestResult: ''
+    requestResult: '',
+    selectedSubject: 0,                    // 控制每日三题选择学科
+    subjects: ["数学", "物理", "化学"],     // 控制每日三题选择学科
+    opacity: [1, 0, 0],                    // 控制每日三题选择学科
   },
 
   onLoad: function() {
@@ -176,6 +179,40 @@ Page({
         console.log(res.result.data[1])
       }
     })
-  }
+  },
+
+  touchStart(e) { // 检测卡片开始滑动，记录触摸位置
+    var that = this;
+    that.setData({
+      touchx: e.changedTouches[0].clientX,
+      touchy: e.changedTouches[0].clientY
+    })
+  },
+  touchEnd(e) { // 检测卡片停止滑动
+    var that = this
+    let x = e.changedTouches[0].clientX
+    let y = e.changedTouches[0].clientY
+    let turn = ""
+    // 判断滑动方向
+    if (x - that.data.touchx > 50 && Math.abs(y - that.data.touchy) < 150) {      //右滑
+      turn = "right"
+    } else if (x - that.data.touchx < -50 && Math.abs(y - that.data.touchy) < 150) {   //左滑
+      turn = "left"
+    }
+    if (turn == "left"){
+      if (this.data.selectedSubject < 2) {
+        let s = this.data.selectedSubject + 1
+        this.setData({selectedSubject: s})
+      }
+    } else if (turn == "right") {
+      if (this.data.selectedSubject > 0) {
+        let s = this.data.selectedSubject - 1
+        this.setData({selectedSubject: s})
+      }
+    }
+    var disp = [0, 0, 0];
+    disp[this.data.selectedSubject] = 1
+    this.setData({opacity: disp})
+  },
 
 })

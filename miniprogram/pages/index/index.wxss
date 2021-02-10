@@ -151,3 +151,69 @@ page {
   line-height: 36rpx;
   word-break: break-all;
 }
+
+.pfp {
+  height: 50px;
+  width: 50px;
+  margin: 10px;
+  border-radius: 25px;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.nick {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+  transform: translate(0, -5px);
+}
+
+.userStats {
+  height: 70px;
+  align-self: start;
+  margin: 10px;
+}
+
+.questionContainer {
+  width: calc(100% - 40px);
+  position: relative;
+}
+
+.thumbnail{
+  display: block;
+  height: 400rpx;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.imageText { 
+  position: absolute;
+  color: white;
+  z-index: 2;
+}
+
+.overlay {
+  position:relative;
+}
+
+.overlay:before {
+  content:"";
+  position: absolute;
+  top:0;
+  left:0;
+  height:100%;
+  width:100%;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  z-index:1;
+}
+
+.subject {
+  font-size: 15pt; 
+  font-weight: 400;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  transition: opacity 0.3s linear;
+}
