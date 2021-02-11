@@ -15,14 +15,41 @@
   max-width: calc(100% / 6);
 }
 
+.cardContainer {
+  width: 60%;
+  margin: 0px auto;
+}
+
 .cards {
   display: inline-block;
-  width: 50%;
+  position: relative;
+  width: calc(50% - 12px);
+  height: 250rpx;
   text-align: center;
+  border-radius: 15px;
+  margin: 2px 5px;
+  border: 1px black solid;
+}
+
+.cardText {
+  position: absolute;
+  top: 5px;
+  left: 7px;
 }
 
 .expression {
   display: block;
   width: 100%;
   text-align: center;
+}
+
+.error {
+  animation: shake 0.12s ease-in-out 0s 2;
+}
+
+@keyframes shake {
+  0% {margin-left: 0px;}
+  25% {margin-left: 5px;}
+  50% {margin-left: -5px;}
+  100% {margin-left: 0px;}
 }

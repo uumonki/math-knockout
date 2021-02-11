@@ -8,7 +8,8 @@ Page({
     cards: [0, 0, 0, 0],
     operations: ['+', '-', '*', '/', '(', ')'],
     expression: "",
-    used: [false, false, false, false]
+    used: [false, false, false, false],
+    error: ""
   },
 
   /**
@@ -116,18 +117,23 @@ Page({
   },
 
   submit: function() {
+    this.setData({error: ""})
     try {
       var correct = (evaluate(this.data.expression) == 24)
     }
     catch (e) {
-      console.log("stupid")
+      this.setData({error: "error"})
+      this.clear()
       return -1
     }
-    if (correct && this.data.used == [true, true, true, true]) {
+    if (correct && this.data.used.every(v => v === true)) {
       this.updateCards()
       this.clear()
     }
-    else console.log("incorrect")
+    else {
+      this.setData({error: "error"})
+      this.clear()
+    }
   },
 
   selectNumber: function(e) {

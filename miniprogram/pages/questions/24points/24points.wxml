@@ -1,9 +1,11 @@
 <!--miniprogram/pages/questions/24points/24points.wxml-->
 <text class="title">24点</text>
-<view wx:for="{{2}}" wx:for-index="idx">
-  <view wx:for="{{[2*idx, 2*idx+1]}}" wx:for-item="cardIdx" class="cards">{{cards[cardIdx]}}</view>
+<view wx:for="{{2}}" wx:for-index="idx" class="cardContainer">
+  <view wx:for="{{[2*idx, 2*idx+1]}}" wx:for-item="cardIdx" class="cards">
+    <text class="cardText">{{cards[cardIdx]}}</text>
+  </view>
 </view>
-<input placeholder="输入表达式" disabled="true" value="{{expression}}" class="expression"></input>
+<input placeholder="输入表达式" disabled="true" value="{{expression}}" class="expression {{error}}"></input>
 <view>
   <button wx:for="{{cards}}" wx:for-item="card" wx:for-index="num" class="numberChoice" disabled="{{used[num]}}" data-index="{{num}}" bindtap="selectNumber">{{card}}</button>
 </view>
