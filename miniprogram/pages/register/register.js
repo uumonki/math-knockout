@@ -1,20 +1,22 @@
 // miniprogram/pages/register.js
-var that;
+//var that;
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo: null,
-
+    userInfo: '',
+    username: '',
+    userclass: '',
+    userGnum: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    that=this;
+    /*that=this;
     wx.getStorage({
       key: 'userInfo',
       success(res){
@@ -23,7 +25,7 @@ Page({
           userInfo: JSON.parse(res.data)
         })
       }
-    })
+    })*/
   },
 
   /**
@@ -74,7 +76,9 @@ Page({
   onShareAppMessage: function () {
 
   },
-  bindGetUserInfo: function(e){
+
+  
+  /*bindGetUserInfo: function(e){
     console.log('bindGetUserInfo:',e) //授权登录
     //获取登录信息成功
     if(e.detail.userInfo){
@@ -103,5 +107,6 @@ Page({
 
     }
 
-  },
+  },*/
+  
 })

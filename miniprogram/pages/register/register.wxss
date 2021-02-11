@@ -6,8 +6,8 @@ page {
   justify-content: flex-start;
 }
 
-.text_style {
-  margin-top: 40rpx;
+.text_style_1 {
+  margin-top: 100rpx;
   height: 100rpx;
   width: 100%;
   background: #fff;
@@ -18,24 +18,60 @@ page {
   flex-direction: row;
   align-items: center;*/
   text-align: center;
-  font-size: 40 rpx;
-  color: rgb(0, 221, 221);
-  transition: all 300ms ease;
+  font-size: 50 rpx;
+  font-weight: 700;
+  color: grey;
 }
-
-.text_dsec_style {
-  /*margin-top: 40rpx;*/
-  height: 140rpx;
-  width: 100%;
+.text_style_2 {
+  margin: 30rpx 50rpx 30rpx 50rpx;
+  height: 100rpx;
+  width: 90%;
   background: #fff;
   /*border: 1px solid rgba(0, 0, 0, 0.1);
   border-left: none;
   border-right: none;
   display: flex;
-  flex-direction: row;
-  align-items: center;*/
+  flex-direction: row;*/
+  align-items: center;
   text-align: center;
+  font-size: 80%;
+  color: grey;
+}
+
+.text_dsec_style {
+  margin-left:30rpx;
+  margin-bottom: 30rpx;
+  height: 140rpx;
+  width: 100%;
+  background: #fff;
+  /*border: 1px solid rgba(131, 122, 122, 0.1);
+  border-left: 20rpx;
+  border-right: 20rpx;*/
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+  font-size: 20 rpx;
+  color:black ;
+}
+
+.input_text{
+  margin-bottom: 30rpx;
+  height: 140rpx;
+  width: 100%;
+  background: #fff;
+  /*border: 1px solid rgba(131, 122, 122, 0.1);
+  border-left: 20rpx;
+  border-right: 20rpx;*/
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
   font-size: 20 rpx;
   color: grey ;
-  transition: all 300ms ease;
+}
+
+.register_btn{
+  margin: 100 !important;
+  font-weight:normal;
 }
