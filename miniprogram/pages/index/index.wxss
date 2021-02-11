@@ -1,7 +1,7 @@
 /**index.wxss**/
 
 page {
-  background: #f6f6f6;
+  background: #ffffff;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -157,12 +157,14 @@ page {
   width: 50px;
   margin: 10px;
   border-radius: 25px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   overflow: hidden;
   display: inline-block;
 }
 
 .nick {
   display: inline-block;
+  margin-left: 3px;
   height: 100%;
   vertical-align: middle;
   transform: translate(0, -5px);
@@ -238,13 +240,13 @@ page {
   top: -12.5px;
   left: 13px;
   padding: 0px 8px;
-  background-color: #f6f6f6;
+  background-color: #ffffff;
 }
 
 .scroll {
-  height: calc(100% - 45px); 
+  height: calc(100% - 48px); 
   position: absolute; 
-  top: 45px; 
+  top: 48px; 
   left: 0px;
   align-content: center;
 }
@@ -254,5 +256,5 @@ page {
   margin: auto;
   padding: 10px 0px;
   width: calc(100% - 40px);
-  border-bottom: 1px #dddddd solid;
+  border-bottom: 1px #e8e8e8 solid;
 }
