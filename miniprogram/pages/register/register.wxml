@@ -1,2 +1,10 @@
 <!--miniprogram/pages/register.wxml-->
-<text>miniprogram/pages/register.wxml</text>
+<view wx:if="{{userInfo!=null}}">
+  {{userInfo.nickName}}
+</view>
+
+<view wx:else>
+  <view class="text_style"><text>微信登录</text></view>
+  <view class="text_dsec_style"><text>将获取您的公开信息，如头像、昵称、性别等等</text></view>
+  <button open-type ="getUserInfo" bindgetuserinfo="bindGetUserInfo" type="primary" size="default">授权登录</button>
+</view>
