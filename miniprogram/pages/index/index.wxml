@@ -20,10 +20,18 @@
   </view>
 
   <view class="recordContainer">
-    <view style="margin-top: 20px;">
+    <view style="margin-top: 35px; position: relative;">
       <view class="line"></view>
-      <text class="containerLabel">答题记录</text>
+      <view class="containerLabel">
+        答题记录
+      </view>
     </view>
+    <scroll-view scroll-y="true" class="scroll">
+      <view class="scrollItem" wx:for="{{6}}">
+        <text style="display: block; font-size: 11pt;">每日三题#123</text>
+        <text style="font-size: 10pt; color: #555555;">数学</text>
+      </view>
+    </scroll-view>
   </view>
 
 </view>
