@@ -198,7 +198,9 @@ Page({
       turn = "right"
     } else if (x - that.data.touchx < -50 && Math.abs(y - that.data.touchy) < 150) {   //左滑
       turn = "left"
-    }
+    } else if (Math.abs(x - that.data.touchx) < 25 && Math.abs(y - that.data.touchy) < 25) {   // tap
+      turn = "tap" 
+    } 
     if (turn == "left"){
       if (this.data.selectedSubject < 2) {
         let s = this.data.selectedSubject + 1
@@ -209,10 +211,16 @@ Page({
         let s = this.data.selectedSubject - 1
         this.setData({selectedSubject: s})
       }
+    } else if (turn == "tap") {
+      this.enterQuestion()
     }
     var disp = [0, 0, 0];
     disp[this.data.selectedSubject] = 1
     this.setData({opacity: disp})
   },
+
+  enterQuestion: function() { // called when 卡片被点击
+    console.log(this.data.subjects[this.data.selectedSubject])
+  }
 
 })
