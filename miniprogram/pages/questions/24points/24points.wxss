@@ -1,1 +1,28 @@
 /* miniprogram/pages/questions/24points/24points.wxss */
+
+.title {
+  font-weight: 600;
+  font-size: 25pt;
+}
+
+.numberChoice {
+  display: inline-block;
+  max-width: 25%;
+}
+
+.operationChoice {
+  display: inline-block;
+  max-width: calc(100% / 6);
+}
+
+.cards {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.expression {
+  display: block;
+  width: 100%;
+  text-align: center;
+}

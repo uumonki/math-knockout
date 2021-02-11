@@ -5,7 +5,7 @@
     "pages/filter/filter",
     "pages/testPrep/testPrep",
     "pages/register/register",
-    "pages/question/question",
+    "pages/questions/question/question",
     "pages/questions/mathKnockout/mathKnockout",
     "pages/questions/24points/24points"
   ],
