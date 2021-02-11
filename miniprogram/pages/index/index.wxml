@@ -19,4 +19,11 @@
     </view>
   </view>
 
+  <view class="recordContainer">
+    <view style="margin-top: 20px;">
+      <view class="line"></view>
+      <text class="containerLabel">答题记录</text>
+    </view>
+  </view>
+
 </view>
