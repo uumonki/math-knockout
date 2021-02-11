@@ -3,16 +3,20 @@
 <view wx:for="{{2}}" wx:for-index="idx" class="cardContainer">
   <view wx:for="{{[2*idx, 2*idx+1]}}" wx:for-item="cardIdx" class="cards">
     <text class="cardText">{{cards[cardIdx]}}</text>
+    <image class="symbol" src="symbol-{{symbols[cardIdx]}}.png"></image>
   </view>
 </view>
 <input placeholder="输入表达式" disabled="true" value="{{expression}}" class="expression {{error}}"></input>
-<view>
-  <button wx:for="{{cards}}" wx:for-item="card" wx:for-index="num" class="numberChoice" disabled="{{used[num]}}" data-index="{{num}}" bindtap="selectNumber">{{card}}</button>
+<view class="controls">
+  <view>
+    <button wx:for="{{cards}}" wx:for-item="card" wx:for-index="num" class="numberChoice" disabled="{{used[num]}}" data-index="{{num}}" bindtap="selectNumber">{{card}}</button>
+  </view>
+  <view>
+    <button wx:for="{{operations}}" wx:for-item="op" wx:for-index="opIdx" class="operationChoice" data-index="{{opIdx}}" bindtap="selectOperation">{{op}}</button>
+  </view>
+  <view class="buttonWrapper">
+    <button bindtap="clear" class="inlineButton">clear</button>
+    <button bindtap="submit" class="inlineButton">submit</button>
+  </view>
 </view>
-<view>
-  <button wx:for="{{operations}}" wx:for-item="op" wx:for-index="opIdx" class="operationChoice" data-index="{{opIdx}}" bindtap="selectOperation">{{op}}</button>
-</view>
-<view>
-  <button bindtap="clear">clear</button>
-  <button bindtap="submit">submit</button>
-</view>
+

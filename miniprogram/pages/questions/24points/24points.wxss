@@ -27,7 +27,7 @@
   height: 250rpx;
   text-align: center;
   border-radius: 15px;
-  margin: 2px 5px;
+  margin: 3px 5px;
   border: 1px black solid;
 }
 
@@ -35,6 +35,15 @@
   position: absolute;
   top: 5px;
   left: 7px;
+}
+
+.symbol {
+  position: absolute;
+  height: 100rpx;
+  width: 100rpx;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .expression {
@@ -52,4 +61,23 @@
   25% {margin-left: 5px;}
   50% {margin-left: -5px;}
   100% {margin-left: 0px;}
+}
+
+.inlineButton {
+  display: inline-block;
+  max-width: 50%;
+}
+
+.buttonWrapper {
+  display: block;
+  margin: 0px auto;
+  width: 80%;
+}
+
+.controls {
+  width: 80%;
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translate(-50%, 0);
 }

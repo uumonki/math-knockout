@@ -9,7 +9,8 @@ Page({
     operations: ['+', '-', '*', '/', '(', ')'],
     expression: "",
     used: [false, false, false, false],
-    error: ""
+    error: "",
+    symbols: [0, 0, 0, 0]
   },
 
   /**
@@ -114,6 +115,9 @@ Page({
 
   updateCards: function() {
     this.setData({cards: this.generateDeck()})
+    var patterns = []
+    for (var i = 0; i < 4; i++) patterns.push(Math.floor(Math.random() * 4))
+    this.setData({symbols: patterns})
   },
 
   submit: function() {
