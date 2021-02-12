@@ -1,14 +1,14 @@
 // miniprogram/pages/register.js
-//var that;
+var db = wx.cloud.database();
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    userInfo: '',
-    username: '',
-    userclass: '',
+    realName: '',
+    userClass: '',
     userGnum: '',
   },
 
@@ -16,8 +16,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    /*that=this;
-    wx.getStorage({
+    /*wx.getStorage({
       key: 'userInfo',
       success(res){
         console.log('get storage success:',JSON.parse(res.data))
@@ -76,8 +75,80 @@ Page({
   onShareAppMessage: function () {
 
   },
+  userNameInput: function(e){
+    console.log(e.detail.value)
+    this.setData({
+      realName: e.detail.value
+    })
+  },
+  userClassInput: function(e){
+    console.log(e.detail.value)
+    this.setData({
+      userClass: e.detail.value
+    })
+  },
+  userGnumInput: function(e){
+    console.log(e.detail.value)
+    this.setData({
+      userGnum: e.detail.value
+    })
+  },
 
-  
+  InputuserInfo: function (){
+    var that = this;
+    if (this.data.realName.length==0||this.data.userClass==0||this.data.userGnum==0){
+      wx.showToast({
+        title: '请填完整所有的信息',
+        icon: 'none',
+        duration: 2000
+      })
+    }else{
+      wx.request({
+        url: 'http://localhost/test/getopenid.php', // 仅为示例，并非真实的接口地址
+        method: 'post',
+        data: {
+          realName: that.data.realname,
+          class: that.data.userclass,
+          Gnum: that.data.userGnum,
+          time: new Date()
+        },
+        header: {
+          'content-type': 'application/x-www-form-urlencoded' // 默认值
+        },
+        success(res) {
+          if (res.data.code == "OK") {
+            var unitName = res.data.data.User.unitName;
+            var unitId = res.data.data.User.unitId;
+            wx.setStorageSync('unitId', unitId);
+            wx.setStorageSync('unitName', unitName);
+            wx.setStorageSync('realName', res.data.realName);
+            wx.setStorageSync('userClass', res.data.userClass);
+            wx.setStorageSync('userGnum', res.data.userGnum);
+          } else {
+            wx.showToast({
+              title: res.data.message,
+              icon: 'none',
+              duration: 2000
+            })
+          }
+        }
+      })
+    }
+    }
+    /*db.collection("userInfo").add({
+      data:{
+        realName: this.data.realname,
+        class: this.data.userclass,
+        Gnum: this.data.userGnum,
+        time: new Date()
+      }
+    })
+    .then(res => {
+      console.log('add userinfo sucess', res)
+    })
+    .catch(console.error)
+  }*/
+
   /*bindGetUserInfo: function(e){
     console.log('bindGetUserInfo:',e) //授权登录
     //获取登录信息成功

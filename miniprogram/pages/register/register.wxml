@@ -5,15 +5,15 @@
   <view class="text_style_2"><text>请务必按照自己学校里真实的姓名，班级，和G账号填写</text></view>
   <view class="text_dsec_style">
     <label>姓名</label>
-    <input name="username" class="input_text" placeholder= "中文/英文姓名" adjust-position="true"></input>
+    <input name="username" class="input_text" placeholder= "中文/英文姓名" adjust-position="true" bindblur= "userNameInput" ></input>
   </view>
   <view class="text_dsec_style">
     <label>班级</label>
-    <input name ="userclass" class="input_text" placeholder= "年级-班级 如：11-2" adjust-position="true"></input>
+    <input name ="userclass" class="input_text" placeholder= "年级-班级 如：11-2" adjust-position="true" bindblur= "userClassInput" ></input>
   </view>
   <view class="text_dsec_style">
     <label>学生号 (G no.）</label>
-    <input name ="userGnum" class="input_text" placeholder= "只填写G后面的号码" type="number" maxlength="10" adjust-position="true"></input>
+    <input name ="userGnum" class="input_text" placeholder= "只填写G后面的号码" type="number" maxlength="10" adjust-position="true" bindblur= "userGnumInput" ></input>
   </view>
-  <button form-type="submit" type="primary" class="register_btn" size="default">确认登录</button>
+  <button bindtap='InputuserInfo'  type="primary" class="register_btn" size="default">确认登录</button>
 </view>
