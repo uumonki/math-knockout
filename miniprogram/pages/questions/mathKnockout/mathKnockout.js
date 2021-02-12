@@ -5,13 +5,22 @@ Page({
    * 页面的初始数据
    */
   data: {
+    score: 0,
+    timer: 121,
+    timerDisplay: "2:00"
+  },
 
+  timeUp: function(){ // CALLED WHEN TIMER IS UP, SCORE STORED IN this.data.score
+    var scoreVal = this.data.score
+    console.log("time's up :D")
+    console.log("your score: " + scoreVal)
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.startSetInter()
 
   },
 
@@ -62,5 +71,16 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+
+  startSetInter: function(){
+    if (this.data.timer > 0) {
+      var time = this.data.timer - 1
+      this.setData({timer: time})
+      var display = Math.floor(time/60) + ":" + ("0" + (time % 60)).slice(-2)
+      this.setData({timerDisplay: display})
+      setTimeout(this.startSetInter, 1000)
+    } else this.timeUp()
   }
+
 })

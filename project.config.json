@@ -71,8 +71,8 @@
         },
         {
           "id": 1,
-          "name": "pages/questions/24points/24points",
-          "pathName": "pages/questions/24points/24points",
+          "name": "pages/questions/mentalMath/mentalMath",
+          "pathName": "pages/questions/mentalMath/mentalMath",
           "query": "",
           "scene": null
         },

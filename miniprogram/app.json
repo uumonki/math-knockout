@@ -7,7 +7,8 @@
     "pages/register/register",
     "pages/questions/question/question",
     "pages/questions/mathKnockout/mathKnockout",
-    "pages/questions/24points/24points"
+    "pages/questions/24points/24points",
+    "pages/questions/mentalMath/mentalMath"
   ],
   "window": {
     "backgroundColor": "#FFFFFF",

@@ -1,4 +1,4 @@
-/* miniprogram/pages/questions/mathKnockout/mathKnockout.wxss */
+/* miniprogram/pages/questions/mentalMath/mentalMath.wxss */
 
 page {
   background: rgb(222,237,255);

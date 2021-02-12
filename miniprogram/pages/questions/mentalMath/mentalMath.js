@@ -1,4 +1,3 @@
-// miniprogram/pages/questions/24points/24points.js
 Page({
 
   /**
