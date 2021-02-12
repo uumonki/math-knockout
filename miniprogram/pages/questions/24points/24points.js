@@ -10,7 +10,12 @@ Page({
     expression: "",
     used: [false, false, false, false],
     error: "",
-    symbols: [0, 0, 0, 0]
+    symbols: [0, 0, 0, 0],
+    displayValues: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'],
+    symbolColors: ["red", "black", "black", "red"],
+    timer: 121,
+    timerDisplay: "2:00",
+    score: 0,
   },
 
   /**
@@ -18,6 +23,7 @@ Page({
    */
   onLoad: function (options) {
     this.updateCards()
+    this.startSetInter()
   },
 
   /**
@@ -45,7 +51,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    clearTimeout()
   },
 
   /**
@@ -68,6 +74,12 @@ Page({
   onShareAppMessage: function () {
 
   },
+
+  timeUp: function(){ // CALLED WHEN TIMER IS UP, SCORE STORED IN this.data.score
+    var scoreVal = this.data.score
+    console.log("time's up :D")
+    console.log("your score: " + scoreVal)
+},
 
   check: function (a, n) { // recursive function to check solvability
     if (n == 1) {
@@ -132,6 +144,7 @@ Page({
     }
     if (correct && this.data.used.every(v => v === true)) {
       this.updateCards()
+      if (this.data.timer > 0) this.setData({score: this.data.score+1})
       this.clear()
     }
     else {
@@ -143,19 +156,21 @@ Page({
   selectNumber: function(e) {
     let i = e.currentTarget.dataset.index
     var disabled = this.data.used
-    var exp = this.data.expression
-    if ("1234567890".indexOf(exp.slice(-1)) <= -1 || exp == "") {
-      disabled[i] = true
-      this.setData({used: disabled})
-      exp = exp + this.data.cards[i]
-      this.setData({expression: exp})
+    if (disabled[i] == false) {
+      var exp = this.data.expression
+      if ("1234567890)".indexOf(exp.slice(-1)) <= -1 || exp == "") {
+        disabled[i] = true
+        this.setData({used: disabled})
+        exp = exp + this.data.cards[i]
+        this.setData({expression: exp})
+      }
     }
   },
 
   selectOperation: function(e) {
     let i = e.currentTarget.dataset.index
     var exp = this.data.expression
-    if (i > 3 || "+-*/(".indexOf(exp.slice(-1)) <= -1) {
+    if (i == 4 || "+-*/(".indexOf(exp.slice(-1)) <= -1) {
       exp = exp + this.data.operations[i]
       this.setData({expression: exp})
     }
@@ -164,7 +179,18 @@ Page({
   clear: function() {
     this.setData({used: [false, false, false, false]})
     this.setData({expression: ""})
-  }
+  },
+
+  startSetInter: function(){
+    if (this.data.timer > 0) {
+      var time = this.data.timer - 1
+      this.setData({timer: time})
+      var display = Math.floor(time/60) + ":" + ("0" + (time % 60)).slice(-2)
+      this.setData({timerDisplay: display})
+      setTimeout(this.startSetInter, 1000)
+    } else this.timeUp()
+  },
+
 })
 
 // CODE TO EVALUATE EXPRESSIONS
@@ -172,6 +198,7 @@ Page({
 function evaluate(str) {
   str = str.replace(/\s+/g, '')
   str = str.replace(/(\d)(\()/g, "$1*$2")
+  str = str.replace(/\)\(/g, ")*(")
   return evalRpn(dal2Rpn(str))  
 }
 

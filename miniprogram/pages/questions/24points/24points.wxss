@@ -1,22 +1,72 @@
 /* miniprogram/pages/questions/24points/24points.wxss */
 
+page {
+  background: rgb(222,237,255);
+  background: linear-gradient(180deg, rgba(222,237,255,1) 0%, rgba(190,225,255,1) 100%);
+}
+
 .title {
   font-weight: 600;
   font-size: 25pt;
+  background: #f8f8f8;
+  box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.1);
+  border-top: 1px solid #eeeeee
+}
+
+.title, .info {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: calc(100% - 46px);
+  padding: 20px 23px;
+}
+
+.info {
+  text-align: right;
+  padding-top: 23px;
+}
+
+.timer, .score {
+  width: 100%;
+  display: block;
+  height: 22px !important;
+}
+
+.label {
+  position: absolute;
+  top: 23px;
+  right: 63px;
+}
+
+.label1 {
+  position: absolute;
+  top: 45px;
+  right: 42px;
 }
 
 .numberChoice {
   display: inline-block;
-  max-width: 25%;
+  background-color: white;
+  width: calc(25% - 10px) !important;
+  max-width: calc(25% - 10px);
+  margin-left: 10px !important;
+  border-radius: 7px;
+}
+
+.true {
+  box-shadow: 0px 1.5px 0px 0px #00000000;
 }
 
 .operationChoice {
   display: inline-block;
-  max-width: calc(100% / 6);
+  width: calc(100% / 6 - 10px) !important;
+  background-color: white;
+  margin-left: 10px !important;
+  border-radius: 7px;
 }
 
 .cardContainer {
-  width: 60%;
+  width: 56%;
   margin: 0px auto;
 }
 
@@ -24,17 +74,19 @@
   display: inline-block;
   position: relative;
   width: calc(50% - 12px);
-  height: 250rpx;
+  height: 240rpx;
   text-align: center;
-  border-radius: 15px;
-  margin: 3px 5px;
-  border: 1px black solid;
+  border-radius: 10px;
+  margin: 3.5px 6px;
+  box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
+  background-color: white;
 }
 
 .cardText {
   position: absolute;
-  top: 5px;
-  left: 7px;
+  top: 2px;
+  left: 9px;
+  font-size: 55rpx;
 }
 
 .symbol {
@@ -50,6 +102,7 @@
   display: block;
   width: 100%;
   text-align: center;
+  margin-top: 5px;
 }
 
 .error {
@@ -65,19 +118,59 @@
 
 .inlineButton {
   display: inline-block;
-  max-width: 50%;
+  width: calc(100% - 50px) !important;
+  background-color: rgb(47,133,252);
+  color: white;
+  margin-left: 50px !important;
+  border-radius: 20px;
+}
+
+.clearButton {
+  display: inline-block;
+  position: absolute;
+  width: 40px !important;
+  height: 40px !important;
+  background-color: white;
+  border-radius: 20px;
+}
+
+.delete {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 20px;
+  width: 20px;
 }
 
 .buttonWrapper {
   display: block;
   margin: 0px auto;
-  width: 80%;
+  width: calc(100% - 40px);
+  max-width: 500px;
 }
 
 .controls {
-  width: 80%;
+  width: 100%;
   position: absolute;
-  bottom: 20px;
+  bottom: 0px;
   left: 50%;
+  padding-bottom: 5vh;
+  padding-top: 18px;
   transform: translate(-50%, 0);
+  background-color: rgb(245, 245, 245);
+  border-radius: 20px 20px 0px 0px;
+}
+
+button:not(.inlineButton) {
+  font-weight: normal !important;
+}
+
+.cardsWrapper {
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  z-index: 999;
 }

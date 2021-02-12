@@ -75,6 +75,13 @@
           "pathName": "pages/questions/24points/24points",
           "query": "",
           "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/register/register",
+          "pathName": "pages/register/register",
+          "query": "",
+          "scene": null
         }
       ]
     }
