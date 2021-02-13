@@ -46,7 +46,6 @@ Page({
       data: {},
       success: res => {
         //call 'login' cloud function
-        console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
         db.collection('userInfo').where({
           _openid: app.globalData.openid
