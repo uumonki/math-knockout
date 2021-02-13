@@ -37,7 +37,7 @@
       {
         "iconPath": "images/testPrep.png",
         "selectedIconPath": "images/testPrep.png",
-        "pagePath": "pages/testPrep/testPrep",
+        "pagePath": "pages/questions/24points/24points",
         "text": "复习"
       },
       {

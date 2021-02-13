@@ -16,14 +16,14 @@ Page({
     timer: 121,
     timerDisplay: "2:00",
     score: 0,
+    timerId: 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.updateCards()
-    this.startSetInter()
+
   },
 
   /**
@@ -37,7 +37,12 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    clearTimeout(this.data.timerId)
+    this.setData({timer: 121})
+    this.setData({timerDisplay: "2:00"})
+    this.setData({score: 0})
+    this.updateCards()
+    this.startSetInter()
   },
 
   /**
@@ -51,7 +56,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    clearTimeout()
+    
   },
 
   /**
@@ -187,7 +192,7 @@ Page({
       this.setData({timer: time})
       var display = Math.floor(time/60) + ":" + ("0" + (time % 60)).slice(-2)
       this.setData({timerDisplay: display})
-      setTimeout(this.startSetInter, 1000)
+      this.setData({timerId: setTimeout(this.startSetInter, 1000)})
     } else this.timeUp()
   },
 
