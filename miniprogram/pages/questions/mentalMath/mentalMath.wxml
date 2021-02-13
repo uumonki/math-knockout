@@ -6,3 +6,11 @@
     <view class="score"><text class="label1">得分:</text>{{score}}</view>
   </view>
 </view>
+
+<view class="content">
+  <view class="expression">{{exp}}</view>
+  <form class="inputWrapper" bindsubmit="submitInput">
+    <input placeholder="输入答案" name="ans" type="digit" class="{{error}} input" placeholder-class="placeholder" focus="{{inputFocus}}" bindblur="focus" value="{{inputVal}}"></input>
+    <button class="submit" size="mini" form-type="submit"><image src="check.png" class="check"/></button>
+  </form>
+</view>

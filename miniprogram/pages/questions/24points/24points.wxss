@@ -8,40 +8,27 @@ page {
 .title {
   font-weight: 600;
   font-size: 25pt;
+  transform: translate(0, -3px);
+  margin-right: 15px;
+}
+
+.header {
   background: #f8f8f8;
   box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.1);
-  border-top: 1px solid #eeeeee
+  border-top: 1px solid #eeeeee;
+  padding: 20px 23px;
+  position: relative;
 }
 
 .title, .info {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: calc(100% - 46px);
-  padding: 20px 23px;
+  display: inline-block;
+  vertical-align: center;
 }
 
-.info {
-  text-align: right;
-  padding-top: 23px;
-}
 
 .timer, .score {
   width: 100%;
   display: block;
-  height: 22px !important;
-}
-
-.label {
-  position: absolute;
-  top: 23px;
-  right: 63px;
-}
-
-.label1 {
-  position: absolute;
-  top: 45px;
-  right: 42px;
 }
 
 .numberChoice {
@@ -173,4 +160,25 @@ button:not(.inlineButton) {
   transform: translate(-50%, -50%);
   width: 100%;
   z-index: 999;
+}
+
+.skip {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translate(0, -50%);
+  height: 40px !important;
+  width: 40px !important;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.05);
+}
+
+.skipImg {
+  height: 20px;
+  width: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

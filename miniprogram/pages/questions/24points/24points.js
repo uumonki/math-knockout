@@ -125,7 +125,7 @@ Page({
   generateDeck: function () {
     do {
       var deck = []
-      for (var i = 0; i < 4; i++) deck.push(Math.ceil(Math.random() * 13))
+      for (var i = 0; i < 4; i++) deck.push(Math.floor(Math.random() * 13) + 1)
     } while (!this.solvable(deck))
     return deck
   },
@@ -195,6 +195,11 @@ Page({
       this.setData({timerId: setTimeout(this.startSetInter, 1000)})
     } else this.timeUp()
   },
+
+  skip: function() {
+    this.updateCards()
+    this.clear()
+  }
 
 })
 
