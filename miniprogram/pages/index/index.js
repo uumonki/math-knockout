@@ -20,14 +20,14 @@ Page({
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+          // get wechat's userinfo + avator
           wx.getUserInfo({
             success: res => {
-              console.log(res)
               this.setData({
                 avatarUrl: res.userInfo.avatarUrl,
                 userInfo: res.userInfo
               })
+              //info stored into global data; can be called anytime
               app.globalData.userInfo = res.userInfo
             }
           })
@@ -54,13 +54,15 @@ Page({
           .get({
             success: function (res) {
               // if the user openid is not in database
-              console.log('userInfo ', res)
               if (res.data.length == 0) {
                 // create new user object in database
                 db.collection('userInfo').add({
                   data: {
                     wechatInfo: app.globalData.userInfo,
-                    monthAnswer: 0
+                    monthAnswer: 0, //number answered every month
+                    monthCorrect: 0, // number of questions answered correctly every month
+                    totalAnswer: 0, //total number of questions answered
+                    totalCorrect: 0 // total number of questions answered correctly
                   },
                   success: function (res) {
                     //if success, log the new userinfo object
@@ -76,12 +78,6 @@ Page({
       }
     })
 
-    
-
-    
-    
-
-    
 
     wx.showTabBar()
   },
