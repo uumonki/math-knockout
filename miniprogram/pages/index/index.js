@@ -215,7 +215,10 @@ Page({
   },
 
   enterQuestion: function() { // called when 卡片被点击
-    console.log(this.data.subjects[this.data.selectedSubject])
+    if (this.data.selectedSubject == 0)
+      wx.navigateTo({url: '../questions/24points/24points'})
+    else if (this.data.selectedSubject == 1)
+      wx.navigateTo({url: '../questions/mentalMath/mentalMath'})
   }
 
 })
