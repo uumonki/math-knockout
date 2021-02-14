@@ -131,6 +131,9 @@ Page({
             userClass: that.data.userClass,
             userGrade: that.data.userGrade,
             userGnum: that.data.userGnum,
+            // verified means completing this registration for math knockout
+            //if a person needs to enter any math knockout related things, check verified within user object.
+            verified: true
           }
         }).then(res => {
           console.log('add userinfo sucess', res)
