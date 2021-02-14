@@ -18,14 +18,36 @@ Page({
       .limit(10) // 10 query items maximum
       .get({
         success: function (res){
-          console.log(res)
+          //store the ranking info locally in monthRanking
+          //ranking info: array of user objects, in descending order of monthly answered correctly
           that.setData({
             monthRanking: res.data
           })
         }
       })
-    console.log(that.monthRanking)
   },
+
+  getTotalRanking: function () {
+    //modified copy of onLoad.
+    let that = this
+    wx.cloud.init({
+      env: 'shsid-3tx38'
+    })
+    const db = wx.cloud.database();
+
+    db.collection('userInfo')
+      .orderBy('totalCorrect', 'desc') // descending order of 'totalCorrect' data of user
+      .limit(10) // 10 query items maximum
+      .get({
+        success: function (res) {
+          //store the ranking info locally in totalRanking
+          //ranking info: array of user objects, in descending order of total answered correctly
+          that.setData({
+            totalRanking: res.data
+          })
+        }
+      })
+  }
 
   
 })
