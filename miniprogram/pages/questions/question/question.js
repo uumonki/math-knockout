@@ -1,4 +1,7 @@
 // miniprogram/pages/question/question.js
+var db = wx.cloud.database();
+const app = getApp()
+
 Page({
 
   /**
@@ -14,5 +17,20 @@ Page({
   onLoad: function (options) {
 
   },
+
+
+  addRecord: function () {
+    db.collection('userInfo').where({
+      _openid: app.globalData.openid
+    }).update({
+      data: {
+        record: db.command.push({
+          isCorrect: true,
+          questionID: '[copy paste the _id of question here]',
+          answerTime: new Date()
+        })
+      }
+    })
+  }
 
 })

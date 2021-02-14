@@ -87,6 +87,13 @@
 					"id": -1,
 					"name": "pages/questions/24points/24points",
 					"pathName": "pages/questions/24points/24points",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/questions/question/question",
+					"pathName": "pages/questions/question/question",
 					"scene": null
 				}
 			]
