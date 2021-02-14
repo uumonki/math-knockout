@@ -1,5 +1,6 @@
 // miniprogram/pages/register.js
 var db = wx.cloud.database();
+const app = getApp()
 
 Page({
 
@@ -10,12 +11,13 @@ Page({
     realName: '',
     userClass: '',
     userGnum: '',
+    userGrade: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     /*wx.getStorage({
       key: 'userInfo',
       success(res){
@@ -30,123 +32,114 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  userNameInput: function(e){
+  userNameInput: function(e) {
     console.log(e.detail.value)
     this.setData({
       realName: e.detail.value
     })
   },
-  userClassInput: function(e){
+  userClassInput: function(e) {
     console.log(e.detail.value)
     this.setData({
       userClass: e.detail.value
     })
   },
-  userGnumInput: function(e){
+  userGnumInput: function(e) {
     console.log(e.detail.value)
     this.setData({
       userGnum: e.detail.value
     })
   },
+  userGradeInput: function(e) {
+    console.log(e.detail.value)
+    this.setData({
+      userGrade: e.detail.value
+    })
+  },
 
-  InputuserInfo: function (){
+  InputuserInfo: function() {
+    wx.cloud.init({
+      env: 'shsid-3tx38'
+    })
+    const db = wx.cloud.database();
+
     var that = this;
-    if (this.data.realName.length==0||this.data.userClass==0||this.data.userGnum==0){
+    //! CHANGE INPUT CONDITIONS
+    if (this.data.realName.length == 0 ||
+      this.data.userClass == 0 ||
+      this.data.userGrade == 0 ||
+      this.data.userGnum == 0
+    ) {
       wx.showToast({
         title: '请填完整所有的信息',
         icon: 'none',
         duration: 2000
       })
-    }else{
-      wx.request({
-        url: 'http://localhost/test/getopenid.php', // 仅为示例，并非真实的接口地址
-        method: 'post',
-        data: {
-          realName: that.data.realname,
-          class: that.data.userclass,
-          Gnum: that.data.userGnum,
-          time: new Date()
-        },
-        header: {
-          'content-type': 'application/x-www-form-urlencoded' // 默认值
-        },
-        success(res) {
-          if (res.data.code == "OK") {
-            var unitName = res.data.data.User.unitName;
-            var unitId = res.data.data.User.unitId;
-            wx.setStorageSync('unitId', unitId);
-            wx.setStorageSync('unitName', unitName);
-            wx.setStorageSync('realName', res.data.realName);
-            wx.setStorageSync('userClass', res.data.userClass);
-            wx.setStorageSync('userGnum', res.data.userGnum);
-          } else {
-            wx.showToast({
-              title: res.data.message,
-              icon: 'none',
-              duration: 2000
-            })
+    } else {
+      //add information into userInfo's corresponding user object
+      db.collection('userInfo').where({
+          //match object with user's openid
+          _openid: app.globalData.openid
+        }).update({
+          data: {
+            userRealName: that.data.realName,
+            userClass: that.data.userClass,
+            userGrade: that.data.userGrade,
+            userGnum: that.data.userGnum,
           }
-        }
-      })
+        }).then(res => {
+          console.log('add userinfo sucess', res)
+        })
+        .catch(console.error)
     }
-    }
-    /*db.collection("userInfo").add({
-      data:{
-        realName: this.data.realname,
-        class: this.data.userclass,
-        Gnum: this.data.userGnum,
-        time: new Date()
-      }
-    })
-    .then(res => {
-      console.log('add userinfo sucess', res)
-    })
-    .catch(console.error)
+
+  },
+  /*d
   }*/
 
   /*bindGetUserInfo: function(e){
@@ -179,5 +172,37 @@ Page({
     }
 
   },*/
-  
+  /*
+    wx.request({
+      url: 'http://localhost/test/getopenid.php', // 仅为示例，并非真实的接口地址
+      method: 'post',
+      data: {
+        realName: that.data.realname,
+        class: that.data.userclass,
+        Gnum: that.data.userGnum,
+        time: new Date()
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success(res) {
+        if (res.data.code == "OK") {
+          var unitName = res.data.data.User.unitName;
+          var unitId = res.data.data.User.unitId;
+          wx.setStorageSync('unitId', unitId);
+          wx.setStorageSync('unitName', unitName);
+          wx.setStorageSync('realName', res.data.realName);
+          wx.setStorageSync('userClass', res.data.userClass);
+          wx.setStorageSync('userGnum', res.data.userGnum);
+        } else {
+          wx.showToast({
+            title: res.data.message,
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
+    })
+    */
+
 })

@@ -5,11 +5,15 @@
   <view class="text_style_2"><text>请务必按照自己学校里真实的姓名，班级，和G账号填写</text></view>
   <view class="text_dsec_style">
     <label>姓名</label>
-    <input name="username" class="input_text" placeholder= "中文/英文姓名" adjust-position="true" bindblur= "userNameInput" ></input>
+    <input name="userName" class="input_text" placeholder= "中文/英文姓名" adjust-position="true" bindblur= "userNameInput" ></input>
+  </view>
+  <view class="text_dsec_style">
+    <label>年级</label>
+    <input name ="userGrade" class="input_text" placeholder= "请填入数字 如：11" type="number" adjust-position="true" bindblur= "userGradeInput" ></input>
   </view>
   <view class="text_dsec_style">
     <label>班级</label>
-    <input name ="userclass" class="input_text" placeholder= "年级-班级 如：11-2" adjust-position="true" bindblur= "userClassInput" ></input>
+    <input name ="userClass" class="input_text" placeholder= "请填入数字 如：2" type="number" adjust-position="true" bindblur= "userClassInput" ></input>
   </view>
   <view class="text_dsec_style">
     <label>学生号 (G no.）</label>
