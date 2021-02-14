@@ -101,13 +101,14 @@ Page({
 
   generateAddition: function() {
     var num1, num2
-    if (Math.random() < 0.5) { 
+    if (Math.random() < 0.2) { 
       num1 = randInt(1000, 4999)
       num2 = randInt(10, 999)
     } else {
       if (Math.random() < 0.6) {
         num1 = randInt(100, 999)
-        num2 = randInt(10, 999) 
+        if (Math.random() < 0.4) num2 = randInt(10, 99)
+        else num2 = randInt(100, 999)
       } else {
         var n1 = randInt(1, 3)
         var n2 = randInt(1, 2)
@@ -137,9 +138,9 @@ Page({
   },
 
   generateMultiplication: function() {
-    var num1 = randInt(11, 149)
+    var num1 = randInt(11, 109)
     var num2 = randInt(2, 10)
-    if (Math.random() < 0.8) {
+    if (Math.random() < 0.6) {
       var n1 = randInt(0, 2)
       var n2 = randInt(0, 1)
       num1 = (num1 / (10 ** n1)).toFixed(n1)

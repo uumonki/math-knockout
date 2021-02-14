@@ -92,8 +92,8 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/questions/question/question",
-					"pathName": "pages/questions/question/question",
+					"name": "pages/questions/mathKnockout/mathKnockout",
+					"pathName": "pages/questions/mathKnockout/mathKnockout",
 					"scene": null
 				}
 			]

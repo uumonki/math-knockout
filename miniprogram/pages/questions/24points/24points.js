@@ -140,7 +140,7 @@ Page({
   submit: function() {
     this.setData({error: ""})
     try {
-      var correct = (evaluate(this.data.expression) == 24)
+      var correct = (Math.abs(evaluate(this.data.expression) - 24) < 0.0001)
     }
     catch (e) {
       this.setData({error: "error"})
@@ -346,5 +346,5 @@ function getResult(first, second, operator) {
       var m = Math.pow(10, digit);
       return parseInt(f * m, 10) / m;
   }
-  return (formatFloat(result, 2));
+  return (formatFloat(result, 6));
 }
