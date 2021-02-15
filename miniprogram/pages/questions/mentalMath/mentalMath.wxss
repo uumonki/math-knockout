@@ -18,23 +18,23 @@ page {
   top: 0px;
   left: 0px;
   width: calc(100% - 46px);
-  padding: 20px 23px;
+  padding: 15px 23px;
 }
 
 .info {
   text-align: right;
-  padding-top: 23px;
+  padding-top: 18px;
 }
 
 .label {
   position: absolute;
-  top: 23px;
+  top: 18px;
   right: 63px;
 }
 
 .label1 {
   position: absolute;
-  top: 45px;
+  top: 40px;
   right: 42px;
 }
 
@@ -46,7 +46,7 @@ page {
 
 .content {
   position: absolute;
-  top: 36%;
+  top: 32%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;

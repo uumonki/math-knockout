@@ -1,4 +1,10 @@
-Page({ // can only load the page once
+var db = wx.cloud.database();
+const app = getApp()
+
+Page({ // TODO: check hasAnswered
+       // TODO: implement question image
+       // TODO: allow image choices
+       // TODO: implement short answer
 
   /**
    * 页面的初始数据
@@ -8,6 +14,13 @@ Page({ // can only load the page once
     timerDisplay: "2:00",
     score: 0,
     timerId: 0,
+    question: {},
+    choices: [],
+    userChoice: -1,
+    choiceDisplay: ["false", "false", "false", "false"],
+    hasAnswered: false,
+    disabled: true,
+    unNextable: true,
   },
 
   /**
@@ -34,6 +47,8 @@ Page({ // can only load the page once
     this.setData({ score: 0 })
     // this.updateCards()
     this.startSetInter()
+    this.getQuestionData()
+    
   },
 
   /**
@@ -77,30 +92,47 @@ Page({ // can only load the page once
     console.log("your score: " + scoreVal)
   },
 
-  submit: function () {
-    this.setData({ error: "" })
-    try {
-      var correct = (evaluate(this.data.expression) == 24)
-    }
-    catch (e) {
-      this.setData({ error: "error" })
-      this.clear()
-      return -1
-    }
-    if (correct && this.data.used.every(v => v === true)) {
-      this.updateCards()
-      if (this.data.timer > 0) this.setData({ score: this.data.score + 1 })
-      this.clear()
-    }
-    else {
-      this.setData({ error: "error" })
-      this.clear()
-    }
+  getQuestionData: function() {
+    let that = this
+    wx.cloud.init({
+      env: 'shsid-3tx38'
+    })
+    const db = wx.cloud.database();
+
+    db.collection('question')
+      .orderBy('uploadDate', 'desc') // descending order of 'totalCorrect' data of user
+      .limit(1) 
+      .get({
+        success: function (res) {
+          //store the ranking info locally in totalRanking
+          //ranking info: array of user objects, in descending order of total answered correctly
+          that.setData({
+            question: res.data[0],
+            choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]]
+          })
+          console.log(that.data.question)         
+        }
+      })
   },
 
-  clear: function () {
-    this.setData({ used: [false, false, false, false] })
-    this.setData({ expression: "" })
+  submit: function () {
+    var correct = this.data.choices[this.data.userChoice] == this.data.question['answer']
+    if (true) { // TODO: check again if question is answered to prevent answering on 2 devices
+      var disp = ["false", "false", "false", "false"]
+      disp[this.data.userChoice] = "incorrect"
+      disp[this.data.choices.indexOf(this.data.question['answer'])] = "correct"
+      this.setData({
+        choiceDisplay: disp,
+        disabled: true,
+        unNextable: false
+      })
+      addRecord(correct, this.data.question['_id'])
+    } else {
+      this.setData({
+        hasAnswered: true,
+        unNextable: false
+      })
+    }
   },
 
   startSetInter: function () {
@@ -112,4 +144,37 @@ Page({ // can only load the page once
       this.setData({ timerId: setTimeout(this.startSetInter, 1000) })
     } else this.timeUp()
   },
+
+  directNext: function() {
+
+  },
+
+  choose: function(e) {
+    let c = e.currentTarget.dataset.choice
+
+    var disp = ["false", "false", "false", "false"]
+    disp[c] = "true"
+
+    this.setData({
+      userChoice: c,
+      choiceDisplay: disp,
+      disabled: false
+    })
+
+  },
+
 })
+
+function addRecord(correct, id) {
+  db.collection('userInfo').where({
+    _openid: app.globalData.openid
+  }).update({
+    data: {
+      record: db.command.push({
+        isCorrect: correct,
+        questionID: id,
+        answerTime: new Date()
+      })
+    }
+  })
+}

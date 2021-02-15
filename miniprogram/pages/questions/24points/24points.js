@@ -5,18 +5,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cards: [0, 0, 0, 0],
+    cards: [0, 0, 0, 0], // card values
     operations: ['+', '-', '*', '/', '(', ')'],
-    expression: "",
-    used: [false, false, false, false],
-    error: "",
-    symbols: [0, 0, 0, 0],
+    expression: "", // expression that the user inputs
+    used: [false, false, false, false], // whether each card is used or not
+    error: "", // controls wiggle animation
+    symbols: [0, 0, 0, 0], // the 花色 of cards
     displayValues: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'],
     symbolColors: ["red", "black", "black", "red"],
-    timer: 121,
-    timerDisplay: "2:00",
-    score: 0,
-    timerId: 0,
+    timer: 121, // timer time left in seconds
+    timerDisplay: "2:00", // controls timer display
+    score: 0, // stores user score
+    timerId: 0, // used for controling timer
   },
 
   /**
@@ -37,8 +37,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    clearTimeout(this.data.timerId)
-    this.setData({timer: 121})
+    clearTimeout(this.data.timerId) // stop countdown if there is one ongoing
+    this.setData({timer: 121}) // initialize
     this.setData({timerDisplay: "2:00"})
     this.setData({score: 0})
     this.updateCards()
@@ -86,8 +86,8 @@ Page({
     console.log("your score: " + scoreVal)
   },
 
-  check: function (a, n) { // recursive function to check solvability
-    if (n == 1) {
+  check: function (a, n) { // recursive function to check solvability, 抄的 不comment了
+    if (n == 1) { 
       if (Math.abs(a[0] - 24) < 1e-9) {
         return true
       } else return false
@@ -118,11 +118,11 @@ Page({
     return false
   },
 
-  solvable: function (x) { // call with array of 4 numbers to check solvability
+  solvable: function (x) { // call with array of 4 numbers as argument to check solvability
     return this.check(x, 4)
   },
 
-  generateDeck: function () {
+  generateDeck: function () { // randomly generates a solvable deck
     do {
       var deck = []
       for (var i = 0; i < 4; i++) deck.push(Math.floor(Math.random() * 13) + 1)
@@ -130,27 +130,27 @@ Page({
     return deck
   },
 
-  updateCards: function() {
+  updateCards: function() { // randomizes deck
     this.setData({cards: this.generateDeck()})
     var patterns = []
     for (var i = 0; i < 4; i++) patterns.push(Math.floor(Math.random() * 4))
     this.setData({symbols: patterns})
   },
 
-  submit: function() {
+  submit: function() { // called when submit is hit
     this.setData({error: ""})
-    try {
-      var correct = (Math.abs(evaluate(this.data.expression) - 24) < 0.0001)
+    try { // check if the expression is evaluate-able, if not, incorrect
+      var correct = (Math.abs(evaluate(this.data.expression) - 24) < 0.0001) // evaluate() evaluates to 6 decimal places
     }
     catch (e) {
-      this.setData({error: "error"})
+      this.setData({error: "error"}) // shake input box
       this.clear()
       return -1
     }
-    if (correct && this.data.used.every(v => v === true)) {
+    if (correct && this.data.used.every(v => v === true)) { // check if all numbers are used and is equal 24
       this.updateCards()
-      if (this.data.timer > 0) this.setData({score: this.data.score+1})
-      this.clear()
+      if (this.data.timer > 0) this.setData({score: this.data.score+1}) // only increment score if timer is not up
+      this.clear() // remove input
     }
     else {
       this.setData({error: "error"})
@@ -158,12 +158,12 @@ Page({
     }
   },
 
-  selectNumber: function(e) {
+  selectNumber: function(e) { // used for inputting numbers
     let i = e.currentTarget.dataset.index
     var disabled = this.data.used
     if (disabled[i] == false) {
       var exp = this.data.expression
-      if ("1234567890)".indexOf(exp.slice(-1)) <= -1 || exp == "") {
+      if ("1234567890)".indexOf(exp.slice(-1)) <= -1 || exp == "") { // disable inputting number after a digit or )
         disabled[i] = true
         this.setData({used: disabled})
         exp = exp + this.data.cards[i]
@@ -172,21 +172,21 @@ Page({
     }
   },
 
-  selectOperation: function(e) {
+  selectOperation: function(e) { // used for inputting sumbol
     let i = e.currentTarget.dataset.index
     var exp = this.data.expression
-    if (i == 4 || "+-*/(".indexOf(exp.slice(-1)) <= -1) {
+    if (i == 4 || "+-*/(".indexOf(exp.slice(-1)) <= -1) { // allow ( anywhere, disable inputting symbol after +-*/(
       exp = exp + this.data.operations[i]
       this.setData({expression: exp})
     }
   },
 
-  clear: function() {
+  clear: function() { // resets input
     this.setData({used: [false, false, false, false]})
     this.setData({expression: ""})
   },
 
-  startSetInter: function(){
+  startSetInter: function(){ // start timer
     if (this.data.timer > 0) {
       var time = this.data.timer - 1
       this.setData({timer: time})
@@ -196,14 +196,14 @@ Page({
     } else this.timeUp()
   },
 
-  skip: function() {
+  skip: function() { // skips the current question
     this.updateCards()
     this.clear()
   }
 
 })
 
-// CODE TO EVALUATE EXPRESSIONS
+// CODE BELOW TO EVALUATE EXPRESSIONS
 
 function evaluate(str) {
   str = str.replace(/\s+/g, '')

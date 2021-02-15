@@ -1,8 +1,7 @@
 /* miniprogram/pages/questions/mathKnockout/mathKnockout.wxss */
 
 page {
-  background: rgb(222,237,255);
-  background: linear-gradient(180deg, rgba(222,237,255,1) 0%, rgba(190,225,255,1) 100%);
+  background: white;
 }
 
 .header {
@@ -14,8 +13,8 @@ page {
 
 .title {
   background: #f8f8f8;
-  box-shadow: 0px 0px 8px 1px rgba(0,0,0,0.1);
-  border-top: 1px solid #eeeeee
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #eee;
 }
 
 .bold {
@@ -28,7 +27,7 @@ page {
   top: 0px;
   left: 0px;
   width: calc(100% - 46px);
-  padding: 20px 23px;
+  padding: 15px 23px;
 }
 
 .info {
@@ -49,4 +48,138 @@ page {
   position: absolute;
   top: 0px;
   right: 40px;
+}
+
+.content {
+  margin: 88px 20px 100px 20px;
+}
+
+.img {
+  width: 100%;
+}
+
+.qChi, .qEng {
+  margin: 7.5px 0;
+  font-size: 12pt;
+}
+
+.qEng {
+  line-height: 14pt;
+}
+
+.qImg {
+  margin: 15px 0;
+}
+
+.choice {
+  padding: 10px 0;
+  border-bottom: #ddd solid 1px;
+}
+
+.choice-0 {
+  border-top: #ddd solid 1px;
+}
+
+.directions {
+  padding-bottom: 8px;
+}
+
+.bubble, .choiceText {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bubble {
+  font-size: 9pt;
+  margin-right: 10px;
+  position: relative;
+  border-radius: 8px;
+}
+
+.chosen-false {
+  color: gray;
+  border: 1px gray solid;
+  background: white;
+  height: 14px;
+  width: 14px;
+}
+
+.chosen-true {
+  color: white;
+  border: none;
+  background: rgb(47,133,252); /* rgb(30, 205,151); */
+  height: 16px;
+  width: 16px;
+}
+
+.chosen-correct {
+  color: white;
+  border: none;
+  background: rgb(30, 205,151);
+  height: 16px;
+  width: 16px;
+}
+
+.chosen-incorrect {
+  color: white;
+  border: none;
+  background: rgb(255, 72, 0);
+  height: 16px;
+  width: 16px;
+}
+
+.letter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.footer {
+  width: 100%;
+  height: 60px;
+  padding-bottom: 20px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  border-top: 1px solid #eee;
+  background: #f8f8f8;
+}
+
+.submit {
+  position: absolute;
+  right: 65px;
+  top: 50%;
+  transform: translate(0, -50%);
+  font-weight: normal;
+  height: 35px !important;
+  border-radius: 17.5px;
+  background: rgb(30, 205,151);
+  color: white;
+  line-height: 35px !important;
+}
+
+.next {
+  height: 35px !important;
+  width: 35px !important;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translate(0, -50%);
+  border-radius: 17.5px;
+  background: rgb(30, 205,151);
+}
+
+.nextImg {
+  filter: invert(1);
+  height: 15px;
+  width: 15px;
+  position: absolute;
+  right: 50%;
+  top: 50%;
+  transform: translate(55%, -50%);
+}
+
+.disabled-true {
+  background: #ddd !important;
 }

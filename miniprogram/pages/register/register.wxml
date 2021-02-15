@@ -2,7 +2,7 @@
 
 <view>
   <view class="text_style_1"><text>Math Knockout</text></view>
-  <view class="text_style_2"><text>请务必按照自己学校里真实的姓名，班级，和G账号填写</text></view>
+  <view class="text_style_2"><text>请务必按照自己学校里真实的姓名，班级，和G账号填写以确保正确计分</text></view>
   <view class="text_dsec_style">
     <label>姓名</label>
     <input name="userName" class="input_text" placeholder= "中文/英文姓名" adjust-position="true" bindblur= "userNameInput" ></input>
