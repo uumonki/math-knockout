@@ -183,3 +183,7 @@ page {
 .disabled-true {
   background: #ddd !important;
 }
+
+.answered-true {
+  display: none !important;
+}

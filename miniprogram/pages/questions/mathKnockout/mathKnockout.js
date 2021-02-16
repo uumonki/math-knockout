@@ -1,10 +1,12 @@
 var db = wx.cloud.database();
-const app = getApp()
+var app = getApp();
 
 Page({ // TODO: check hasAnswered
        // TODO: implement question image
        // TODO: allow image choices
        // TODO: implement short answer
+       // TODO: check if user exists before allowing visiting page
+
 
   /**
    * 页面的初始数据
@@ -27,7 +29,8 @@ Page({ // TODO: check hasAnswered
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getQuestionData()
+    console.log(app.globalData)
   },
 
   /**
@@ -47,8 +50,7 @@ Page({ // TODO: check hasAnswered
     this.setData({ score: 0 })
     // this.updateCards()
     this.startSetInter()
-    this.getQuestionData()
-    
+    console.log(this.userAnswered(this.data.question["_id"]))
   },
 
   /**
@@ -116,8 +118,9 @@ Page({ // TODO: check hasAnswered
   },
 
   submit: function () {
+    var qId = this.data.question["_id"]
     var correct = this.data.choices[this.data.userChoice] == this.data.question['answer']
-    if (true) { // TODO: check again if question is answered to prevent answering on 2 devices
+    if (!this.userAnswered(qId)) { 
       var disp = ["false", "false", "false", "false"]
       disp[this.data.userChoice] = "incorrect"
       disp[this.data.choices.indexOf(this.data.question['answer'])] = "correct"
@@ -126,7 +129,7 @@ Page({ // TODO: check hasAnswered
         disabled: true,
         unNextable: false
       })
-      addRecord(correct, this.data.question['_id'])
+      addRecord(correct, qId)
     } else {
       this.setData({
         hasAnswered: true,
@@ -163,9 +166,37 @@ Page({ // TODO: check hasAnswered
 
   },
 
+  userAnswered: function(id) {
+    var that = this
+    db.collection('userInfo')
+      .where({_openid: openid()})
+      .get({
+        success: function (res) {
+          console.log("HERE")
+          var questions = res.data[0]["record"]
+          console.log(questions)
+          var exists = false
+          for (var i = 0; i < questions.length; i++) {
+            if (questions[i]["questionID"] == id) {
+              exists = true
+              break
+            }
+          }
+          if (exists) {
+            that.setData({
+              unNextable: false,
+              hasAnswered: true
+            })
+          }
+          return exists
+        }
+      })
+  }
+
 })
 
 function addRecord(correct, id) {
+  console.log(app.globalData.openid)
   db.collection('userInfo').where({
     _openid: app.globalData.openid
   }).update({
@@ -174,7 +205,17 @@ function addRecord(correct, id) {
         isCorrect: correct,
         questionID: id,
         answerTime: new Date()
-      })
+      }),
+      totalAnswer: db.command.inc(1),
+      monthAnswer: db.command.inc(1),
+      totalCorrect: db.command.inc(correct ? 1 : 0),
+      monthCorrect: db.command.inc(correct ? 1 : 0)
     }
   })
 }
+
+function openid() {
+  return app.globalData.openid
+}
+
+
