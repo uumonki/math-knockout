@@ -23,6 +23,8 @@ Page({ // TODO: check hasAnswered
     hasAnswered: false,
     disabled: true,
     unNextable: true,
+    type: "",
+    title: "",
   },
 
   /**
@@ -39,6 +41,24 @@ Page({ // TODO: check hasAnswered
       })
     this.getQuestionData()
     console.log(app.globalData)
+
+    var qType = options.type
+    var pageTitle
+    switch (qType) {
+      case "concept":
+        pageTitle = "概念"
+        break
+      case "geometry":
+        pageTitle = "几何"
+        break
+      case "riddle":
+        pageTitle = "急转弯"
+        break
+    }
+    this.setData({
+      type: qType,
+      title: pageTitle
+    })
   },
 
   /**
