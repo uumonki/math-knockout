@@ -27,9 +27,9 @@
       </view>
     </view>
     <scroll-view scroll-y="true" class="scroll">
-      <view class="scrollItem" wx:for="{{6}}">
-        <text style="display: block; font-size: 11pt;">每日三题#123</text>
-        <text style="font-size: 10pt; color: #555555;">数学</text>
+      <view class="scrollItem" wx:for="{{records}}" wx:for-item="record">
+        <text style="display: block; font-size: 11pt;">每日三题{{record.questionID}}</text>
+        <text style="font-size: 10pt; color: #555555;">{{record.subject}}</text>
       </view>
     </scroll-view>
   </view>

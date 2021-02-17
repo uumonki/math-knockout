@@ -1,8 +1,7 @@
 var db = wx.cloud.database();
 var app = getApp();
 
-Page({ // TODO: check hasAnswered
-       // TODO: implement question image
+Page({ // TODO: implement question image
        // TODO: allow image choices
        // TODO: implement short answer
        // TODO: check if user exists before allowing visiting page
@@ -41,11 +40,10 @@ Page({ // TODO: check hasAnswered
       .limit(1)
       .get({
         success: function (res) {
-          console.log('res', res)
           that.setData({
             question: res.data[0],
             choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]],
-            hasAnswered: that.userAnswered(res.data[0]._id)
+            //hasAnswered: that.userAnswered(res.data[0]._id)
           })
         }
       })
@@ -74,6 +72,7 @@ Page({ // TODO: check hasAnswered
   },
 
   submit: function () {
+    let that = this
     var qId = this.data.question["_id"]
     var correct = this.data.choices[this.data.userChoice] == this.data.question['answer']
     if (!this.userAnswered(qId)) { 
@@ -85,7 +84,7 @@ Page({ // TODO: check hasAnswered
         disabled: true,
         unNextable: false
       })
-      addRecord(correct, qId)
+      addRecord(correct, qId, that.data.question.subject)
     } else {
       this.setData({
         hasAnswered: true,
@@ -123,7 +122,6 @@ Page({ // TODO: check hasAnswered
   },
 
   userAnswered: function(id) {
-    console.log('id ', id)
     var that = this
     db.collection('userInfo')
       .where({
@@ -131,25 +129,19 @@ Page({ // TODO: check hasAnswered
         })
       .get({
         success: function (res) {
-          console.log("HERE")
           var records = res.data[0]["record"]
-          console.log('records ', records)
           var exists = false
           for (var i = 0; i < records.length; i++) {
             if (records[i]["questionID"] == id) {
               exists = true
-              console.log('found')
               break
             }
           }
-          console.log('exist ', exists)
           if (exists) {
             that.setData({
               unNextable: false,
               hasAnswered: true
             }, () => {
-                console.log(that.data.unNextable)
-                console.log(that.data.hasAnswered)
                 return exists
             })
             }
@@ -160,8 +152,7 @@ Page({ // TODO: check hasAnswered
 
 })
 
-function addRecord(correct, id) {
-  console.log(app.globalData.openid)
+function addRecord(correct, id, subject) {
   db.collection('userInfo').where({
     _openid: app.globalData.openid
   }).update({
@@ -169,7 +160,8 @@ function addRecord(correct, id) {
       record: db.command.push({
         isCorrect: correct,
         questionID: id,
-        answerTime: new Date()
+        answerTime: new Date(),
+        subject: subject
       }),
       totalAnswer: db.command.inc(1),
       monthAnswer: db.command.inc(1),

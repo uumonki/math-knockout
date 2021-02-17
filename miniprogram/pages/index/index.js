@@ -10,11 +10,12 @@ Page({
     requestResult: '',
     selectedSubject: 0,                    // 控制每日三题选择学科
     subjects: ["数学", "物理", "化学"],     // 控制每日三题选择学科
-    opacity: [1, 0, 0],                    // 控制每日三题选择学科
+    opacity: [1, 0, 0],                   // 控制每日三题选择学科
+    records: null,
   },
 
   onLoad: function() {
-
+    let that = this
     
     // 获取用户信息
     wx.getSetting({
@@ -71,11 +72,24 @@ Page({
               }
             }
           })
+
+          //get 答题记录!
+          db.collection('userInfo')
+            .where({_openid: app.globalData.openid})
+            .get({
+              success: function (res){
+                console.log(res.data[0].record)
+                that.setData({records: res.data[0].record})
+              }
+            })
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
       }
     })
+    
+    
+    db.collection('userInfo')
 
 
     wx.showTabBar()
