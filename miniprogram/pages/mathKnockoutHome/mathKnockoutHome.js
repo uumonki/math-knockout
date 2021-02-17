@@ -43,24 +43,15 @@ Page({
 
   },
 
-  /**
-   * Page event handler function--Called when user drop down
-   */
-  onPullDownRefresh: function () {
-
+  redirect1: function () {
+    wx.navigateTo({
+      url: '../questions/mentalMath/mentalMath'
+    })
   },
 
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage: function () {
-
+  redirect2: function () {
+    wx.navigateTo({
+      url: '../questions/24points/24points'
+    })
   }
 })
