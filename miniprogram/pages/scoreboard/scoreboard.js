@@ -3,7 +3,9 @@ Page({
 
   data: {
       monthRanking: null,
-      totalRanking: null
+      totalRanking: null,
+      monthOffset: 0,
+      totalOffset: 0
   },
 
   onLoad: function (options) {
@@ -15,7 +17,7 @@ Page({
 
     db.collection('userInfo')
       .orderBy('monthCorrect', 'desc') // descending order of 'monthCorrect' data of user
-      .limit(10) // 10 query items maximum
+      .limit(20) // 10 query items maximum
       .get({
         success: function (res){
           //store the ranking info locally in monthRanking
@@ -37,7 +39,7 @@ Page({
 
     db.collection('userInfo')
       .orderBy('totalCorrect', 'desc') // descending order of 'totalCorrect' data of user
-      .limit(10) // 10 query items maximum
+      .limit(20) // 10 query items maximum
       .get({
         success: function (res) {
           //store the ranking info locally in totalRanking
@@ -47,7 +49,8 @@ Page({
           })
         }
       })
-  }
+  },
+
 
   
 })
