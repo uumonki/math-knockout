@@ -7,11 +7,8 @@ Page({ // TODO: check hasAnswered
        // TODO: implement short answer
        // TODO: check if user exists before allowing visiting page
 
-
-  /**
-   * 页面的初始数据
-   */
   data: {
+    //page data
     timer: 121,
     timerDisplay: "2:00",
     score: 0,
@@ -25,32 +22,37 @@ Page({ // TODO: check hasAnswered
     unNextable: true,
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
+    let that = this
     wx.cloud.callFunction({
       name: 'login',
       data: {},
       success: res => {
-        //call 'login' cloud function
         app.globalData.openid = res.result.openid
       }
+    })
+   
+    wx.cloud.init({
+      env: 'shsid-3tx38'
+    })
+    const db = wx.cloud.database();
+
+    db.collection('question')
+      .limit(1)
+      .get({
+        success: function (res) {
+          console.log('res', res)
+          that.setData({
+            question: res.data[0],
+            choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]],
+            hasAnswered: that.userAnswered(res.data[0]._id)
+          })
+        }
       })
-    this.getQuestionData()
-    console.log(app.globalData)
+
+    
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
     clearTimeout(this.data.timerId)
     this.setData({ timer: 121 })
@@ -58,71 +60,17 @@ Page({ // TODO: check hasAnswered
     this.setData({ score: 0 })
     // this.updateCards()
     this.startSetInter()
-    console.log(this.userAnswered(this.data.question["_id"]))
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
     clearTimeout(this.data.timerId)
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
 
   timeUp: function () { // CALLED WHEN TIMER IS UP, SCORE STORED IN this.data.score
     var scoreVal = this.data.score
     console.log("time's up :D")
     console.log("your score: " + scoreVal)
-  },
-
-  getQuestionData: function() {
-    let that = this
-    wx.cloud.init({
-      env: 'shsid-3tx38'
-    })
-    const db = wx.cloud.database();
-
-    db.collection('question')
-      .orderBy('uploadDate', 'desc') // descending order of 'totalCorrect' data of user
-      .limit(1) 
-      .get({
-        success: function (res) {
-          //store the ranking info locally in totalRanking
-          //ranking info: array of user objects, in descending order of total answered correctly
-          that.setData({
-            question: res.data[0],
-            choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]]
-          })
-          console.log(that.data.question)         
-        }
-      })
   },
 
   submit: function () {
@@ -175,28 +123,37 @@ Page({ // TODO: check hasAnswered
   },
 
   userAnswered: function(id) {
+    console.log('id ', id)
     var that = this
     db.collection('userInfo')
-      .where({_openid: openid()})
+      .where({
+        _openid: app.globalData.openid
+        })
       .get({
         success: function (res) {
           console.log("HERE")
-          var questions = res.data[0]["record"]
-          console.log(questions)
+          var records = res.data[0]["record"]
+          console.log('records ', records)
           var exists = false
-          for (var i = 0; i < questions.length; i++) {
-            if (questions[i]["questionID"] == id) {
+          for (var i = 0; i < records.length; i++) {
+            if (records[i]["questionID"] == id) {
               exists = true
+              console.log('found')
               break
             }
           }
+          console.log('exist ', exists)
           if (exists) {
             that.setData({
               unNextable: false,
               hasAnswered: true
+            }, () => {
+                console.log(that.data.unNextable)
+                console.log(that.data.hasAnswered)
+                return exists
             })
-          }
-          return exists
+            }
+          
         }
       })
   }
@@ -222,8 +179,5 @@ function addRecord(correct, id) {
   })
 }
 
-function openid() {
-  return app.globalData.openid
-}
 
 
