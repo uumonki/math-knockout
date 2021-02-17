@@ -8,7 +8,8 @@
     "pages/questions/question/question",
     "pages/questions/mathKnockout/mathKnockout",
     "pages/questions/24points/24points",
-    "pages/questions/mentalMath/mentalMath"
+    "pages/questions/mentalMath/mentalMath",
+    "pages/mathKnockoutHome/mathKnockoutHome"
   ],
   "window": {
     "backgroundColor": "#FFFFFF",
@@ -35,10 +36,10 @@
         "text": "分类"
       },
       {
-        "iconPath": "images/testPrep.png",
-        "selectedIconPath": "images/testPrep.png",
-        "pagePath": "pages/testPrep/testPrep",
-        "text": "复习"
+        "iconPath": "images/pie.jpg",
+        "selectedIconPath": "images/pie.jpg",
+        "pagePath": "pages/mathKnockoutHome/mathKnockoutHome",
+        "text": "数学日"
       },
       {
         "iconPath": "images/scoreboard.png",

@@ -94,6 +94,13 @@
 					"id": -1,
 					"name": "pages/questions/mathKnockout/mathKnockout",
 					"pathName": "pages/questions/mathKnockout/mathKnockout",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/mathKnockoutHome/mathKnockoutHome",
+					"pathName": "pages/mathKnockoutHome/mathKnockoutHome",
 					"scene": null
 				}
 			]
