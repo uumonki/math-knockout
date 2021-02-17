@@ -1,0 +1,37 @@
+/* miniprogram/pages/mathKnockoutHome/mathKnockoutHome.wxss */
+
+.button-1, .button-2, .button-3, .button-4, .button-5, .button-6 {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.button-1 {
+  top: 20%;
+  left: 30%;
+}
+
+.button-2 {
+  top: 20%;
+  left: 70%;
+}
+
+.button-3 {
+  top: 50%;
+  left: 30%;
+}
+
+.button-4 {
+  top: 50%;
+  left: 70%;
+}
+
+.button-5 {
+  top: 80%;
+  left: 30%;
+}
+
+.button-6 {
+  top: 80%;
+  left: 70%;
+}

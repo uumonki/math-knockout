@@ -1,0 +1,10 @@
+<!--miniprogram/pages/mathKnockoutHome/mathKnockoutHome.wxml-->
+<view class="container">
+  <view class="button-1" bindtap="redirect1">速算</view>
+  <view class="button-2" bindtap="redirect2">24点</view>
+  <view class="button-3" bindtap="redirect3">概念</view>
+  <view class="button-4" bindtap="redirect4">几何</view>
+  <view class="button-5" bindtap="redirect5">急转弯</view>
+  <view class="button-6" bindtap="redirect6">排行榜</view>
+</view>
+

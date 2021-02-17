@@ -80,6 +80,16 @@ Page({
     var scoreVal = this.data.score
     console.log("time's up :D")
     console.log("your score: " + scoreVal)
+    wx.showModal({
+      title: '时间到！',
+      content: "分数: " + scoreVal,//提示内容
+      showCancel: false,
+      success(res) {
+        if (res.confirm) {
+          wx.navigateBack()
+        }
+      }
+    })
   },
 
   generateExpression: function() {
