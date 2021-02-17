@@ -19,6 +19,8 @@ Page({ // TODO: implement question image
     hasAnswered: false,
     disabled: true,
     unNextable: true,
+    type: "",
+    title: "",
   },
 
   onLoad: function (options) {
@@ -29,6 +31,29 @@ Page({ // TODO: implement question image
       success: res => {
         app.globalData.openid = res.result.openid
       }
+
+      })
+    this.getQuestionData()
+    console.log(app.globalData)
+
+    var qType = options.type
+    var pageTitle
+    switch (qType) {
+      case "concept":
+        pageTitle = "概念"
+        break
+      case "geometry":
+        pageTitle = "几何"
+        break
+      case "riddle":
+        pageTitle = "急转弯"
+        break
+    }
+    this.setData({
+      type: qType,
+      title: pageTitle
+    })
+  },
     })
    
     wx.cloud.init({

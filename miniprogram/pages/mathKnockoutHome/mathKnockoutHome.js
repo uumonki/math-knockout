@@ -53,5 +53,23 @@ Page({
     wx.navigateTo({
       url: '../questions/24points/24points'
     })
-  }
+  },
+
+  redirect3: function () {
+    wx.navigateTo({
+      url: '../questions/mathKnockout/mathKnockout?type=concept'
+    })
+  },
+
+  redirect4: function () {
+    wx.navigateTo({
+      url: '../questions/mathKnockout/mathKnockout?type=geometry'
+    })
+  },
+
+  redirect5: function () {
+    wx.navigateTo({
+      url: '../questions/mathKnockout/mathKnockout?type=riddle'
+    })
+  },
 })
