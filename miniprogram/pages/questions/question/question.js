@@ -16,6 +16,9 @@ Page({
    */
   onLoad: function (options) {
 
+    
+    console.log('subject:', options.subject)
+    
   },
 
 

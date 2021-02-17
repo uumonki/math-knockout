@@ -154,41 +154,6 @@ Page({
     })
   },
 
-  test: function() {
-      wx.cloud.init({
-        env: 'shsid-3tx38'
-      })
-      const db = wx.cloud.database();
-      db.collection('userInfo').add({
-        data:{
-          answer: 'yusuke sucks'
-        }
-      })
-  },
-
-  test2: function() {
-    wx.cloud.callFunction({
-      name: 'addUserInfo',
-      data:{
-        value: 13
-      },
-      complete: res =>{
-        console.log(res)
-      }
-    })
-  },
-
-  test3: function() {
-    wx.cloud.callFunction({
-      name: 'addUserInfo',
-      data:{
-        value: 13
-      },
-      complete: res =>{
-        console.log(res.result.data[1])
-      }
-    })
-  },
 
   touchStart(e) { // 检测卡片开始滑动，记录触摸位置
     var that = this;
@@ -230,6 +195,10 @@ Page({
 
   enterQuestion: function() { // called when 卡片被点击
     console.log(this.data.subjects[this.data.selectedSubject])
+    const url = '../questions/question/question?subject='+ this.data.subjects[this.data.selectedSubject]
+    wx.navigateTo({
+      url: url
+    })
   }
 
 })
