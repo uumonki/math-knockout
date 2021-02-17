@@ -51,11 +51,8 @@ Page({
     clearTimeout(this.data.timerId)
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
-    
+    clearTimeout(this.data.timerId)
   },
 
   /**

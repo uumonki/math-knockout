@@ -91,6 +91,14 @@
           "id": -1,
           "name": "pages/questions/mathKnockout/mathKnockout",
           "pathName": "pages/questions/mathKnockout/mathKnockout",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 5,
+          "name": "pages/questions/question/question",
+          "pathName": "pages/questions/question/question",
+          "query": "subject=数学",
           "scene": null
         }
       ]

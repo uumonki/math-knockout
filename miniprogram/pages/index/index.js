@@ -87,10 +87,8 @@ Page({
         console.error('[云函数] [login] 调用失败', err)
       }
     })
-    
-    
+  
     db.collection('userInfo')
-
 
     wx.showTabBar()
   },

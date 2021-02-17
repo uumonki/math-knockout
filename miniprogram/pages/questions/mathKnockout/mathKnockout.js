@@ -5,6 +5,7 @@ Page({ // TODO: implement question image
        // TODO: allow image choices
        // TODO: implement short answer
        // TODO: check if user exists before allowing visiting page
+       // TODO: log if user has opened page
 
   data: {
     //page data
@@ -33,7 +34,6 @@ Page({ // TODO: implement question image
       }
 
       })
-    this.getQuestionData()
     console.log(app.globalData)
 
     var qType = options.type
@@ -66,7 +66,7 @@ Page({ // TODO: implement question image
           that.setData({
             question: res.data[0],
             choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]],
-            //hasAnswered: that.userAnswered(res.data[0]._id)
+            hasAnswered: that.userAnswered(res.data[0]._id)
           })
         }
       })
@@ -87,6 +87,10 @@ Page({ // TODO: implement question image
     clearTimeout(this.data.timerId)
   },
 
+  onUnload: function () {
+    clearTimeout(this.data.timerId)
+  },
+
 
   timeUp: function () { // CALLED WHEN TIMER IS UP, SCORE STORED IN this.data.score
     var scoreVal = this.data.score
@@ -96,23 +100,25 @@ Page({ // TODO: implement question image
 
   submit: function () {
     let that = this
-    var qId = this.data.question["_id"]
-    var correct = this.data.choices[this.data.userChoice] == this.data.question['answer']
-    if (!this.userAnswered(qId)) { 
-      var disp = ["false", "false", "false", "false"]
-      disp[this.data.userChoice] = "incorrect"
-      disp[this.data.choices.indexOf(this.data.question['answer'])] = "correct"
-      this.setData({
-        choiceDisplay: disp,
-        disabled: true,
-        unNextable: false
-      })
-      addRecord(correct, qId, that.data.question.subject)
-    } else {
-      this.setData({
-        hasAnswered: true,
-        unNextable: false
-      })
+    if (this.data.userChoice) {
+      var qId = this.data.question["_id"]
+      var correct = this.data.choices[this.data.userChoice] == this.data.question['answer']
+      if (!this.userAnswered(qId)) { 
+        var disp = ["false", "false", "false", "false"]
+        disp[this.data.userChoice] = "incorrect"
+        disp[this.data.choices.indexOf(this.data.question['answer'])] = "correct"
+        this.setData({
+          choiceDisplay: disp,
+          disabled: true,
+          unNextable: false
+        })
+        addRecord(correct, qId, that.data.question.subject)
+      } else {
+        this.setData({
+          hasAnswered: true,
+          unNextable: false
+        })
+      }
     }
   },
 
@@ -171,7 +177,7 @@ Page({ // TODO: implement question image
           
         }
       })
-  }
+  },
 
 })
 
