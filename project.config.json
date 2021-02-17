@@ -1,102 +1,102 @@
 {
-  "miniprogramRoot": "miniprogram/",
-  "cloudfunctionRoot": "cloudfunctions/",
-  "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": false,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "useApiHostProcess": false,
-    "enableEngineNative": false,
-    "userConfirmedBundleSwitch": false,
-    "minifyWXSS": true
-  },
-  "appid": "wx75f99a2b335e85a9",
-  "projectname": "math-knockout",
-  "libVersion": "2.14.1",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": [
-        {
-          "id": -1,
-          "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide",
-          "query": ""
-        },
-        {
-          "id": 1,
-          "name": "pages/questions/mentalMath/mentalMath",
-          "pathName": "pages/questions/mentalMath/mentalMath",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/register/register",
-          "pathName": "pages/register/register",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/questions/24points/24points",
-          "pathName": "pages/questions/24points/24points",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/questions/mathKnockout/mathKnockout",
-          "pathName": "pages/questions/mathKnockout/mathKnockout",
-          "scene": null
-        }
-      ]
-    }
-  }
+	"miniprogramRoot": "miniprogram/",
+	"cloudfunctionRoot": "cloudfunctions/",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
+		"preloadBackgroundData": false,
+		"minified": true,
+		"newFeature": true,
+		"coverView": true,
+		"nodeModules": false,
+		"autoAudits": false,
+		"showShadowRootInWxmlPanel": true,
+		"scopeDataCheck": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"compileHotReLoad": false,
+		"useMultiFrameRuntime": false,
+		"useApiHook": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		},
+		"bundle": false,
+		"useIsolateContext": true,
+		"useCompilerModule": true,
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"packNpmManually": false,
+		"packNpmRelationList": [],
+		"useApiHostProcess": false,
+		"enableEngineNative": false,
+		"userConfirmedBundleSwitch": false,
+		"minifyWXSS": true
+	},
+	"appid": "wx75f99a2b335e85a9",
+	"projectname": "math-knockout",
+	"libVersion": "2.14.1",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"gamePlugin": {
+			"list": []
+		},
+		"miniprogram": {
+			"list": [
+				{
+					"id": -1,
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "pages/questions/mentalMath/mentalMath",
+					"pathName": "pages/questions/mentalMath/mentalMath",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/register/register",
+					"pathName": "pages/register/register",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/questions/24points/24points",
+					"pathName": "pages/questions/24points/24points",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/questions/mathKnockout/mathKnockout",
+					"pathName": "pages/questions/mathKnockout/mathKnockout",
+					"scene": null
+				}
+			]
+		}
+	}
 }

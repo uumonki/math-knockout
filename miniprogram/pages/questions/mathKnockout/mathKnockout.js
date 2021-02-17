@@ -29,6 +29,14 @@ Page({ // TODO: check hasAnswered
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.cloud.callFunction({
+      name: 'login',
+      data: {},
+      success: res => {
+        //call 'login' cloud function
+        app.globalData.openid = res.result.openid
+      }
+      })
     this.getQuestionData()
     console.log(app.globalData)
   },
