@@ -53,8 +53,6 @@ Page({ // TODO: implement question image
       type: qType,
       title: pageTitle
     })
-  },
-    })
    
     wx.cloud.init({
       env: 'shsid-3tx38'
