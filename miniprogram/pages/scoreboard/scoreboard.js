@@ -27,8 +27,12 @@ Page({
           that.setData({
             monthRanking: res.data
           })
+          console.log(res.data[0].wechatInfo.nickName)
         }
       })
+
+    this.getTotalRanking()
+
   },
 
   getTotalRanking: function () {

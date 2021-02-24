@@ -91,7 +91,7 @@ Page({
 
   generateExpression: function() {
     var weights = this.data.weights
-    var selection = Math.random() 
+    var selection = 0.2 // Math.random() 
     var expression, answer
 
     // makes selection of operation based on weights and random number
@@ -99,7 +99,7 @@ Page({
     else if (selection < 0.6) [expression, answer] = this.generateSubtraction()
     else if (selection < 0.85) [expression, answer] = this.generateMultiplication()
     else [expression, answer] = this.generateDivision()
-    
+    console.log(answer)
     this.setData({ans: answer})
     this.setData({exp: expression})
   },
@@ -122,7 +122,7 @@ Page({
       }
     }
     [num1, num2] = shuffle([num1, num2]) // randomize order of two numbers
-    return [num1 + " + " + num2, num1 + num2] // returns array of display and answer
+    return [num1 + " + " + num2, +num1 + +num2] // returns array of display and answer
   },
 
   generateSubtraction: function() {

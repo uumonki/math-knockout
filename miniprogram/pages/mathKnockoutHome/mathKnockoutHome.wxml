@@ -1,10 +1,22 @@
-<!--miniprogram/pages/mathKnockoutHome/mathKnockoutHome.wxml-->
-<view class="container">
-  <view class="button-1" bindtap="redirect1">速算</view>
-  <view class="button-2" bindtap="redirect2">24点</view>
-  <view class="button-3" bindtap="redirect3">概念</view>
-  <view class="button-4" bindtap="redirect4">几何</view>
-  <view class="button-5" bindtap="redirect5">急转弯</view>
-  <view class="button-6" bindtap="redirect6">排行榜</view>
+<view class="section">
+  <view class="tui-table-view">
+    <view class="tui-col-3" bindtap="redirect1">
+      <view class="buttonText">速算</view>
+    </view>
+    <view class="tui-col-3" bindtap="redirect2">
+      <view class="buttonText">24点</view>
+    </view>
+    <view class="tui-col-3" bindtap="redirect3">
+      <view class="buttonText">概念</view>
+    </view>
+    <view class="tui-col-3" bindtap="redirect4">
+      <view class="buttonText">几何</view>
+    </view>
+    <view class="tui-col-3" bindtap="redirect5">
+      <view class="buttonText">急转弯</view>
+    </view>
+    <view class="tui-col-3" bindtap="">
+      <view class="buttonText">排行榜</view>
+    </view>
+  </view>
 </view>
-

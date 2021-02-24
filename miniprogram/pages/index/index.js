@@ -79,7 +79,7 @@ Page({
             .get({
               success: function (res){
                 console.log(res.data[0].record)
-                that.setData({records: res.data[0].record})
+                that.setData({records: res.data[0].record.sort((a, b) => b.answerTime - a.answerTime)}) // sort records by time
               }
             })
       },
@@ -92,6 +92,8 @@ Page({
 
     wx.showTabBar()
   },
+
+
 
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {

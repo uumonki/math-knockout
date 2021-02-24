@@ -2,41 +2,41 @@ var db = wx.cloud.database();
 var app = getApp();
 
 Page({ // TODO: implement question image
-       // TODO: allow image choices
+       // TODO: allow image choices (?)
        // TODO: implement short answer
-       // TODO: check if user exists before allowing visiting page
-       // TODO: log if user has opened page
+       // TODO: check if user exists before allowing visiting page (!!!)
+       // TODO: check if user has already opened page
 
   data: {
     //page data
-    timer: 121,
+    timer: 121, 
     timerDisplay: "2:00",
-    score: 0,
     timerId: 0,
-    question: {},
-    choices: [],
-    userChoice: -1,
-    choiceDisplay: ["false", "false", "false", "false"],
-    hasAnswered: false,
-    disabled: true,
-    unNextable: true,
+    questions: [],    // array of all questions
+    choicesList: [],  // list of all question choices
+    questionIndex: 0, // current q user is on
+    question: {},     // current q displayed
+    choices: [],      // current choices displayed
+    userChoice: -1,   // user choice, -1 if not chosen
+    choiceDisplay: ["false", "false", "false", "false"], // controls display
+    qIds: [],         // array of all q ids
+    disabled: true,   // whether submit button available
+    unNextable: true, // if true: NEXT is grayed out and SUBMIT is visible, vice versa
     type: "",
     title: "",
   },
 
   onLoad: function (options) {
     let that = this
-    wx.cloud.callFunction({
+    wx.cloud.callFunction({ // get openid
       name: 'login',
       data: {},
       success: res => {
         app.globalData.openid = res.result.openid
       }
-
       })
-    console.log(app.globalData)
 
-    var qType = options.type
+    var qType = options.type // differentiate question type, update title
     var pageTitle
     switch (qType) {
       case "concept":
@@ -59,14 +59,37 @@ Page({ // TODO: implement question image
     })
     const db = wx.cloud.database();
 
-    db.collection('question')
-      .limit(1)
+    db.collection('mkQuestion')  // fetch most recent 5 questions
+      .limit(5)
+      .orderBy('uploadDate', 'desc')
+      .where({type: qType})
       .get({
-        success: function (res) {
-          that.setData({
+        success: function (res) { // check if user has alr answered, this is a mess cuz i can't async
+          db.collection('userInfo')
+          .where({
+            _openid: app.globalData.openid
+            })
+          .get({
+            success: function (res2) {
+              var records = res2.data[0].record
+              var exists = false
+              for (var i = 0; i < records.length; i++) {
+                if (records[i].questionID == res.data[0]._id) {
+                  exists = true
+                  break
+                }
+              }
+              that.setData({
+                unNextable: !exists
+              })
+            }
+          })
+          that.setData({    // write in question data
+            questions: res.data,
             question: res.data[0],
+            choicesList: res.data.map((a) => [a.choice1, a.choice2, a.choice3, a.choice4]),
             choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]],
-            hasAnswered: that.userAnswered(res.data[0]._id)
+            qIds: res.data.map((a) => a._id),
           })
         }
       })
@@ -78,8 +101,6 @@ Page({ // TODO: implement question image
     clearTimeout(this.data.timerId)
     this.setData({ timer: 121 })
     this.setData({ timerDisplay: "2:00" })
-    this.setData({ score: 0 })
-    // this.updateCards()
     this.startSetInter()
   },
 
@@ -100,10 +121,11 @@ Page({ // TODO: implement question image
 
   submit: function () {
     let that = this
-    if (this.data.userChoice) {
+    if (this.data.userChoice > -1) { // check if anything chosen
+      clearTimeout(this.data.timerId)
       var qId = this.data.question["_id"]
-      var correct = this.data.choices[this.data.userChoice] == this.data.question['answer']
-      if (!this.userAnswered(qId)) { 
+      var correct = this.data.choices[this.data.userChoice] == this.data.question['answer'] // check answer correct
+      if (!this.userAnswered(qId)) {  // check again if user answered to prevent cross-device
         var disp = ["false", "false", "false", "false"]
         disp[this.data.userChoice] = "incorrect"
         disp[this.data.choices.indexOf(this.data.question['answer'])] = "correct"
@@ -115,7 +137,6 @@ Page({ // TODO: implement question image
         addRecord(correct, qId, that.data.question.subject)
       } else {
         this.setData({
-          hasAnswered: true,
           unNextable: false
         })
       }
@@ -133,10 +154,31 @@ Page({ // TODO: implement question image
   },
 
   directNext: function() {
-
+    if (!this.data.unNextable) {
+      clearTimeout(this.data.timerId)
+      if (this.data.questionIndex >= (this.data.questions.length - 1)) { // go back if on last question
+        wx.navigateBack()
+      } else {
+        var qIdx = this.data.questionIndex + 1 // increment question index
+        this.startSetInter() // reset timer
+        this.setData({       // reset everything
+          questionIndex: qIdx,
+          choiceDisplay: [false, false, false, false],
+          disabled: false,
+          unNextable: true,
+          unNextable: !this.userAnswered(this.data.qIds[qIdx]),
+          timer: 120,
+          timerDisplay: "2:00",
+          question: this.data.questions[qIdx],
+          choices: this.data.choicesList[qIdx],
+          userChoice: -1,
+          disabled: true
+        })
+      }
+    }
   },
 
-  choose: function(e) {
+  choose: function(e) { // controls MC buttons
     let c = e.currentTarget.dataset.choice
 
     var disp = ["false", "false", "false", "false"]
@@ -150,7 +192,7 @@ Page({ // TODO: implement question image
 
   },
 
-  userAnswered: function(id) {
+  userAnswered: function(id) { // checks if user has answered question of id
     var that = this
     db.collection('userInfo')
       .where({
@@ -169,12 +211,21 @@ Page({ // TODO: implement question image
           if (exists) {
             that.setData({
               unNextable: false,
-              hasAnswered: true
+            }, () => {
+                return exists
+          })
+        }
+          /*
+          
+          } else {
+            that.setData({
+              unNextable: true,
+              hasAnswered: false
             }, () => {
                 return exists
             })
-            }
-          
+          }
+          */
         }
       })
   },
