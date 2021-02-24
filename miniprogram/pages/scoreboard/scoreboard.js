@@ -1,13 +1,16 @@
 // miniprogram/pages/scoreboard.js
+var app = getApp();
 Page({
 
   data: {
-      monthRanking: null,
-      totalRanking: null,
+      monthRanking: [],
+      totalRanking: [],
       monthOffset: 0,
       totalOffset: 0,
-      dayScore:0,
-      totalScore:0
+      monthScore: 0,
+      totalScore: 0,
+      pfpUrl: "",
+      show: false, 
   },
 
   onLoad: function (options) {
@@ -16,6 +19,20 @@ Page({
       env: 'shsid-3tx38'
     })
     const db = wx.cloud.database();
+
+    
+    db.collection('userInfo')
+      .where({_openid:app.globalData.openid})
+      .get({
+        success: function (res){
+            that.setData({
+            monthScore:res.data[0].monthCorrect,
+            totalScore:res.data[0].totalCorrect,
+            pfpUrl: res.data[0].wechatInfo.avatarUrl
+          })
+        }
+      })
+    
 
     db.collection('userInfo')
       .orderBy('monthCorrect', 'desc') // descending order of 'monthCorrect' data of user
@@ -27,11 +44,18 @@ Page({
           that.setData({
             monthRanking: res.data
           })
-          console.log(res.data[0].wechatInfo.nickName)
+// Updated upstream
+//<<<<<<< HEAD
         }
       })
+    
+//=======
+//>>>>>>> Stashed changes
+        
+// Updated upstream
 
-    this.getTotalRanking()
+// ad4030fa033db1b6c41900905d91c490d5e30944
+// Stashed changes
 
   },
 
@@ -55,8 +79,5 @@ Page({
           })
         }
       })
-  },
-
-
-  
+}
 })

@@ -1,52 +1,43 @@
 /* miniprogram/pages/scoreboard.wxss */
 
 .userinfoBox{
-  width: 95%;
+  margin: 30px 50px 0px 0px;
+  width: calc(100% - 50px);
   height: 150px;
-  margin-top: 30px;
-  display: flex;
-  flex-direction: row-reverse;
-  align-self: center;
+  position:relative;
+  display:flex;
 }
 
-.userStats {
-  width: 40%;
-  height: 150px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap:wrap;
-  align-items:center;
-}
+.userinfoBox .userStats {
+  position: absolute;
+  right: 0;
+  width: 35%;
+  height: 100%;
+ }
 
 .pfp {
-  height: 120px;
-  width: 120px;
+  width: 100%;
+  max-width: 150px;
   border-radius: 50%;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  text-align:center;
+  display: block;
 }
 
 .nick {
-  height: 30px;
-  width:120px;
+  height: auto;
+  width: auto;
   text-align: center;
+  font-size:10pt;
+  padding:5px;
+  display:block;
 }
 
-.userScores{
-  /*border: black solid;*/
-  width: 100%;
-  height:100px;
+.userinfoBox .userScores{
+  width: 60%;
+  height:40%;
   align-self:center;
-  direction:flex;
-  flex-direction: column;
-}
-
-.rank{
-  text-align: center;
-  font-size:30px;
-  display: block;
-  line-height:2em;
+  justify-content: center;
 }
 
 .score{
@@ -57,30 +48,71 @@
 }
 
 .recordContainer {
-  border:black solid;
+  border:solid;
   position:relative;
   top:20px;
   width:100%;
-  height: calc(100vh - 50px - 350rpx); /*90px should be determined based on the UI for scoreboard  */
+  height: calc(100vh - 25px - 350rpx); /*90px should be determined based on the UI for scoreboard  */
   z-index: 0; /* z-index高 在overlapp的时候会出现在前面*/
   position: relative;
 }
+
+.tabBar{
+  height:30px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.tabBar .tab1Container{
+  width: 50%;
+  height:auto;
+  display: flex;
+  justify-content: center;
+}
+
+.tabBar .tab2Container{
+  width: 50%;
+  height:auto;
+  display: flex;
+  justify-content: center;
+}
+
+ .tabLabel1-false{
+  background:rgba(0, 0, 0, 0.2);
+  width: 30%;
+  height: auto;
+  padding:5px 0px 0px 0px;
+  text-align: center;
+  border-bottom: 1px solid rgb(93, 235, 28);
+}
+
+
+.tabBar .tabLabel1-true{
+  width:30%;
+  height: auto;
+  padding:5px 0px 0px 0px;
+  text-align: center;
+}
+
+.tabBar .tabLabel2{
+  background:rgba(0, 100, 0, 0.2);
+  width:30%;
+  height: auto;
+  padding:5px 0px 0px 0px;
+  text-align: center;
+}
+
+
 
 .rankLabel{
   border:grey solid;
   width:20%;
 }
 
-.line {
-  position: absolute;
-  width: 100%;
-  height: 1px;
-  background-color: gray;
-}
-
 .containerLabel {
   position: relative;
-  top: 30px;
+  top: 5px;
   padding: 0px 8px;
   background-color: #ffffff;
   display: flex;
@@ -91,7 +123,7 @@
 .scroll {
   height: calc(100% - 48px); 
   position: absolute; 
-  top: 48px; 
+  top: 55px; 
   left: 0px;
   align-content: center;
 }
@@ -102,18 +134,35 @@
   padding: 10px 0px;
   width: calc(100% - 40px);
   border-bottom: 1px #e8e8e8 solid;
+}
+
+.itemText1{
+  width:100%;
+  font-size:9pt;
+  display: block;
+}
+
+.rankingInfo{
+  width: 100%;
+  margin-top:5px;
+  align-items: center;
   display:flex;
   flex-direction: row;
 }
 
-.itemText1{
-  align-items:left;
-  display: inline-block;
+.pfprank{
+  width:25px;
+  height:25px;
+  border-radius: 50%;
 }
 
-.itemText1{
-  align-items:right;
-  display: inline-block;
+.username {
+  margin-left: 5px;
+  font-size: 10.5pt;
+  align-items: center;
 }
 
-
+.userScore{
+  font-size: 11pt;
+  margin-left:auto;
+}

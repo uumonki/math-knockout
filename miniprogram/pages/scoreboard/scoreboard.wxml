@@ -1,25 +1,38 @@
 <!--排行榜-->
 
-<view class ="userinfoBox">
-  <view class="userStats">
-    <open-data type="userAvatarUrl" class="pfp"></open-data>
-    <open-data type="userNickName" class="nick"></open-data>
+<view class="userinfoBox">
+  <view class="userStats" >
+    <image class="pfp" src="{{pfpUrl}}" mode="widthFix"/>
+    <view class="nick">
+      <open-data type="userNickName"></open-data>
+    </view>
   </view>
   <view class="userScores">
-    <text class="rank">No.</text>
-    <text class="score">目前总分：</text>
-    <text class="score">当日分数：</text>
+    <text class="score">目前总分: {{totalScore}}</text>
+    <text class="score">当日分数: {{monthScore}}</text>
   </view>
 </view>
 
 <view class="recordContainer">
+  <view class="tabBar">
+    <view class="tab1Container">
+      <view class="tabLabel1-{{show}}">今日</view>
+    </view>
+    <view class="tab2Container">
+       <view class="tabLabel2">总分</view>
+    </view>
+  </view>
   <view class="containerLabel">
     排行榜Top 10
   </view>
   <scroll-view scroll-y="true" class="scroll">
-    <view class="scrollItem" wx:for="{{10}}">
-      <view class="itemText1">No.</view>
-      <view class="itemText2">score</view>
-    </view>
+      <view class="scrollItem" wx:for="{{monthRanking}}" wx:for-item="person" wx:for-index="idx">
+        <view class="itemText1">No. {{idx+1}}</view>
+        <view class="rankingInfo">
+          <image class="pfprank" src="{{person.wechatInfo.avatarUrl}}" />
+          <view class="username">{{person.wechatInfo.nickName}}</view>
+          <view class="userScore">{{person.monthCorrect}}</view>
+        </view>
+      </view>
   </scroll-view>
 </view>
