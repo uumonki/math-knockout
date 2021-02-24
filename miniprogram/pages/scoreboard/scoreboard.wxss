@@ -1,1 +1,119 @@
 /* miniprogram/pages/scoreboard.wxss */
+
+.userinfoBox{
+  width: 95%;
+  height: 150px;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-self: center;
+}
+
+.userStats {
+  width: 40%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+.pfp {
+  height: 120px;
+  width: 120px;
+  border-radius: 50%;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  text-align:center;
+}
+
+.nick {
+  height: 30px;
+  width:120px;
+  text-align: center;
+}
+
+.userScores{
+  /*border: black solid;*/
+  width: 100%;
+  height:100px;
+  align-self:center;
+  direction:flex;
+  flex-direction: column;
+}
+
+.rank{
+  text-align: center;
+  font-size:30px;
+  display: block;
+  line-height:2em;
+}
+
+.score{
+  text-align: center;
+  font-size: 15px;
+  display: block;
+  line-height:1.5em;
+}
+
+.recordContainer {
+  border:black solid;
+  position:relative;
+  top:20px;
+  width:100%;
+  height: calc(100vh - 50px - 350rpx); /*90px should be determined based on the UI for scoreboard  */
+  z-index: 0; /* z-index高 在overlapp的时候会出现在前面*/
+  position: relative;
+}
+
+.rankLabel{
+  border:grey solid;
+  width:20%;
+}
+
+.line {
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  background-color: gray;
+}
+
+.containerLabel {
+  position: relative;
+  top: 30px;
+  padding: 0px 8px;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll {
+  height: calc(100% - 48px); 
+  position: absolute; 
+  top: 48px; 
+  left: 0px;
+  align-content: center;
+}
+
+.scrollItem {
+  position: relative;
+  margin: auto;
+  padding: 10px 0px;
+  width: calc(100% - 40px);
+  border-bottom: 1px #e8e8e8 solid;
+  display:flex;
+  flex-direction: row;
+}
+
+.itemText1{
+  align-items:left;
+  display: inline-block;
+}
+
+.itemText1{
+  align-items:right;
+  display: inline-block;
+}
+
+

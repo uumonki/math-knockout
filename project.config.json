@@ -1,6 +1,8 @@
 {
-  "miniprogramRoot": "miniprogram/",
-  "cloudfunctionRoot": "cloudfunctions/",
+  "description": "Project configuration file",
+  "packOptions": {
+    "ignore": []
+  },
   "setting": {
     "urlCheck": true,
     "es6": true,
@@ -19,9 +21,8 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
+    "useMultiFrameRuntime": false,
     "useApiHook": true,
-    "useApiHostProcess": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -31,34 +32,48 @@
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true
+    "packNpmRelationList": []
   },
+  "compileType": "miniprogram",
+  "libVersion": "2.14.1",
   "appid": "wx75f99a2b335e85a9",
   "projectname": "math-knockout",
-  "libVersion": "2.14.1",
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+  "watchOptions": {
+    "ignore": []
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {
+      "current": -1,
       "list": []
     },
     "conversation": {
+      "current": -1,
       "list": []
     },
     "plugin": {
+      "current": -1,
       "list": []
     },
     "game": {
+      "current": -1,
       "list": []
     },
     "gamePlugin": {
+      "current": -1,
       "list": []
     },
     "miniprogram": {
+      "current": 6,
       "list": [
         {
           "id": -1,
@@ -99,6 +114,13 @@
           "name": "pages/questions/question/question",
           "pathName": "pages/questions/question/question",
           "query": "subject=数学",
+          "scene": null
+        },
+        {
+          "id": 6,
+          "name": "pages/scoreboard/scoreboard",
+          "pathName": "pages/scoreboard/scoreboard",
+          "query": "",
           "scene": null
         }
       ]

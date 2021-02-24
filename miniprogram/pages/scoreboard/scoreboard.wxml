@@ -1,2 +1,25 @@
 <!--排行榜-->
-<text>scoreboard</text>
+
+<view class ="userinfoBox">
+  <view class="userStats">
+    <open-data type="userAvatarUrl" class="pfp"></open-data>
+    <open-data type="userNickName" class="nick"></open-data>
+  </view>
+  <view class="userScores">
+    <text class="rank">No.</text>
+    <text class="score">目前总分：</text>
+    <text class="score">当日分数：</text>
+  </view>
+</view>
+
+<view class="recordContainer">
+  <view class="containerLabel">
+    排行榜Top 10
+  </view>
+  <scroll-view scroll-y="true" class="scroll">
+    <view class="scrollItem" wx:for="{{10}}">
+      <view class="itemText1">No.</view>
+      <view class="itemText2">score</view>
+    </view>
+  </scroll-view>
+</view>

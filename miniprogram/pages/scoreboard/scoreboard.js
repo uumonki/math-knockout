@@ -5,7 +5,9 @@ Page({
       monthRanking: null,
       totalRanking: null,
       monthOffset: 0,
-      totalOffset: 0
+      totalOffset: 0,
+      dayScore:0,
+      totalScore:0
   },
 
   onLoad: function (options) {
