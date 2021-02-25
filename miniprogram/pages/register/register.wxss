@@ -7,8 +7,7 @@ page {
 }
 
 .text_style_1 {
-  margin-top: 100rpx;
-  height: 100rpx;
+  height: calc(30pt + 10rpx);
   width: 100%;
   background: #fff;
   /*border: 1px solid rgba(0, 0, 0, 0.1);
@@ -18,14 +17,13 @@ page {
   flex-direction: row;
   align-items: center;*/
   text-align: center;
-  font-size: 18pt;
+  font-size: calc(15pt + 10rpx);
   font-weight: 700;
-  margin-top: 35px;
 }
 .text_style_2 {
-  margin: 30rpx 50rpx 30rpx 50rpx;
+  margin: 30rpx 70rpx;
   height: 100rpx;
-  width: 90%;
+  width: calc(100% - 140rpx);
   background: #fff;
   /*border: 1px solid rgba(0, 0, 0, 0.1);
   border-left: none;
@@ -39,10 +37,11 @@ page {
 }
 
 .text_dsec_style {
-  margin-left:30rpx;
+  margin: 0 50rpx;
   margin-bottom: 30rpx;
   height: 140rpx;
-  width: 100%;
+  max-height: 100px;
+  width: calc(100% - 100rpx);
   background: #fff;
   /*border: 1px solid rgba(131, 122, 122, 0.1);
   border-left: 20rpx;
@@ -74,4 +73,12 @@ page {
 .register_btn{
   margin: 100 !important;
   font-weight: normal;
+}
+
+.container {
+  position: absolute;
+  width: 100%;
+  top: calc(15px + 46vh);
+  left: 0;
+  transform: translateY(-50%);
 }

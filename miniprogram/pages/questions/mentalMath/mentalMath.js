@@ -9,8 +9,8 @@ Page({
     error: "", // controls shaking the input box when error
     inputVal: "", // value of user input
     inputFocus: true, // controls focus of input box
-    timer: 121, // timer seconds 
-    timerDisplay: "2:00",
+    timer: 61, // timer seconds 
+    timerDisplay: "1:00",
     score: 0, // user score
     timerId: 0, // controls timer
   },
@@ -34,8 +34,8 @@ Page({
    */
   onShow: function () {
     clearTimeout(this.data.timerId) // initialize timer, score, and question
-    this.setData({ timer: 121 })
-    this.setData({ timerDisplay: "2:00" })
+    this.setData({ timer: 61 })
+    this.setData({ timerDisplay: "1:00" })
     this.setData({ score: 0 })
     this.generateExpression()
     this.startSetInter()
@@ -90,7 +90,6 @@ Page({
   },
 
   generateExpression: function() {
-    var weights = this.data.weights
     var selection = 0.2 // Math.random() 
     var expression, answer
 

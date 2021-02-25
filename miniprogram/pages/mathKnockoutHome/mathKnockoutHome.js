@@ -1,4 +1,7 @@
 // miniprogram/pages/mathKnockoutHome/mathKnockoutHome.js
+var app = getApp();
+var db = wx.cloud.database();
+
 Page({
 
   /**
@@ -26,7 +29,7 @@ Page({
    * Lifecycle function--Called when page show
    */
   onShow: function () {
-
+    this.incompleteInfo()
   },
 
   /**
@@ -41,6 +44,33 @@ Page({
    */
   onUnload: function () {
 
+  },
+
+  incompleteInfo: function () {
+    var that = this
+    wx.cloud.init({
+      env: 'shsid-3tx38'
+    })
+    const openid = app.globalData.openid
+    db.collection('userInfo')
+      .where({_openid: openid})
+      .get({
+        success: function (res) {
+          var verified = res.data[0].verified
+          if (typeof verified === 'undefined' || verified === null || verified === false) {
+            that.collectInfo()
+          }
+        },
+        fail: () => {
+          that.collectInfo()
+        }
+      })
+  },
+
+  collectInfo: function () {
+    wx.redirectTo({
+      url: '../register/register',
+    })
   },
 
   redirect1: function () {

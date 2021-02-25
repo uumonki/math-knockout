@@ -9,8 +9,8 @@ Page({ // TODO: implement question image
 
   data: {
     //page data
-    timer: 121, 
-    timerDisplay: "2:00",
+    timer: 31, 
+    timerDisplay: "0:30",
     timerId: 0,
     questions: [],    // array of all questions
     choicesList: [],  // list of all question choices
@@ -76,6 +76,7 @@ Page({ // TODO: implement question image
               for (var i = 0; i < records.length; i++) {
                 if (records[i].questionID == res.data[0]._id) {
                   exists = true
+                  clearTimeout(that.data.timerId)
                   break
                 }
               }
@@ -99,24 +100,34 @@ Page({ // TODO: implement question image
 
   onShow: function () {
     clearTimeout(this.data.timerId)
-    this.setData({ timer: 121 })
-    this.setData({ timerDisplay: "2:00" })
+    this.setData({ timer: 31 })
+    this.setData({ timerDisplay: "0:30" })
     this.startSetInter()
   },
 
   onHide: function () {
     clearTimeout(this.data.timerId)
+    if (this.data.unNextable)
+      addRecord(false, this.data.question._id, this.data.question.subject)
   },
 
   onUnload: function () {
     clearTimeout(this.data.timerId)
+    if (this.data.unNextable)
+      addRecord(false, this.data.question._id, this.data.question.subject)
   },
 
 
   timeUp: function () { // CALLED WHEN TIMER IS UP, SCORE STORED IN this.data.score
-    var scoreVal = this.data.score
-    console.log("time's up :D")
-    console.log("your score: " + scoreVal)
+    clearTimeout(this.data.timerId)
+    this.setData({timer: 30})
+    console.log("hi")
+    var that = this
+    wx.showModal({
+      title: '时间到！',
+      content: this.submit(), //提示内容
+      showCancel: false,
+    })
   },
 
   submit: function () {
@@ -140,7 +151,9 @@ Page({ // TODO: implement question image
           unNextable: false
         })
       }
+      return correct ? '回答正确!' : '未回答正确!'
     }
+    return '未回答正确!'
   },
 
   startSetInter: function () {
@@ -167,8 +180,8 @@ Page({ // TODO: implement question image
           disabled: false,
           unNextable: true,
           unNextable: !this.userAnswered(this.data.qIds[qIdx]),
-          timer: 120,
-          timerDisplay: "2:00",
+          timer: 30,
+          timerDisplay: "0:30",
           question: this.data.questions[qIdx],
           choices: this.data.choicesList[qIdx],
           userChoice: -1,
@@ -179,17 +192,16 @@ Page({ // TODO: implement question image
   },
 
   choose: function(e) { // controls MC buttons
-    let c = e.currentTarget.dataset.choice
-
-    var disp = ["false", "false", "false", "false"]
-    disp[c] = "true"
-
-    this.setData({
-      userChoice: c,
-      choiceDisplay: disp,
-      disabled: false
-    })
-
+    if (this.data.unNextable) {
+      let c = e.currentTarget.dataset.choice
+      var disp = ["false", "false", "false", "false"]
+      disp[c] = "true"
+      this.setData({
+        userChoice: c,
+        choiceDisplay: disp,
+        disabled: false
+      })
+    }
   },
 
   userAnswered: function(id) { // checks if user has answered question of id
@@ -209,6 +221,7 @@ Page({ // TODO: implement question image
             }
           }
           if (exists) {
+            clearTimeout(that.data.timerId)
             that.setData({
               unNextable: false,
             }, () => {
