@@ -1,0 +1,19 @@
+<!--miniprogram/pages/uploadQuestion/uploadQuestion.wxml-->
+<form bindsubmit="questionForm" style="margin: 20px;">
+  <text>题目类型</text>
+  <input name="type" style="border: solid 1px gray" placeholder="riddle, geometry, concept" value="{{o}}" bindinput="typeChange"/>
+  <text hidden="{{type}}" style="margin-top: 5px">题目文本</text>
+  <input name="question" style="border: solid 1px gray" placeholder="What does the fox say?" value="{{o}}" hidden="{{type}}"/>
+  <text style="margin-top: 5px">题目图片</text>
+  <button bindtap="pic" style="border: 1px solid gray;">上传</button>
+  <text hidden="{{type}}" style="margin-top: 5px">选择s</text>
+  <input name="choice1" style="border: solid 1px gray; margin-bottom: 5px;" placeholder="Hi" value="{{o}}" hidden="{{type}}"/>
+  <input name="choice2" style="border: solid 1px gray; margin-bottom: 5px;" placeholder="Bye" value="{{o}}" hidden="{{type}}"/>
+  <input name="choice3" style="border: solid 1px gray; margin-bottom: 5px;" placeholder="Ok" value="{{o}}" hidden="{{type}}"/>
+  <input name="choice4" style="border: solid 1px gray; margin-bottom: 5px;" placeholder="ringdingdingdingdingeringeding" value="{{o}}" hidden="{{type}}"/>
+  <text hidden="{{type}}">正确选择 （1，2，3，4）</text>
+  <input name="answerIndex" style="border: solid 1px gray" placeholder="4" value="{{o}}" hidden="{{type}}"/>
+  <text hidden="{{!type}}">字母值 (format b2 a1 => a=1 b=2)</text>
+  <input name="answerKey" style="border: solid 1px gray" placeholder="b2 a1" value="{{o}}" hidden="{{!type}}"/>
+  <button form-type="submit" style="border: 1px solid gray; margin-top: 10px;">提交问题</button>
+</form>

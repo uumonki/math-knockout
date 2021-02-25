@@ -9,7 +9,8 @@
     "pages/questions/mathKnockout/mathKnockout",
     "pages/questions/24points/24points",
     "pages/questions/mentalMath/mentalMath",
-    "pages/mathKnockoutHome/mathKnockoutHome"
+    "pages/mathKnockoutHome/mathKnockoutHome",
+    "pages/uploadQuestion/uploadQuestion"
   ],
   "window": {
     "backgroundColor": "#FFFFFF",

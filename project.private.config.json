@@ -1,0 +1,70 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "db guide",
+          "pathName": "pages/databaseGuide/databaseGuide",
+          "query": ""
+        },
+        {
+          "id": 1,
+          "name": "pages/questions/mentalMath/mentalMath",
+          "pathName": "pages/questions/mentalMath/mentalMath",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/register/register",
+          "pathName": "pages/register/register",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/questions/24points/24points",
+          "pathName": "pages/questions/24points/24points",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/questions/mathKnockout/mathKnockout",
+          "pathName": "pages/questions/mathKnockout/mathKnockout",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 5,
+          "name": "pages/questions/question/question",
+          "pathName": "pages/questions/question/question",
+          "query": "subject=数学",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "pages/scoreboard/scoreboard",
+          "pathName": "pages/scoreboard/scoreboard",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/uploadQuestion/uploadQuestion",
+          "pathName": "pages/uploadQuestion/uploadQuestion",
+          "scene": null
+        }
+      ]
+    }
+  }
+}
