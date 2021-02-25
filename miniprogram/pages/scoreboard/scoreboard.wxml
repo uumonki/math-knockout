@@ -16,22 +16,32 @@
 <view class="recordContainer">
   <view class="tabBar">
     <view class="tab1Container">
-      <view class="tabLabel1-{{show}}">今日</view>
+      <view bindtap="func1" class="tabLabel1-{{show}}" >今日</view>
     </view>
     <view class="tab2Container">
-       <view class="tabLabel2">总分</view>
+       <view bindtap="func2" class="tabLabel2-{{show}}" >总分</view>
     </view>
   </view>
   <view class="containerLabel">
-    排行榜Top 10
+    排行榜
   </view>
-  <scroll-view scroll-y="true" class="scroll">
+  <scroll-view wx:if="{{!show}}" scroll-y="true" class="scroll">
       <view class="scrollItem" wx:for="{{monthRanking}}" wx:for-item="person" wx:for-index="idx">
         <view class="itemText1">No. {{idx+1}}</view>
         <view class="rankingInfo">
           <image class="pfprank" src="{{person.wechatInfo.avatarUrl}}" />
           <view class="username">{{person.wechatInfo.nickName}}</view>
           <view class="userScore">{{person.monthCorrect}}</view>
+        </view>
+      </view>
+  </scroll-view>
+  <scroll-view wx:if="{{show}}" scroll-y="true" class="scroll">
+      <view class="scrollItem" wx:for="{{totalRanking}}" wx:for-item="user" wx:for-index="idx">
+        <view class="itemText1">No. {{idx+1}}</view>
+        <view class="rankingInfo">
+          <image class="pfprank" src="{{user.wechatInfo.avatarUrl}}" />
+          <view class="username">{{user.wechatInfo.nickName}}</view>
+          <view class="userScore">{{user.totalCorrect}}</view>
         </view>
       </view>
   </scroll-view>

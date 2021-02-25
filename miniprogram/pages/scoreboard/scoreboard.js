@@ -44,18 +44,10 @@ Page({
           that.setData({
             monthRanking: res.data
           })
-// Updated upstream
-//<<<<<<< HEAD
         }
       })
     
-//=======
-//>>>>>>> Stashed changes
-        
-// Updated upstream
-
-// ad4030fa033db1b6c41900905d91c490d5e30944
-// Stashed changes
+      this.getTotalRanking()
 
   },
 
@@ -79,5 +71,12 @@ Page({
           })
         }
       })
-}
+},
+
+  func1: function() {
+    this.setData({ show: false })
+  },
+  func2: function() {
+    this.setData({ show: true })
+  }
 })

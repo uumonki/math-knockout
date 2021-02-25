@@ -3,8 +3,6 @@ const app = getApp()
 
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
     logged: false,
     takeSession: false,
     requestResult: '',
@@ -16,26 +14,9 @@ Page({
 
   onLoad: function() {
     let that = this
-    
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // get wechat's userinfo + avator
-          wx.getUserInfo({
-            success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
-              })
-              //info stored into global data; can be called anytime
-              app.globalData.userInfo = res.userInfo
-            }
-          })
-        }
-      }
-    })
   
+    this.getUserData()
+
     wx.cloud.init({
       env: 'shsid-3tx38'
     })
@@ -93,7 +74,26 @@ Page({
     wx.showTabBar()
   },
 
-
+  getUserData: function () {
+    let that = this
+    // 获取用户信息
+    wx.getSetting({
+      success: res => {
+        if (res.authSetting['scope.userInfo']) {
+          wx.getUserInfo({
+            success: res => {
+              //info stored into global data; can be called anytime
+              app.globalData.userInfo = res.userInfo
+            },
+            fail: () => {
+              wx.authorize({scope: "scope.userInfo"})
+              that.getUserData()
+            }
+          })
+        }
+      }
+    })
+  },
 
   onGetUserInfo: function(e) {
     if (!this.data.logged && e.detail.userInfo) {

@@ -18,9 +18,9 @@ page {
   flex-direction: row;
   align-items: center;*/
   text-align: center;
-  font-size: 50 rpx;
+  font-size: 18pt;
   font-weight: 700;
-  color: grey;
+  margin-top: 35px;
 }
 .text_style_2 {
   margin: 30rpx 50rpx 30rpx 50rpx;
@@ -68,10 +68,10 @@ page {
   align-items: left;
   text-align: left;
   font-size: 20 rpx;
-  color: grey ;
+  color: grey;
 }
 
 .register_btn{
   margin: 100 !important;
-  font-weight:normal;
+  font-weight: normal;
 }
