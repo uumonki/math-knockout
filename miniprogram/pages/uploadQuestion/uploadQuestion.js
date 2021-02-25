@@ -19,7 +19,7 @@ Page({
     if (input === 'riddle') {
       this.setData({type: true})
     } else this.setData({type: false})
-  },
+  }, //控制表单元素显示
 
   pic: function () {
     var that = this
@@ -31,7 +31,7 @@ Page({
       success(res) {
       //选择完成会先返回一个临时地址保存备用
         that.setData({path: res.tempFilePaths[0]})
-        console.log(that.data.path)
+        console.log(that.data.path) // 临时地址储存在path
       }
     })
   },
@@ -40,10 +40,10 @@ Page({
     var that = this
     const inputData = e.detail.value
     var key = inputData.answerKey
-    if (key.length !== 0) {
+    if (key.length !== 0) { // format riddle type question answer
       key = key.split(' ').map((a) => a.split(''))
     }
-    db.collection('mkQuestion').add({
+    db.collection('mkQuestion').add({ // create new question in database, input basic info
       data: {
         type: inputData.type,
         engQuestion: inputData.question,
@@ -55,28 +55,27 @@ Page({
         riddleKey: key,
         uploadDate: new Date()
       },
-      success: function (res) {
-        //if success, log the new userinfo object
+      success: function (res) { // get the id of created object, use it to name picture
         const id = res._id
-        if (that.data.path.length !== 0) {
+        if (that.data.path.length !== 0) { // if there is a picture, upload
           wx.cloud.uploadFile({
-            cloudPath: inputData.type + '/' + id + '.jpg',
+            cloudPath: inputData.type + '/' + id + '.jpg', // image file in folder named after its type
             filePath: that.data.path,
-            success(res1) {
+            success(res1) { // write the address of uploaded pic back into question data
             //上传成功后会返回永久地址
-              console.log(res1.fileID)
+              console.log(res1.fileID) 
               db.collection('mkQuestion')
                 .where({_id: id})
                 .update({
                   data: {
-                    imgUrl: res1.fileID
+                    imgUrl: res1.fileID // url of corresponding image stored in imgUrl
                   }
                 })
             }
           })
         }
         this.setData({
-          o: '',
+          o: '', // this is supposed to clear the input boxes but it dont work sad
           path: ''
         })
       }
