@@ -46,9 +46,6 @@ Page({
       case "geometry":
         pageTitle = "几何"
         break
-      case "riddle":
-        pageTitle = "急转弯"
-        break
     }
     this.setData({
       type: qType,
@@ -149,7 +146,7 @@ Page({
           disabled: true,
           unNextable: false
         })
-        addRecord(correct, qId, that.data.question.subject)
+        addRecord(correct, qId, that.data.subject)
       } else {
         this.setData({
           unNextable: false

@@ -119,12 +119,11 @@ Page({
         }
         console.log(correct)
 
-        // 2.27 这里开始改 !!!!
         this.setData({
           disabled: true,
           unNextable: false
         })
-        addRecord(correct, qId, that.data.question.subject)
+        addRecord(correct, qId, '数字谜')
       } else {
         this.setData({
           unNextable: false
@@ -152,15 +151,18 @@ Page({
         var qIdx = this.data.questionIndex + 1 // increment question index
         this.startSetInter() // reset timer
         var image = this.data.questions[qIdx].imgUrl
+        var lets = this.data.questions[qIdx].riddleKey.map((a) => a[0])
         this.setData({       // reset everything
-          questionIndex: qIdx,
-          unNextable: true,
-          unNextable: !this.userAnswered(this.data.qIds[qIdx]),
           timer: 180,
           timerDisplay: "3:00",
+          questionIndex: qIdx,
           question: this.data.questions[qIdx],
+          unNextable: true,
+          unNextable: !this.userAnswered(this.data.qIds[qIdx]),
           img: (typeof image === 'undefined') ? '' : image,
-          disabled: true
+          disabled: true,
+          letters: lets,
+          input: new Array(lets.length).fill(undefined)
         })
       }
     }
@@ -171,9 +173,11 @@ Page({
     let val = e.detail.value
     var currentInput = this.data.input
     currentInput[l] = val
+    var inputData = this.data.input
+    var allQuestionsAnswered = !(inputData.includes(undefined) || inputData.includes(''))
     this.setData({
-      userChoice: c,
-      disabled: false
+      input: currentInput,
+      disabled: !allQuestionsAnswered
     })
   },
 
@@ -224,15 +228,15 @@ function addRecord(correct, id, subject) {
   }).update({
     data: {
       record: db.command.push({
-        isCorrect: correct,
+        correctCount: correct,
         questionID: id,
         answerTime: new Date(),
         subject: subject
       }),
-      totalAnswer: db.command.inc(1),
-      monthAnswer: db.command.inc(1),
-      totalCorrect: db.command.inc(correct ? 1 : 0),
-      monthCorrect: db.command.inc(correct ? 1 : 0)
+      // totalAnswer: db.command.inc(1),
+      // monthAnswer: db.command.inc(1),
+      // totalCorrect: db.command.inc(correct),
+      // monthCorrect: db.command.inc(correct)
     }
   })
 }
