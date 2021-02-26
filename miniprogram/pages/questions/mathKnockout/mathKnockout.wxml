@@ -11,9 +11,9 @@
 <view class="content">
   <view class="question">
     <view class="qEng">{{question["engQuestion"]}}</view>
-    <view class="qImg"><image class="img" mode="widthFix" src="../../../images/0.jpg"/></view>
+    <view class="qImg"><image style="{{imgWidth}}" mode="widthFix" src="{{img}}"/></view>
   </view>
-  <view class="mcAns">
+  <view class="mcAns" style="margin-top: {{margin}}px">
     <view class="directions">Select one answer:</view>
     <view wx:for="{{choices}}" wx:for-item="c" wx:for-index="idx" class="choice choice-{{idx}}" bindtap="choose" data-choice="{{idx}}">
       <view class="bubble chosen-{{choiceDisplay[idx]}}"><view class="letter">{{['A', 'B', 'C', 'D'][idx]}}</view></view>

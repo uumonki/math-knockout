@@ -1,11 +1,10 @@
 var db = wx.cloud.database();
 var app = getApp();
 
-Page({ // TODO: implement question image
+Page({ 
        // TODO: allow image choices (?)
        // TODO: implement short answer
        // TODO: check if user exists before allowing visiting page (!!!)
-       // TODO: check if user has already opened page
 
   data: {
     //page data
@@ -24,6 +23,8 @@ Page({ // TODO: implement question image
     unNextable: true, // if true: NEXT is grayed out and SUBMIT is visible, vice versa
     type: "",
     title: "",
+    imgWidth: "width: 100%",
+    margin: '0'
   },
 
   onLoad: function (options) {
@@ -88,6 +89,9 @@ Page({ // TODO: implement question image
           that.setData({    // write in question data
             questions: res.data,
             question: res.data[0],
+            img: res.data[0].imgUrl,
+            imgWidth: (typeof res.data[0].imgUrl === 'undefined') ? 'height: 0; width: 0' : 'width: 100%',
+            margin: (typeof res.data[0].imgUrl === 'undefined') ? '-25' : '0',
             choicesList: res.data.map((a) => [a.choice1, a.choice2, a.choice3, a.choice4]),
             choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]],
             qIds: res.data.map((a) => a._id),
@@ -125,14 +129,14 @@ Page({ // TODO: implement question image
     var that = this
     wx.showModal({
       title: '时间到！',
-      content: this.submit(), //提示内容
+      content: this.submit(true), //提示内容
       showCancel: false,
     })
   },
 
-  submit: function () {
+  submit: function (skip) {
     let that = this
-    if (this.data.userChoice > -1) { // check if anything chosen
+    if (this.data.userChoice > -1 || skip) { // check if anything chosen or if time is up
       clearTimeout(this.data.timerId)
       var qId = this.data.question["_id"]
       var correct = this.data.choices[this.data.userChoice] == this.data.question['answer'] // check answer correct
@@ -174,6 +178,7 @@ Page({ // TODO: implement question image
       } else {
         var qIdx = this.data.questionIndex + 1 // increment question index
         this.startSetInter() // reset timer
+        var image = this.data.questions[qIdx].imgUrl
         this.setData({       // reset everything
           questionIndex: qIdx,
           choiceDisplay: [false, false, false, false],
@@ -184,9 +189,13 @@ Page({ // TODO: implement question image
           timerDisplay: "0:30",
           question: this.data.questions[qIdx],
           choices: this.data.choicesList[qIdx],
+          img: (typeof image === 'undefined') ? '' : image,
+          imgWidth: (typeof image === 'undefined') ? 'height: 0; width: 0' : 'width: 100%',
+          margin: (typeof image === 'undefined') ? '-25' : '0',
           userChoice: -1,
           disabled: true
         })
+        console.log(this.data.imgWidth)
       }
     }
   },
