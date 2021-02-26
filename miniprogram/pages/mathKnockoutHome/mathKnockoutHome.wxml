@@ -1,19 +1,24 @@
 <view class="section">
   <view class="tui-table-view">
-    <view class="tui-col-3" bindtap="redirect1">
+    <view class="tui-col-3 color-{{color==1}}" bindtap="redirect1">
       <view class="buttonText">速算</view>
+      <image wx:if="{{color!=1}}" class="lockImage" mode="heightFix" src="../../images/lock_white.png"/>
     </view>
-    <view class="tui-col-3" bindtap="redirect2">
+    <view class="tui-col-3 color-{{color==2}}" bindtap="redirect2">
       <view class="buttonText">24点</view>
+      <image wx:if="{{color!=2}}" class="lockImage" mode="heightFix" src="../../images/lock_white.png"/>
     </view>
-    <view class="tui-col-3" bindtap="redirect3">
+    <view class="tui-col-3 color-{{color==3}}" bindtap="redirect3">
       <view class="buttonText">概念</view>
+      <image wx:if="{{color!=3}}" class="lockImage" mode="heightFix" src="../../images/lock_white.png"/>
     </view>
-    <view class="tui-col-3" bindtap="redirect4">
+    <view class="tui-col-3 color-{{color==4}}" bindtap="redirect4">
       <view class="buttonText">几何</view>
+      <image wx:if="{{color!=4}}" class="lockImage" mode="heightFix" src="../../images/lock_white.png"/>
     </view>
-    <view class="tui-col-3" bindtap="redirect5">
-      <view class="buttonText">急转弯</view>
+    <view class="tui-col-3 color-{{color==5}}" bindtap="redirect5">
+      <view class="buttonText">数字谜</view>
+      <image wx:if="{{color!=5}}" class="lockImage" mode="heightFix" src="../../images/lock_white.png"/>
     </view>
     <view class="tui-col-3" bindtap="">
       <view class="buttonText">排行榜</view>

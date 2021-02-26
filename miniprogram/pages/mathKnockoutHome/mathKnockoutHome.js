@@ -8,7 +8,7 @@ Page({
    * Page initial data
    */
   data: {
-
+    color:0,
   },
 
   /**
@@ -30,6 +30,14 @@ Page({
    */
   onShow: function () {
     this.incompleteInfo()
+    var that = this
+    db.collection('mathKnockoutSettings') 
+      .where({setting: 'dayGame'})
+      .get({
+        success: function (res) {
+        that.setData({color: res.data[0].value})
+    }
+  }) 
   },
 
   /**
@@ -74,32 +82,43 @@ Page({
   },
 
   redirect1: function () {
-    wx.navigateTo({
-      url: '../questions/mentalMath/mentalMath'
-    })
+    if(this.data.color==1){
+      wx.navigateTo({
+        url: '../questions/mentalMath/mentalMath'
+      })
+    }
+    
   },
 
   redirect2: function () {
-    wx.navigateTo({
-      url: '../questions/24points/24points'
-    })
+    if(this.data.color==2){
+      wx.navigateTo({
+        url: '../questions/24points/24points'
+      })
+    }
   },
 
   redirect3: function () {
-    wx.navigateTo({
-      url: '../questions/mathKnockout/mathKnockout?type=concept'
-    })
+    if(this.data.color==3){
+      wx.navigateTo({
+        url: '../questions/mathKnockout/mathKnockout?type=concept'
+      })
+    }
   },
 
   redirect4: function () {
-    wx.navigateTo({
-      url: '../questions/mathKnockout/mathKnockout?type=geometry'
-    })
+    if(this.data.color==4){
+      wx.navigateTo({
+        url: '../questions/mathKnockout/mathKnockout?type=geometry'
+      })
+    }
   },
 
   redirect5: function () {
-    wx.navigateTo({
-      url: '../questions/mathKnockout/mathKnockout?type=riddle'
-    })
+    if(this.data.color==5){
+      wx.navigateTo({
+        url: '../questions/mathKnockout/mathKnockout?type=riddle'
+      })
+    }
   },
 })

@@ -1,5 +1,5 @@
 page {
-  background: #fafafa;
+  background: linear-gradient(#283048,#859398);
 }
 
 .section {
@@ -19,17 +19,38 @@ page {
 }
 
 .tui-col-3{
+  position: relative;
   flex: 0 0 auto;
   width: calc(50% - 20px);
   text-align: center;
   padding: calc(((100vh - 360rpx) / 3 - 15pt) / 2 - 10px) 0;
   margin: 10px;
   border-radius: 10px;
-  box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.1);
-  background: white
+  box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.15);
+  background: rgba(247, 239, 239, 0.719);
+}
+
+
+.color-true{
+  background:rgba(247, 239, 239, 0.719);
+}
+
+.color-false{
+  background: rgb(0,0,0,0.2);
 }
 
 .buttonText {
   line-height: 15pt;
   height: 15pt;
+  font-size: 12pt;
+}
+
+.lockImage{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  height:50%;
+  z-index: 999;
+  opacity: 0.2;
 }
