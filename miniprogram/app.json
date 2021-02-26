@@ -10,7 +10,8 @@
     "pages/questions/24points/24points",
     "pages/questions/mentalMath/mentalMath",
     "pages/mathKnockoutHome/mathKnockoutHome",
-    "pages/uploadQuestion/uploadQuestion"
+    "pages/uploadQuestion/uploadQuestion",
+    "pages/questions/riddle/riddle"
   ],
   "window": {
     "backgroundColor": "#FFFFFF",

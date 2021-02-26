@@ -1,4 +1,5 @@
 {
+  "setting": {},
   "condition": {
     "plugin": {
       "list": []
@@ -62,6 +63,13 @@
         {
           "name": "pages/uploadQuestion/uploadQuestion",
           "pathName": "pages/uploadQuestion/uploadQuestion",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/questions/riddle/riddle",
+          "pathName": "pages/questions/riddle/riddle",
+          "query": "type=riddle",
           "scene": null
         }
       ]

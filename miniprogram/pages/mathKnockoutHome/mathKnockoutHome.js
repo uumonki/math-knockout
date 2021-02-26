@@ -117,7 +117,7 @@ Page({
   redirect5: function () {
     if(this.data.color==5){
       wx.navigateTo({
-        url: '../questions/mathKnockout/mathKnockout?type=riddle'
+        url: '../questions/riddle/riddle'
       })
     }
   },
