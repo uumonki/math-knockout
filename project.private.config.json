@@ -40,10 +40,9 @@
           "scene": null
         },
         {
-          "id": -1,
           "name": "pages/questions/mathKnockout/mathKnockout",
           "pathName": "pages/questions/mathKnockout/mathKnockout",
-          "query": "",
+          "query": "type=geometry",
           "scene": null
         },
         {

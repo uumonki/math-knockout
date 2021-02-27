@@ -20,7 +20,7 @@
       <view class="buttonText">数字谜</view>
       <image wx:if="{{color!=5}}" class="lockImage" mode="heightFix" src="../../images/lock_white.png"/>
     </view>
-    <view class="tui-col-3" bindtap="">
+    <view class="tui-col-3" bindtap="redirect6">
       <view class="buttonText">排行榜</view>
     </view>
   </view>

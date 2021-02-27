@@ -32,22 +32,10 @@
         "text": "首页"
       },
       {
-        "iconPath": "images/filter.png",
-        "selectedIconPath": "images/filter.png",
-        "pagePath": "pages/filter/filter",
-        "text": "分类"
-      },
-      {
         "iconPath": "images/pie.jpg",
         "selectedIconPath": "images/pie.jpg",
         "pagePath": "pages/mathKnockoutHome/mathKnockoutHome",
         "text": "数学日"
-      },
-      {
-        "iconPath": "images/scoreboard.png",
-        "selectedIconPath": "images/scoreboard.png",
-        "pagePath": "pages/scoreboard/scoreboard",
-        "text": "排行"
       }
     ]
   },

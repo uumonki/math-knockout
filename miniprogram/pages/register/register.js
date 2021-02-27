@@ -143,19 +143,37 @@ Page({
 
   },
 
-  getUserInfo: function(e) {
-    let that = this;
-    // console.log(e)
+  getUserData: function () {
     // 获取用户信息
     wx.getSetting({
+      success: () => {
+        wx.getUserInfo({
+          success: res => {
+            console.log(res)
+            //info stored into global data; can be called anytime
+            app.globalData.userInfo = res.userInfo
+            db.collection('userInfo')
+              .where({_openid: app.globalData.openid})
+              .update({
+                data: {
+                  wechatInfo: app.globalData.userInfo,
+                }
+              })
+          }
+        })
+      }
+    })
+  },
+
+  getUserInfo: function () {
+    let that = this;
+    wx.getSetting({
       success(res) {
-        // console.log("res", res)
         if (res.authSetting['scope.userInfo']) {
           console.log("已授权=====")
           that.InputuserInfo()
-          wx.switchTab({
-            url: '../mathKnockoutHome/mathKnockoutHome',
-          })
+          that.getUserData()
+          wx.navigateBack()
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
         } else {
           console.log("未授权=====")

@@ -13,7 +13,7 @@
     <view class="qEng">{{question["engQuestion"]}}</view>
     <view class="qImg"><image style="{{imgWidth}}" mode="widthFix" src="{{img}}"/></view>
   </view>
-  <view class="mcAns" style="margin-top: {{margin}}px">
+  <view class="mcAns">
     <view class="directions">Select one answer:</view>
     <view wx:for="{{choices}}" wx:for-item="c" wx:for-index="idx" class="choice choice-{{idx}}" bindtap="choose" data-choice="{{idx}}">
       <view class="bubble chosen-{{choiceDisplay[idx]}}"><view class="letter">{{['A', 'B', 'C', 'D'][idx]}}</view></view>

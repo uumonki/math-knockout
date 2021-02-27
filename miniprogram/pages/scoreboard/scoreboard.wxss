@@ -1,12 +1,12 @@
 /* miniprogram/pages/scoreboard.wxss */
 
 page {
-  background: pink; /* 骚粉色可还行 */
+  background: #981966; /* 骚粉色可还行 */
 }
 
 .userinfoBox{
   margin: 30px 50px 0px 0px;
-  width: calc(100% - 50px);
+  width: calc(100% - 60px);
   height: 150px;
   position:relative;
   display:flex;
@@ -20,8 +20,7 @@ page {
  }
 
 .pfp {
-  width: 100%;
-  max-width: 150px;
+  width: 120px;
   height: 0;
   border-radius: 50%;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
@@ -31,7 +30,7 @@ page {
 
 .nick {
   height: auto;
-  width: auto;
+  width: 120px;
   text-align: center;
   font-size:10pt;
   padding:5px;
@@ -57,7 +56,7 @@ page {
   top: 10px;
   padding-top: 10px;
   width:100%;
-  height: calc(100vh - 25px - 350rpx); /*90px should be determined based on the UI for scoreboard  */
+  height: calc(100vh - 20px); /*90px should be determined based on the UI for scoreboard  */
   z-index: 0; /* z-index高 在overlapp的时候会出现在前面*/
   position: relative;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.16);

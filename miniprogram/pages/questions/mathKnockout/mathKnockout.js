@@ -24,7 +24,6 @@ Page({
     type: "",
     title: "",
     imgWidth: "width: 100%",
-    margin: '0'
   },
 
   onLoad: function (options) {
@@ -57,46 +56,33 @@ Page({
     })
     const db = wx.cloud.database();
 
-    db.collection('mkQuestion')  // fetch most recent 5 questions
-      .limit(5)
-      .orderBy('uploadDate', 'desc')
-      .where({type: qType})
-      .get({
-        success: function (res) { // check if user has alr answered, this is a mess cuz i can't async
-          db.collection('userInfo')
-          .where({
-            _openid: app.globalData.openid
-            })
+    wx.cloud.callFunction({ // fetch all questions
+      name: 'getQuestions',
+      data: {type: qType},
+      success: res => {
+        var qData = res.result.data
+        db.collection('userInfo')
+          .where({_openid: app.globalData.openid})
           .get({
             success: function (res2) {
-              var records = res2.data[0].record
-              var exists = false
-              for (var i = 0; i < records.length; i++) {
-                if (records[i].questionID == res.data[0]._id) {
-                  exists = true
-                  clearTimeout(that.data.timerId)
-                  break
-                }
-              }
+              var exists = that.checkRecord(res2, qData[0]._id)
+              if (exists) clearTimeout(that.data.timerId)
               that.setData({
                 unNextable: !exists
               })
             }
           })
           that.setData({    // write in question data
-            questions: res.data,
-            question: res.data[0],
-            img: res.data[0].imgUrl,
-            imgWidth: (typeof res.data[0].imgUrl === 'undefined') ? 'height: 0; width: 0' : 'width: 100%',
-            margin: (typeof res.data[0].imgUrl === 'undefined') ? '-25' : '0',
-            choicesList: res.data.map((a) => [a.choice1, a.choice2, a.choice3, a.choice4]),
-            choices: [res.data[0]["choice1"], res.data[0]["choice2"], res.data[0]["choice3"], res.data[0]["choice4"]],
-            qIds: res.data.map((a) => a._id),
+            questions: qData,
+            question: qData[0],
+            img: qData[0].imgUrl,
+            imgWidth: (typeof qData[0].imgUrl === 'undefined') ? 'height: 0; width: 0' : 'width: 100%',
+            choicesList: qData.map((a) => [a.choice1, a.choice2, a.choice3, a.choice4]),
+            choices: [qData[0].choice1, qData[0].choice2, qData[0].choice3, qData[0].choice4],
+            qIds: qData.map((a) => a._id),
           })
-        }
-      })
-
-    
+      }
+    })
   },
 
   onShow: function () {
@@ -109,20 +95,19 @@ Page({
   onHide: function () {
     clearTimeout(this.data.timerId)
     if (this.data.unNextable)
-      addRecord(false, this.data.question._id, this.data.question.subject)
+      addRecord(false, this.data.question._id, this.data.question.title)
   },
 
   onUnload: function () {
     clearTimeout(this.data.timerId)
     if (this.data.unNextable)
-      addRecord(false, this.data.question._id, this.data.question.subject)
+      addRecord(false, this.data.question._id, this.data.question.title)
   },
 
 
   timeUp: function () { // CALLED WHEN TIMER IS UP, SCORE STORED IN this.data.score
     clearTimeout(this.data.timerId)
     this.setData({timer: 30})
-    console.log("hi")
     var that = this
     wx.showModal({
       title: '时间到',
@@ -135,26 +120,29 @@ Page({
     let that = this
     if (this.data.userChoice > -1 || skip) { // check if anything chosen or if time is up
       clearTimeout(this.data.timerId)
-      var qId = this.data.question["_id"]
-      var correct = this.data.choices[this.data.userChoice] === this.data.question['answer'] // check answer correct
-      if (!this.userAnswered(qId)) {  // check again if user answered to prevent cross-device
-        var disp = ["false", "false", "false", "false"]
-        disp[this.data.userChoice] = "incorrect"
-        disp[this.data.choices.indexOf(this.data.question['answer'])] = "correct"
-        this.setData({
-          choiceDisplay: disp,
-          disabled: true,
-          unNextable: false
+      var qId = this.data.question._id
+      var correct = this.data.choices[this.data.userChoice] === this.data.question.answer // check answer correct
+      this.setData({unNextable: false})
+      db.collection('userInfo') // check again if user answered to prevent cross-device
+        .where({_openid: app.globalData.openid})
+        .get({
+          success: function (res) {
+            var exists = that.checkRecord(res, qId)
+            if (!exists) {
+              var disp = ["false", "false", "false", "false"]
+              disp[that.data.userChoice] = "incorrect"
+              disp[that.data.choices.indexOf(that.data.question.answer)] = "correct"
+              that.setData({
+                choiceDisplay: disp,
+                disabled: true,
+                unNextable: false
+              })
+              addRecord(correct, qId, that.data.title)
+            }
+          }
         })
-        addRecord(correct, qId, that.data.subject)
-      } else {
-        this.setData({
-          unNextable: false
-        })
-      }
       return correct ? '回答正确!' : '未回答正确!'
-    }
-    return '未回答正确!'
+    } else return '未回答正确!'
   },
 
   startSetInter: function () {
@@ -187,11 +175,9 @@ Page({
           choices: this.data.choicesList[qIdx],
           img: (typeof image === 'undefined') ? '' : image,
           imgWidth: (typeof image === 'undefined') ? 'height: 0; width: 0' : 'width: 100%',
-          margin: (typeof image === 'undefined') ? '-25' : '0',
           userChoice: -1,
           disabled: true
         })
-        console.log(this.data.imgWidth)
       }
     }
   },
@@ -212,41 +198,33 @@ Page({
   userAnswered: function(id) { // checks if user has answered question of id
     var that = this
     db.collection('userInfo')
-      .where({
-        _openid: app.globalData.openid
-        })
+      .where({_openid: app.globalData.openid})
       .get({
         success: function (res) {
-          var records = res.data[0]["record"]
-          var exists = false
-          for (var i = 0; i < records.length; i++) {
-            if (records[i]["questionID"] == id) {
-              exists = true
-              break
-            }
-          }
+          var exists = that.checkRecord(res, id)
           if (exists) {
             clearTimeout(that.data.timerId)
             that.setData({
               unNextable: false,
             }, () => {
                 return exists
-          })
-        }
-          /*
-          
-          } else {
-            that.setData({
-              unNextable: true,
-              hasAnswered: false
-            }, () => {
-                return exists
             })
           }
-          */
         }
       })
   },
+
+  checkRecord: function (res, id) {
+    var records = res.data[0].record
+    var exists = false
+    for (var i = 0; i < records.length; i++) {
+      if (records[i]["questionID"] == id) {
+        exists = true
+        break
+      }
+    }
+    return exists
+  }
 
 })
 

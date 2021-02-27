@@ -43,7 +43,8 @@ Page({
                     monthAnswer: 0, //number answered every month
                     monthCorrect: 0, // number of questions answered correctly every month
                     totalAnswer: 0, //total number of questions answered
-                    totalCorrect: 0 // total number of questions answered correctly
+                    totalCorrect: 0, // total number of questions answered correctly
+                    record: []
                   },
                   success: function (res) {
                     //if success, log the new userinfo object
@@ -84,10 +85,6 @@ Page({
             success: res => {
               //info stored into global data; can be called anytime
               app.globalData.userInfo = res.userInfo
-            },
-            fail: () => {
-              wx.authorize({scope: "scope.userInfo"})
-              that.getUserData()
             }
           })
         }

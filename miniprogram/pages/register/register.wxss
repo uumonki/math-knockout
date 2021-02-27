@@ -67,7 +67,6 @@ page {
   align-items: left;
   text-align: left;
   font-size: 20 rpx;
-  color: grey;
 }
 
 .register_btn{

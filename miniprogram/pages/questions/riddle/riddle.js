@@ -28,47 +28,34 @@ Page({
     })
     const db = wx.cloud.database();
 
-    db.collection('mkQuestion')  // fetch most recent 5 questions
-      .limit(5)
-      .orderBy('uploadDate', 'desc')
-      .where({type: 'riddle'})
-      .get({
-        success: function (res) { // check if user has alr answered, this is a mess cuz i can't async
-          console.log(app.globalData.openid)
-          db.collection('userInfo')
-          .where({
-            _openid: app.globalData.openid
-            })
+    wx.cloud.callFunction({ // fetch all questions
+      name: 'getQuestions',
+      data: {type: qType},
+      success: res => {
+        var qData = res.result.data
+        db.collection('userInfo')
+          .where({_openid: app.globalData.openid})
           .get({
             success: function (res2) {
-              var records = res2.data[0].record
-              var exists = false
-              for (var i = 0; i < records.length; i++) {
-                if (records[i].questionID == res.data[0]._id) {
-                  exists = true
-                  clearTimeout(that.data.timerId)
-                  break
-                }
-              }
+              var exists = that.checkRecord(res2, qData[0]._id)
+              if (exists) clearTimeout(that.data.timerId)
               that.setData({
                 unNextable: !exists
               })
             }
           })
-          var lets = res.data[0].riddleKey.map((a) => a[0])
+          var lets = qData[0].riddleKey.map((a) => a[0])
           console.log(lets)
           that.setData({    // write in question data
-            questions: res.data,
-            question: res.data[0],
-            img: res.data[0].imgUrl,
+            questions: qData,
+            question: qData[0],
+            img: qData[0].imgUrl,
             letters: lets,
-            qIds: res.data.map((a) => a._id),
+            qIds: qData.map((a) => a._id),
             input: new Array(lets.length).fill(undefined)
           })
-        }
-      })
-
-    
+      }
+    })
   },
 
   onShow: function () {
@@ -81,13 +68,13 @@ Page({
   onHide: function () {
     clearTimeout(this.data.timerId)
     if (this.data.unNextable)
-      addRecord(false, this.data.question._id, this.data.question.subject)
+      addRecord(0, this.data.question._id, '数字谜')
   },
 
   onUnload: function () {
     clearTimeout(this.data.timerId)
     if (this.data.unNextable)
-      addRecord(false, this.data.question._id, this.data.question.subject)
+      addRecord(0, this.data.question._id, '数字谜')
   },
 
 
@@ -105,30 +92,34 @@ Page({
   submit: function (skip) {
     let that = this
     var inputData = this.data.input
-    if (!(inputData.includes(undefined) || inputData.includes('')) || skip) { // check if anything chosen or if time is up
+    if (!(inputData.includes(undefined) || inputData.includes('')) || skip) { // check if all filled in or if time is up
       clearTimeout(this.data.timerId)
       var qId = this.data.question._id
+      this.setData({unNextable: false})
 
-      if (!this.userAnswered(qId)) {  // check again if user answered to prevent cross-device
-        // check correct count
-        var correct = 0
-        var input = this.data.input
-        var correctVals = this.data.question.riddleKey.map((a) => a[1])
-        for (var i = 0; i < input.length; i++) {
-          if (input[i] === correctVals[i]) correct++
+      db.collection('userInfo') // check again if user answered to prevent cross-device
+      .where({_openid: app.globalData.openid})
+      .get({
+        success: function (res) {
+          var exists = that.checkRecord(res, qId)
+          if (!exists) {
+            // check correct count
+            var correct = 0
+            var input = this.data.input
+            var correctVals = this.data.question.riddleKey.map((a) => a[1])
+            for (var i = 0; i < input.length; i++) {
+              if (input[i] === correctVals[i]) correct++
+            }
+            console.log(correct)
+
+            this.setData({
+              disabled: true,
+              unNextable: false
+            })
+            addRecord(correct, qId, '数字谜')
+          }
         }
-        console.log(correct)
-
-        this.setData({
-          disabled: true,
-          unNextable: false
-        })
-        addRecord(correct, qId, '数字谜')
-      } else {
-        this.setData({
-          unNextable: false
-        })
-      }
+      })
     }
   },
 
@@ -184,42 +175,33 @@ Page({
   userAnswered: function(id) { // checks if user has answered question of id
     var that = this
     db.collection('userInfo')
-      .where({
-        _openid: app.globalData.openid
-        })
+      .where({_openid: app.globalData.openid})
       .get({
         success: function (res) {
-          var records = res.data[0]["record"]
-          var exists = false
-          for (var i = 0; i < records.length; i++) {
-            if (records[i]["questionID"] == id) {
-              exists = true
-              break
-            }
-          }
+          var exists = that.checkRecord(res, id)
           if (exists) {
             clearTimeout(that.data.timerId)
             that.setData({
               unNextable: false,
             }, () => {
                 return exists
-          })
-        }
-          /*
-          
-          } else {
-            that.setData({
-              unNextable: true,
-              hasAnswered: false
-            }, () => {
-                return exists
             })
           }
-          */
         }
       })
   },
 
+  checkRecord: function (res, id) {
+    var records = res.data[0].record
+    var exists = false
+    for (var i = 0; i < records.length; i++) {
+      if (records[i]["questionID"] == id) {
+        exists = true
+        break
+      }
+    }
+    return exists
+  }
 })
 
 function addRecord(correct, id, subject) {

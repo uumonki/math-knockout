@@ -20,13 +20,12 @@ Page({
       env: 'shsid-3tx38'
     })
     const db = wx.cloud.database();
-
     
     db.collection('userInfo')
       .where({_openid:app.globalData.openid})
       .get({
-        success: function (res){
-            that.setData({
+        success: function (res) {
+          that.setData({
             monthScore:res.data[0].monthCorrect,
             totalScore:res.data[0].totalCorrect,
             pfpUrl: res.data[0].wechatInfo.avatarUrl,
@@ -34,12 +33,10 @@ Page({
           })
           that.getMonthRanking(res.data[0].userGrade)
           that.getTotalRanking(res.data[0].userGrade)
+        }, fail: (e) => {
+          console.log(e)
         }
       })
-    
-
-
-
 
   },
 

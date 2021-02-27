@@ -9,11 +9,11 @@
   </view>
   <view class="text_dsec_style">
     <label>年级</label>
-    <input name ="userGrade" class="input_text" placeholder= "请填入数字 如：11" type="number" adjust-position="true" bindblur= "userGradeInput" ></input>
+    <input name ="userGrade" class="input_text" placeholder= "请填入数字 如：11" type="number" adjust-position="true" bindblur= "userGradeInput" maxlength="2"></input>
   </view>
   <view class="text_dsec_style">
     <label>班级</label>
-    <input name ="userClass" class="input_text" placeholder= "请填入数字 如：2" type="number" adjust-position="true" bindblur= "userClassInput" ></input>
+    <input name ="userClass" class="input_text" placeholder= "请填入数字 如：2" type="number" adjust-position="true" bindblur= "userClassInput" maxlength="2"></input>
   </view>
   <view class="text_dsec_style">
     <label>学生号 (G no.）</label>

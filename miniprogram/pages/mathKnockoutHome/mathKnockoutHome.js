@@ -76,7 +76,7 @@ Page({
   },
 
   collectInfo: function () {
-    wx.redirectTo({
+    wx.navigateTo({
       url: '../register/register',
     })
   },
@@ -120,5 +120,11 @@ Page({
         url: '../questions/riddle/riddle'
       })
     }
+  },
+
+  redirect6: function () {
+    wx.navigateTo({
+      url: '../scoreboard/scoreboard'
+    })
   },
 })
