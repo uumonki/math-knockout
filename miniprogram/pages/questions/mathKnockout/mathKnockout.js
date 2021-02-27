@@ -217,15 +217,18 @@ Page({
   checkRecord: function (res, id) {
     var records = res.data[0].record
     var exists = false
-    for (var i = 0; i < records.length; i++) {
-      if (records[i]["questionID"] == id) {
-        exists = true
-        break
+    if (typeof records === 'undefined') {
+      return false
+    } else {
+      for (var i = 0; i < records.length; i++) {
+        if (records[i]["questionID"] == id) {
+          exists = true
+          break
+        }
       }
+      return exists
     }
-    return exists
   }
-
 })
 
 function addRecord(correct, id, subject) {
