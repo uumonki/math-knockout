@@ -10,13 +10,13 @@
 
 <view class="content">
   <view class="question">
-    <view class="qImg"><image style="{{imgWidth}}" mode="widthFix" src="{{img}}"/></view>
+    <view class="qImg"><image style="width: 100%" mode="widthFix" src="{{img}}"/></view>
   </view>
   <view class="saAns">
     <view class="directions">Enter letter values:</view>
     <view wx:for="{{letters}}" wx:for-item="c" wx:for-index="idx" class="choice choice-{{idx}}">
       <view class="bubble" style="position: relative; left: 5px; top: 0rpx"><view class="letter">{{c}} =</view></view>
-      <input bindinput="input" data-letter="{{idx}}" class="letterInput" type="number" placeholder-class="letterInput" maxlength="1" disabled="{{!unNextable}}"></input>
+      <input bindinput="input" data-letter="{{idx}}" class="letterInput" type="number" placeholder-class="letterInput" maxlength="1" disabled="{{!unNextable}}" value="{{input[idx]}}"></input>
     </view>
   </view>
 </view>

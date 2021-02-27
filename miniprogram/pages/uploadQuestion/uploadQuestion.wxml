@@ -1,5 +1,6 @@
 <!--miniprogram/pages/uploadQuestion/uploadQuestion.wxml-->
 <form bindsubmit="questionForm" style="margin: 20px;">
+  <text style="display: block; font-weight: bold">不要乱加题目！后台清理比较麻烦！</text>
   <text>题目类型</text>
   <input name="type" style="border: solid 1px gray" placeholder="riddle, geometry, concept" value="{{o}}" bindinput="typeChange"/>
   <text hidden="{{type}}" style="margin-top: 5px">题目文本</text>

@@ -71,11 +71,11 @@ Page({
                     imgUrl: res1.fileID // url of corresponding image stored in imgUrl
                   }
                 })
+              wx.showToast({title: '上传成功'})
             }
           })
         }
         this.setData({
-          o: '', // this is supposed to clear the input boxes but it dont work sad
           path: ''
         })
       }

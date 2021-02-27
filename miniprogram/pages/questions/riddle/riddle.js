@@ -45,14 +45,13 @@ Page({
             }
           })
           var lets = qData[0].riddleKey.map((a) => a[0])
-          console.log(lets)
           that.setData({    // write in question data
             questions: qData,
             question: qData[0],
             img: qData[0].imgUrl,
             letters: lets,
             qIds: qData.map((a) => a._id),
-            input: new Array(lets.length).fill(undefined)
+            input: new Array(lets.length).fill('')
           })
       }
     })
@@ -92,7 +91,7 @@ Page({
   submit: function (skip) {
     let that = this
     var inputData = this.data.input
-    if (!(inputData.includes(undefined) || inputData.includes('')) || skip) { // check if all filled in or if time is up
+    if (!inputData.includes('') || skip) { // check if all filled in or if time is up
       clearTimeout(this.data.timerId)
       var qId = this.data.question._id
       this.setData({unNextable: false})
@@ -153,7 +152,7 @@ Page({
           img: (typeof image === 'undefined') ? '' : image,
           disabled: true,
           letters: lets,
-          input: new Array(lets.length).fill(undefined)
+          input: new Array(lets.length).fill('')
         })
       }
     }
@@ -165,7 +164,7 @@ Page({
     var currentInput = this.data.input
     currentInput[l] = val
     var inputData = this.data.input
-    var allQuestionsAnswered = !(inputData.includes(undefined) || inputData.includes(''))
+    var allQuestionsAnswered = !inputData.includes('')
     this.setData({
       input: currentInput,
       disabled: !allQuestionsAnswered
