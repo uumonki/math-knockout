@@ -96,7 +96,6 @@ Page({
       clearTimeout(this.data.timerId)
       var qId = this.data.question._id
       this.setData({unNextable: false})
-
       db.collection('userInfo') // check again if user answered to prevent cross-device
       .where({_openid: app.globalData.openid})
       .get({
@@ -105,14 +104,15 @@ Page({
           if (!exists) {
             // check correct count
             var correct = 0
-            var input = this.data.input
-            var correctVals = this.data.question.riddleKey.map((a) => a[1])
+            var input = that.data.input
+            var correctVals = that.data.question.riddleKey.map((a) => a[1])
+
             for (var i = 0; i < input.length; i++) {
               if (input[i] === correctVals[i]) correct++
             }
             console.log(correct)
 
-            this.setData({
+            that.setData({
               disabled: true,
               unNextable: false
             })
