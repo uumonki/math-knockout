@@ -82,44 +82,38 @@ Page({
   },
 
   redirect1: function () {
-    if(this.data.color==1){
+    // if (this.data.color==1)
       wx.navigateTo({
         url: '../questions/mentalMath/mentalMath'
       })
-    }
-    
   },
 
   redirect2: function () {
-    if(this.data.color==2){
+    // if (this.data.color==2)
       wx.navigateTo({
         url: '../questions/24points/24points'
       })
-    }
   },
 
   redirect3: function () {
-    if(this.data.color==3){
+    // if (this.data.color==3)
       wx.navigateTo({
         url: '../questions/mathKnockout/mathKnockout?type=concept'
       })
-    }
   },
 
   redirect4: function () {
-    if(this.data.color==4){
+    // if (this.data.color==4)
       wx.navigateTo({
         url: '../questions/mathKnockout/mathKnockout?type=geometry'
       })
-    }
   },
 
   redirect5: function () {
-    if(this.data.color==5){
+    // if (this.data.color==5)
       wx.navigateTo({
         url: '../questions/riddle/riddle'
       })
-    }
   },
 
   redirect6: function () {
