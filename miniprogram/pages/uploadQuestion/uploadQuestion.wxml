@@ -4,7 +4,7 @@
   <text>题目类型</text>
   <input name="type" style="border: solid 1px gray" placeholder="riddle, geometry, concept" value="{{o}}" bindinput="typeChange"/>
   <text hidden="{{type}}" style="margin-top: 5px">题目文本</text>
-  <input name="question" style="border: solid 1px gray" placeholder="What does the fox say?" value="{{o}}" hidden="{{type}}"/>
+  <input name="question" style="border: solid 1px gray" placeholder="What does the fox say?" value="{{o}}" hidden="{{type}}" maxlength="999"/>
   <text style="margin-top: 5px">题目图片</text>
   <button bindtap="pic" style="border: 1px solid gray;">上传</button>
   <text hidden="{{type}}" style="margin-top: 5px">选择s</text>
