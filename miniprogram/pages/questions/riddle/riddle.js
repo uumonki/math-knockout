@@ -81,11 +81,6 @@ Page({
     clearTimeout(this.data.timerId)
     this.setData({timer: 180})
     this.submit(true)
-    wx.showModal({
-      title: '时间到!',
-      content: '答案已自动提交', //提示内容
-      showCancel: false,
-    })
   },
 
   submit: function (skip) {
@@ -110,13 +105,31 @@ Page({
               if (input[i] === correctVals[i]) correct++
             }
             console.log(correct)
+            console.log(skip)
+            if (typeof skip === 'object')
+              wx.showToast({
+                title: '答对题数: ' + correct,
+                icon: 'none',
+                duration: 3000
+              })
+            else
+              wx.showModal({
+                title: '时间到!',
+                content: '答对题数: ' + correct, //提示内容
+                showCancel: false,
+              })
 
             that.setData({
               disabled: true,
               unNextable: false
             })
             addRecord(correct, qId, '数字谜')
-          }
+          } else
+            wx.showModal({
+              title: '时间到!',
+              content: '已回答!', //提示内容
+              showCancel: false,
+            })
         }
       })
     }

@@ -81,3 +81,24 @@ page {
   left: 0;
   transform: translateY(-50%);
 }
+
+.gnum {
+  padding-left: 18px;
+  position: relative;
+  width: calc(100% - 18px)
+}
+
+.G {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translateY(-50%);
+}
+
+.gray-true {
+  color: #888;
+}
+
+.gray-false {
+  color: black;
+}

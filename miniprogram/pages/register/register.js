@@ -11,7 +11,8 @@ Page({
     realName: '',
     userClass: '',
     userGnum: '',
-    userGrade: ''
+    userGrade: '',
+    empty: true
   },
 
   /**
@@ -121,6 +122,7 @@ Page({
         duration: 2000
       })
     } else {
+      app.globalData.justVerified = true
       //add information into userInfo's corresponding user object
       db.collection('userInfo').where({
           //match object with user's openid
@@ -195,6 +197,10 @@ Page({
         }
       }
     })
+  },
+
+  checkEmpty: function (e) {
+    this.setData({empty: (e.detail.value.length === 0)})
   }
 
   /*d

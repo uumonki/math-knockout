@@ -87,8 +87,11 @@ page {
 }
 
 .letterInput {
-  width: calc(100% - 43px);
+  width: 20px;
   z-index: 0;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .bubble {

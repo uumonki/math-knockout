@@ -90,7 +90,7 @@ Page({
   },
 
   generateExpression: function() {
-    var selection = 0.2 // Math.random() 
+    var selection = Math.random() 
     var expression, answer
 
     // makes selection of operation based on weights and random number

@@ -8,7 +8,7 @@ Page({
    * Page initial data
    */
   data: {
-    color:0,
+    color: 0,
   },
 
   /**
@@ -65,12 +65,14 @@ Page({
       .get({
         success: function (res) {
           var verified = res.data[0].verified
-          if (typeof verified === 'undefined' || verified === null || verified === false) {
+          if ((typeof verified === 'undefined' || verified === null || verified === false) && !app.globalData.justVerified) {
             that.collectInfo()
           }
         },
         fail: () => {
-          that.collectInfo()
+          wx.switchTab({
+            url: '../index/index',
+          })
         }
       })
   },

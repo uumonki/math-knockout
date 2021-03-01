@@ -17,7 +17,7 @@
   </view>
   <view class="text_dsec_style">
     <label>学生号 (G no.）</label>
-    <input name ="userGnum" class="input_text" placeholder= "只填写G后面的号码" type="number" maxlength="10" adjust-position="true" bindblur= "userGnumInput" ></input>
+    <input name ="userGnum" class="input_text gnum gray-{{empty}}" type="number" maxlength="10" adjust-position="true" bindinput="checkEmpty" bindblur= "userGnumInput"><text class="G">G</text></input>
   </view>
   <button type="primary" class="register_btn" size="default" open-type="getUserInfo" bindgetuserinfo="getUserInfo">确认登录</button>
 </view>

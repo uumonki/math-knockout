@@ -1,7 +1,7 @@
 /* miniprogram/pages/scoreboard.wxss */
 
 page {
-  background: #981966; /* 骚粉色可还行 */
+  background: rgb(255, 212, 205); /* 骚粉色可还行 */
 }
 
 .userinfoBox{
