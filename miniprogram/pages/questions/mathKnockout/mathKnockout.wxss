@@ -51,7 +51,7 @@ page {
 }
 
 .content {
-  margin: 90px 20px 100px 20px;
+  margin: 95px 20px 100px 20px;
 }
 
 .qChi, .qEng {

@@ -71,10 +71,10 @@ Page({
                     imgUrl: res1.fileID // url of corresponding image stored in imgUrl
                   }
                 })
-              wx.showToast({title: '上传成功'})
             }
           })
         }
+        wx.showToast({title: '上传成功'})
         this.setData({
           path: ''
         })
