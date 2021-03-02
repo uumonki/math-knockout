@@ -152,7 +152,6 @@ Page({
         wx.navigateBack()
       } else {
         var qIdx = this.data.questionIndex + 1 // increment question index
-        this.startSetInter() // reset timer
         var image = this.data.questions[qIdx].imgUrl
         var lets = this.data.questions[qIdx].riddleKey.map((a) => a[0])
         this.setData({       // reset everything
@@ -167,6 +166,7 @@ Page({
           letters: lets,
           input: new Array(lets.length).fill('')
         })
+        this.startSetInter() // reset timer
       }
     }
   },
@@ -221,20 +221,30 @@ Page({
 })
 
 function addRecord(correct, id, subject) {
-  db.collection('userInfo').where({
-    _openid: app.globalData.openid
-  }).update({
-    data: {
-      record: db.command.push({
-        correctCount: correct,
-        questionID: id,
-        answerTime: new Date(),
-        subject: subject
-      }),
-      // totalAnswer: db.command.inc(1),
-      // monthAnswer: db.command.inc(1),
-      // totalCorrect: db.command.inc(correct),
-      // monthCorrect: db.command.inc(correct)
+  db.collection('userInfo')
+  .where({ _openid: app.globalData.openid })
+  .get({
+    success: function (res) {
+      var totalScore = res.data[0].totalCorrect
+      var updatedScore = res.data[0].dailyScore4
+      if (correct) {
+        totalScore += 15 * (correct)
+        updatedScore += 15 * (correct)
+      }
+      db.collection('userInfo')
+        .where({ _openid: app.globalData.openid })
+        .update({
+          data: {
+            record: db.command.push({
+              correctCount: correct,
+              questionID: id,
+              answerTime: new Date(),
+              subject: subject
+            }),
+            dailyScore4: updatedScore,
+            totalCorrect: totalScore
+          }
+        })
     }
   })
 }

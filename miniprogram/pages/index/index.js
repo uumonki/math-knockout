@@ -44,7 +44,12 @@ Page({
                     monthCorrect: 0, // number of questions answered correctly every month
                     totalAnswer: 0, //total number of questions answered
                     totalCorrect: 0, // total number of questions answered correctly
-                    record: []
+                    record: [],
+                    dailyScore0: 0, // math knockout daily scores
+                    dailyScore1: 0,
+                    dailyScore2: 0,
+                    dailyScore3: 0,
+                    dailyScore4: 0,
                   },
                   success: function (res) {
                     //if success, log the new userinfo object

@@ -31,7 +31,7 @@
         <view class="rankingInfo">
           <image class="pfprank" src="{{person.wechatInfo.avatarUrl}}" />
           <view class="username">{{person.wechatInfo.nickName}}</view>
-          <view class="userScore">{{person.monthCorrect}}</view>
+          <view class="userScore">{{person['dailyScore'+day]}}</view>
         </view>
       </view>
       <view class="scrollEnd">我也是有底线的</view>

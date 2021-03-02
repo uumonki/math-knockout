@@ -162,7 +162,6 @@ Page({
         wx.navigateBack()
       } else {
         var qIdx = this.data.questionIndex + 1 // increment question index
-        this.startSetInter() // reset timer
         var image = this.data.questions[qIdx].imgUrl
         this.setData({       // reset everything
           questionIndex: qIdx,
@@ -178,6 +177,7 @@ Page({
           userChoice: -1,
           disabled: true
         })
+        this.startSetInter() // reset timer
       }
     }
   },
@@ -232,22 +232,36 @@ Page({
 })
 
 function addRecord(correct, id, subject) {
-  db.collection('userInfo').where({
-    _openid: app.globalData.openid
-  }).update({
-    data: {
-      record: db.command.push({
-        isCorrect: correct,
-        questionID: id,
-        answerTime: new Date(),
-        subject: subject
-      }),
-      totalAnswer: db.command.inc(1),
-      monthAnswer: db.command.inc(1),
-      totalCorrect: db.command.inc(correct ? 1 : 0),
-      monthCorrect: db.command.inc(correct ? 1 : 0)
-    }
-  })
+  db.collection('userInfo')
+    .where({ _openid: app.globalData.openid })
+    .get({
+      success: function (res) { // this is some really shitty code
+        var totalScore = res.data[0].totalCorrect
+        var updatedScore2 = res.data[0].dailyScore2
+        var updatedScore3 = res.data[0].dailyScore3 
+        if (correct) {
+          totalScore += 100
+          if (subject === '概念') updatedScore2 += 100
+          else if (subject === '几何') updatedScore3 += 100
+        }
+        db.collection('userInfo')
+          .where({ _openid: app.globalData.openid })
+          .update({
+            data: {
+              record: db.command.push({
+                isCorrect: correct,
+                questionID: id,
+                answerTime: new Date(),
+                subject: subject
+              }),
+              dailyScore2: updatedScore2,
+              dailyScore3: updatedScore3,
+              totalCorrect: totalScore
+            }
+          })
+      }
+    })
+ 
 }
 
 

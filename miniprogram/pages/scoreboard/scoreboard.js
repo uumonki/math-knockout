@@ -12,6 +12,7 @@ Page({
       pfpUrl: "",
       grade: 0,
       show: false, 
+      day: 0
   },
 
   onLoad: function (options) {
@@ -25,14 +26,25 @@ Page({
       .where({_openid:app.globalData.openid})
       .get({
         success: function (res) {
-          that.setData({
-            monthScore:res.data[0].monthCorrect,
-            totalScore:res.data[0].totalCorrect,
-            pfpUrl: res.data[0].wechatInfo.avatarUrl,
-            grade: res.data[0].userGrade
-          })
-          that.getMonthRanking(res.data[0].userGrade)
-          that.getTotalRanking(res.data[0].userGrade)
+          db.collection('mathKnockoutSettings')
+            .where({ setting: 'dayGame' })
+            .get({
+              success: function (res1) {
+                console.log(1)
+                const day = parseInt(res1.data[0].value)
+                console.log(2)
+                that.setData({
+                  day: day,
+                  monthScore: res.data[0]['dailyScore'+day],
+                  totalScore: res.data[0].totalCorrect,
+                  pfpUrl: res.data[0].wechatInfo.avatarUrl,
+                  grade: res.data[0].userGrade
+                })
+                that.getMonthRanking(res.data[0].userGrade, day)
+                that.getTotalRanking(res.data[0].userGrade)
+
+              }
+            })
         }, fail: (e) => {
           console.log(e)
         }
@@ -40,14 +52,14 @@ Page({
 
   },
 
-  getMonthRanking: function (grade) {
+  getMonthRanking: function (grade, day) {
     let that = this
     wx.cloud.init({
       env: 'shsid-3tx38'
     })
     const db = wx.cloud.database();
     db.collection('userInfo')
-    .orderBy('monthCorrect', 'desc') // descending order of 'monthCorrect' data of user
+    .orderBy('dailyScore'+day, 'desc') // descending order of 'monthCorrect' data of user
     .limit(20) // 10 query items maximum
     .where({userGrade: grade}) // same grade
     .get({

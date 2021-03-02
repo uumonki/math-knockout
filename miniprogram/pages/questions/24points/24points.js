@@ -1,4 +1,7 @@
 // miniprogram/pages/questions/24points/24points.js
+const db = wx.cloud.database();
+const app = getApp();
+
 Page({
 
   /**
@@ -80,6 +83,7 @@ Page({
     var scoreVal = this.data.score
     console.log("time's up :D")
     console.log("your score: " + scoreVal)
+    addRecord(scoreVal)
     wx.showModal({
       title: '时间到！',
       content: "分数: " + scoreVal,//提示内容
@@ -155,7 +159,7 @@ Page({
     }
     if (correct && this.data.used.every(v => v === true)) { // check if all numbers are used and is equal 24
       this.updateCards()
-      if (this.data.timer > 0) this.setData({score: this.data.score+1}) // only increment score if timer is not up
+      if (this.data.timer > 0) this.setData({score: this.data.score + 100}) // only increment score if timer is not up
       this.clear() // remove input
     }
     else {
@@ -353,4 +357,35 @@ function getResult(first, second, operator) {
       return parseInt(f * m, 10) / m;
   }
   return (formatFloat(result, 6));
+}
+
+function addRecord(score) {
+  wx.cloud.init({
+    env: 'shsid-3tx38'
+  })
+  db.collection('userInfo')
+    .where({ _openid: app.globalData.openid })
+    .get({
+      success: function (res) {
+        var dayScore = res.data[0].dailyScore0
+        dayScore = Math.max(dayScore, score)
+        var scores = [...Array(5).keys()].map((x) => res.data[0]['dailyScore' + x])
+        scores[0] = dayScore
+        var totalScore = scores.reduce((a, b) => a + b, 0)
+        db.collection('userInfo')
+          .where({ _openid: app.globalData.openid })
+          .update({
+            data: {
+              record: db.command.push({
+                correctCount: score,
+                answerTime: new Date(),
+                subject: '24点'
+              }),
+              dailyScore0: dayScore,
+              totalCorrect: totalScore
+            }
+          })
+      }
+    })
+ 
 }

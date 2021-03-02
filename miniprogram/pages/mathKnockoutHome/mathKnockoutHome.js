@@ -35,7 +35,7 @@ Page({
       .where({setting: 'dayGame'})
       .get({
         success: function (res) {
-        that.setData({color: res.data[0].value})
+        that.setData({color: parseInt(res.data[0].value)+1})
     }
   }) 
   },
@@ -86,14 +86,14 @@ Page({
   redirect1: function () {
     // if (this.data.color==1)
       wx.navigateTo({
-        url: '../questions/mentalMath/mentalMath'
+        url: '../questions/24points/24points'
       })
   },
 
   redirect2: function () {
     // if (this.data.color==2)
       wx.navigateTo({
-        url: '../questions/24points/24points'
+        url: '../questions/mentalMath/mentalMath'
       })
   },
 

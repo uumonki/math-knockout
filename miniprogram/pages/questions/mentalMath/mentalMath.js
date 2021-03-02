@@ -1,3 +1,6 @@
+const db = wx.cloud.database();
+const app = getApp();
+
 Page({
 
   /**
@@ -13,6 +16,7 @@ Page({
     timerDisplay: "1:00",
     score: 0, // user score
     timerId: 0, // controls timer
+    operation: false // false=add/sub, true=mult/div
   },
 
   /**
@@ -77,6 +81,7 @@ Page({
     var scoreVal = this.data.score
     console.log("time's up :D")
     console.log("your score: " + scoreVal)
+    addRecord(scoreVal)
     wx.showModal({
       title: '时间到！',
       content: "分数: " + scoreVal,//提示内容
@@ -91,16 +96,18 @@ Page({
 
   generateExpression: function() {
     var selection = Math.random() 
-    var expression, answer
+    var expression, answer, op
 
     // makes selection of operation based on weights and random number
-    if (selection < 0.3) [expression, answer] = this.generateAddition() 
-    else if (selection < 0.6) [expression, answer] = this.generateSubtraction()
-    else if (selection < 0.85) [expression, answer] = this.generateMultiplication()
-    else [expression, answer] = this.generateDivision()
-    console.log(answer)
-    this.setData({ans: answer})
-    this.setData({exp: expression})
+    if (selection < 0.3) [expression, answer, op] = this.generateAddition() 
+    else if (selection < 0.6) [expression, answer, op] = this.generateSubtraction()
+    else if (selection < 0.85) [expression, answer, op] = this.generateMultiplication()
+    else [expression, answer, op] = this.generateDivision()
+    this.setData({
+      ans: answer, 
+      exp: expression,
+      operation: op
+    })
   },
 
   generateAddition: function() {
@@ -121,7 +128,7 @@ Page({
       }
     }
     [num1, num2] = shuffle([num1, num2]) // randomize order of two numbers
-    return [num1 + " + " + num2, +num1 + +num2] // returns array of display and answer
+    return [num1 + " + " + num2, +num1 + +num2, false] // returns array of display and answer
   },
 
   generateSubtraction: function() {
@@ -138,7 +145,7 @@ Page({
       num2 = (num2 / (10 ** n)).toFixed(n)
     }
     [num1, num2] = [num1, num2].sort((a, b) => b - a) // make larger one first to avoid negative result
-    return [num1 + " − " + num2, num1 - num2]
+    return [num1 + " − " + num2, num1 - num2, false]
   },
 
   generateMultiplication: function() {
@@ -151,7 +158,7 @@ Page({
       num2 = (num2 / (10 ** n2)).toFixed(n2)
     }
     [num1, num2] = shuffle([num1, num2]) // randomize order
-    return [num1 + " × " + num2, num1 * num2]
+    return [num1 + " × " + num2, num1 * num2, true]
   },
 
   generateDivision: function() { // picks 1 & 2 digit integer, uses product as dividend and 2 digit as divisor
@@ -164,15 +171,15 @@ Page({
       num1 = (num1 / (10 ** n1)).toFixed(n1)
       num2 = (num2 / (10 ** n2)).toFixed(n2)
     }
-    return [num2 + " ÷ " + num1, ans]
+    return [num2 + " ÷ " + num1, ans, true]
   },
 
   submitInput: function(data) { // checks answer
     this.setData({error: ""})
     var input = data.detail.value.ans
     if (Math.abs(parseFloat(input) - this.data.ans) < 0.0001) { // checks if input is equal answer
+      if (this.data.timer > 0) this.setData({score: this.data.score + (this.data.operation ? 100 : 90)})
       this.generateExpression()
-      if (this.data.timer > 0) this.setData({score: this.data.score+1})
       this.clear()
     }
     else {
@@ -208,4 +215,35 @@ function randInt(min, max) { // returns random integer between min and max inclu
 function shuffle(arr) { // shuffles 2 number arrays
   if (Math.random() < 0.5) return [arr[0], arr[1]]
   return [arr[1], arr[0]]
+}
+
+function addRecord(score) {
+  wx.cloud.init({
+    env: 'shsid-3tx38'
+  })
+  db.collection('userInfo')
+    .where({ _openid: app.globalData.openid })
+    .get({
+      success: function (res) {
+        var dayScore = res.data[0].dailyScore1
+        dayScore = Math.max(dayScore, score)
+        var scores = [...Array(5).keys()].map((x) => res.data[0]['dailyScore' + x])
+        scores[1] = dayScore
+        var totalScore = scores.reduce((a, b) => a + b, 0)
+        db.collection('userInfo')
+          .where({ _openid: app.globalData.openid })
+          .update({
+            data: {
+              record: db.command.push({
+                correctCount: score,
+                answerTime: new Date(),
+                subject: '速算'
+              }),
+              dailyScore1: dayScore,
+              totalCorrect: totalScore
+            }
+          })
+      }
+    })
+ 
 }
