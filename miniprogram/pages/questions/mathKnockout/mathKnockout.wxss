@@ -85,6 +85,10 @@ page {
   vertical-align: middle;
 }
 
+.choiceText {
+  width: calc(100% - 28px)
+}
+
 .bubble {
   font-size: 9pt;
   margin-right: 10px;

@@ -232,35 +232,37 @@ Page({
 })
 
 function addRecord(correct, id, subject) {
-  db.collection('userInfo')
+  if (subject === '概念') {
+    db.collection('userInfo')
     .where({ _openid: app.globalData.openid })
-    .get({
-      success: function (res) { // this is some really shitty code
-        var totalScore = res.data[0].totalCorrect
-        var updatedScore2 = res.data[0].dailyScore2
-        var updatedScore3 = res.data[0].dailyScore3 
-        if (correct) {
-          totalScore += 100
-          if (subject === '概念') updatedScore2 += 100
-          else if (subject === '几何') updatedScore3 += 100
-        }
-        db.collection('userInfo')
-          .where({ _openid: app.globalData.openid })
-          .update({
-            data: {
-              record: db.command.push({
-                isCorrect: correct,
-                questionID: id,
-                answerTime: new Date(),
-                subject: subject
-              }),
-              dailyScore2: updatedScore2,
-              dailyScore3: updatedScore3,
-              totalCorrect: totalScore
-            }
-          })
+    .update({
+      data: {
+        record: db.command.push({
+          isCorrect: correct,
+          questionID: id,
+          answerTime: new Date(),
+          subject: subject
+        }),
+        dailyScore2: db.command.inc(correct ? 100 : 0),
+        totalCorrect: db.command.inc(correct ? 100 : 0)
       }
     })
+  } else if (subject === '几何') {
+    db.collection('userInfo')
+    .where({ _openid: app.globalData.openid })
+    .update({
+      data: {
+        record: db.command.push({
+          isCorrect: correct,
+          questionID: id,
+          answerTime: new Date(),
+          subject: subject
+        }),
+        dailyScore3: db.command.inc(correct ? 100 : 0),
+        totalCorrect: db.command.inc(correct ? 100 : 0)
+      }
+    })
+  }
  
 }
 

@@ -1,5 +1,6 @@
 //index.js
-const app = getApp()
+const app = getApp();
+const db = wx.cloud.database();
 
 Page({
   data: {
@@ -20,7 +21,6 @@ Page({
     wx.cloud.init({
       env: 'shsid-3tx38'
     })
-    const db = wx.cloud.database();
 
     //get openid of user and store it in app.globalData.openid
     wx.cloud.callFunction({
@@ -201,6 +201,27 @@ Page({
     wx.navigateTo({
       url: url
     })
-  }
+  },
 
+  returnFeedback: function (t, c) {
+    db.collection('userInfo')
+    .where({_openid: app.globalData.openid})
+    .get({
+      success: function (res) {
+        db.collection('feedback').add({
+          data: {
+            _openid: app.globalData.openid,
+            userData: res.data[0],
+            text: t,
+            contact: c
+          },
+          success: function () {
+            wx.showToast({
+              title: '反馈成功!',
+            })
+          }
+        })
+      }
+    })
+  }
 })
