@@ -36,10 +36,6 @@
         "selectedIconPath": "images/pie.jpg",
         "pagePath": "pages/mathKnockoutHome/mathKnockoutHome",
         "text": "数学日"
-      },
-      {
-        "pagePath": "pages/uploadQuestion/uploadQuestion",
-        "text": "新题目"
       }
     ]
   },

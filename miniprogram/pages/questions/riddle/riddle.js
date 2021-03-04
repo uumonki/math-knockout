@@ -53,15 +53,16 @@ Page({
             qIds: qData.map((a) => a._id),
             input: new Array(lets.length).fill('')
           })
+          clearTimeout(this.data.timerId)
+          this.setData({ timer: 181 })
+          this.setData({ timerDisplay: "3:00" })
+          this.startSetInter()
       }
     })
   },
 
   onShow: function () {
-    clearTimeout(this.data.timerId)
-    this.setData({ timer: 181 })
-    this.setData({ timerDisplay: "3:00" })
-    this.startSetInter()
+
   },
 
   onHide: function () {

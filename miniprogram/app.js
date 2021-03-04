@@ -1,7 +1,8 @@
 //app.js
 App({
   globalData:{
-    justVerified: false
+    justVerified: false,
+    openid: ''
   },
 
 

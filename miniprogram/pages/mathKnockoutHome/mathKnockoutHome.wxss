@@ -1,11 +1,22 @@
 page {
-  background: linear-gradient(#4CA1AF,#C4E0E5);
+  background: linear-gradient(#3a424b, #595d5f);
+}
+
+.background {
+  width: 100vh;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.1;
 }
 
 .section {
   margin: 180rpx 100rpx;
   width: calc(100vw - 200rpx);
-  height: calc(100vh - 360rpx)
+  height: calc(100vh - 360rpx);
+  z-index: 5;
 }
 
 .tui-table-view{
@@ -28,15 +39,18 @@ page {
   border-radius: 10px;
   box-shadow: 0px 0px 6px 1px rgba(0,0,0,0.15);
   background: rgba(247, 239, 239, 0.719);
+  z-index: 1;
 }
 
 
 .color-true{
   background:rgba(247, 239, 239, 0.719);
+  z-index: 5;
 }
 
 .color-false{
-  background: rgba(225, 255, 255, 0.2);
+  background: rgb(0, 0, 0, 0.3);
+  z-index: 5;
 }
 
 .buttonText {

@@ -1,4 +1,4 @@
-
+<image src="bg.jpg" mode="aspectFill" class="background"></image>
 <view class="section">
   <view class="tui-table-view">
     <view class="tui-col-3 color-{{color==1}}" bindtap="redirect1">

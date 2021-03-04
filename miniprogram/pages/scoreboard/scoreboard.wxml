@@ -10,6 +10,7 @@
   <view class="userScores">
     <text class="score">目前总分: {{totalScore}}</text>
     <text class="score">当日分数: {{monthScore}}</text>
+    <text class="score">总分排行: {{rank}}</text>
   </view>
 </view>
 

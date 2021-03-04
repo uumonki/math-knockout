@@ -81,15 +81,16 @@ Page({
             choices: [qData[0].choice1, qData[0].choice2, qData[0].choice3, qData[0].choice4],
             qIds: qData.map((a) => a._id),
           })
+          clearTimeout(this.data.timerId)
+          this.setData({ timer: 31 })
+          this.setData({ timerDisplay: "0:30" })
+          this.startSetInter()
       }
     })
   },
 
   onShow: function () {
-    clearTimeout(this.data.timerId)
-    this.setData({ timer: 31 })
-    this.setData({ timerDisplay: "0:30" })
-    this.startSetInter()
+
   },
 
   onHide: function () {

@@ -1,5 +1,7 @@
 // miniprogram/pages/scoreboard.js
-var app = getApp();
+const app = getApp();
+const db = wx.cloud.database();
+
 Page({
 
   data: {
@@ -12,7 +14,8 @@ Page({
       pfpUrl: "",
       grade: 0,
       show: false, 
-      day: 0
+      day: 0,
+      rank: 0
   },
 
   onLoad: function (options) {
@@ -20,8 +23,8 @@ Page({
     wx.cloud.init({
       env: 'shsid-3tx38'
     })
-    const db = wx.cloud.database();
-    
+
+    if (typeof app.globalData.openid === 'undefined') app.globalData.openid = ''
     db.collection('userInfo')
       .where({_openid:app.globalData.openid})
       .get({
@@ -30,9 +33,7 @@ Page({
             .where({ setting: 'dayGame' })
             .get({
               success: function (res1) {
-                console.log(1)
                 const day = parseInt(res1.data[0].value)
-                console.log(2)
                 that.setData({
                   day: day,
                   monthScore: res.data[0]['dailyScore'+day],
@@ -40,16 +41,13 @@ Page({
                   pfpUrl: res.data[0].wechatInfo.avatarUrl,
                   grade: res.data[0].userGrade
                 })
-                that.getMonthRanking(res.data[0].userGrade, day)
-                that.getTotalRanking(res.data[0].userGrade)
-
+                that.getRanking(res.data[0].userGrade, day)
               }
             })
         }, fail: (e) => {
           console.log(e)
         }
       })
-
   },
 
   getMonthRanking: function (grade, day) {
@@ -94,7 +92,34 @@ Page({
           })
         }
       })
-},
+  },
+
+  getRanking: function (grade, day) {
+    let that = this
+    var arr = []          // 定义空数据 用来存储之后的数据
+    var fetches = 0
+    //初次循环获取云端数据库的分次数的promise数组
+    for (let i = 0; i < 20; i++) {
+      db.collection('userInfo').where({userGrade: grade}).skip(i*20).get({
+        success: function (res) {
+          fetches++
+          arr = arr.concat(res.data)
+        
+          if(fetches === 20){
+            arr.sort((a, b) => b.totalCorrect - a.totalCorrect)
+            that.setData({ totalRanking: arr })
+            var totalRank = arr.map((a) => a._openid).indexOf(app.globalData.openid) + 1
+            that.setData({ rank: totalRank })
+            arr.sort((a, b) => b['dailyScore' + day] - a['dailyScore' + day])
+            that.setData({ monthRanking: arr })
+          }
+          
+        }
+      })
+      
+    }    
+
+  },
 
   func1: function() {
     this.setData({ show: false })
@@ -103,3 +128,5 @@ Page({
     this.setData({ show: true })
   }
 })
+
+
