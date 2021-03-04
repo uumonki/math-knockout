@@ -176,6 +176,43 @@ page {
   margin: 10px;
 }
 
+.ruleContainer{
+  position: absolute;
+  top: 80px;
+  width: 90%;
+  overflow: hidden;
+}
+
+.ruletitle{
+  text-align: center;
+  font-size: 12pt;
+}
+
+.rulesview{
+
+}
+
+.textcontent{
+  position: relative;
+  top: 10px;
+  height: calc(100vh - 180px);
+  font-size: 10pt;
+  color: #666;
+}
+
+.rule{
+  position: relative;
+  margin: 5px;
+}
+
+.reportPb{
+  position: absolute;
+  bottom: 20px;
+  background: green;
+}
+
+
+
 .questionContainer {
   width: calc(100% - 40px);
   position: relative;
