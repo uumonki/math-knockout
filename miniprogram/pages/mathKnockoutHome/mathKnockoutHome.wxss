@@ -1,5 +1,5 @@
 page {
-  background: linear-gradient(#283048,#859398);
+  background: linear-gradient(#4CA1AF,#C4E0E5);
 }
 
 .section {
@@ -36,7 +36,7 @@ page {
 }
 
 .color-false{
-  background: rgb(0,0,0,0.2);
+  background: rgba(225, 255, 255, 0.2);
 }
 
 .buttonText {
@@ -52,5 +52,5 @@ page {
   transform: translate(-50%,-50%);
   height:50%;
   z-index: 999;
-  opacity: 0.2;
+  opacity: 0.4;
 }
