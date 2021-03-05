@@ -4,7 +4,7 @@
   <view class="info">
     <view class="timer">剩余时间: {{timerDisplay}}</view>
     <view class="score">得分: {{score}}</view>
-    <button class="skip" size="mini" bindtap="skip"><image src="skip.png" class="skipImg"/></button>
+    <button class="skip" size="mini" bindtap="skip"><image src="skip.svg" class="skipImg"/></button>
   </view>
 </view>
 

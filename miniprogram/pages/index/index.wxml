@@ -1,61 +1,25 @@
-<!--index.wxml-->
-<view class="container">
+<!--miniprogram/pages/index/index.wxml-->
+<view class="header">
+  <text class="title">Math Knockout Prelims 2021</text>
+  <open-data type="userAvatarUrl" class="pfp"></open-data>
+</view>
 
-  <view class="userStats">
-    <open-data type="userAvatarUrl" class="pfp"></open-data>
-    <open-data type="userNickName" class="nick"></open-data>
+<view class="body">
+  <view class="section">
+    <text class="label">今日游戏</text>
+    <image src="../../images/0.jpg" mode="widthFix" class="today"/>
   </view>
-
-  <view class="ruleContainer">
-    <view class="rulesview">
-      <view class="ruletitle"> Math Knockout Prelim Rules
-      </view>
-      <scroll-view scroll-y="true" class="textcontent">
-        <view class="rule"> 1. The preliminary round starts on 3.14 and ends on 3.19 </view>
-        <view class="rule"> 2. There are 5 categories. Each category is accessible only for a day except for 24 points. </view>
-        <view class="rule"> 3. The 24 points and calculation test your ability to think fast. You can attempt the questions infinitely. Your final score for either of the two would be determined by the highest score you obtained in all your attempts.</view>
-        <view class="rule"> 4. For the other three categories, you can do at most 10 questions. For each question answered correctly, you can receive 100 points.
-        </view>
-        <view class="rule"> 5. Your score will be updated every day. You can check your score and ranking in our scoreboard.
-        </view>
-        <view class="rule"> 6. If you encounter any problem while using our mini program, please press the button below to report the issues. Our Stem Doge staff will get to you ASAP. 
-        </view>
-      </scroll-view>
-    </view>
-  </view>
-
-  <button type="primary" class="reportPb" size="default"> Error Reporting
-  </button>
-
-
-
-  <!--
-  <view class="questionContainer" bindtouchstart="touchStart" bindtouchend="touchEnd">
-    <view class='overlay'>
-      <image mode="aspectFill" src="../../images/0.jpg" class="thumbnail"></image>
-    </view> 
-    <view class='imageText' style="top: 13px; left: 18px;">
-      <text style="font-size: 25pt; font-weight: 600;">每日三题</text>
-      <text style="font-size: 20pt; font-weight: 500; display: block;">695</text> 
-    </view>
-    <view class='imageText' style="bottom: 13px; left: 18px; width: 100%; height: 100%;">
-      <text class="subject" wx:for="{{subjects}}" wx:for-index="idx" wx:for-item="subject" style="opacity: {{opacity[idx]}};">{{subject}}</text>
-    </view>
-  </view>
-
-  <view class="recordContainer">
-    <view style="margin-top: 35px; position: relative;">
-      <view class="line"></view>
-      <view class="containerLabel">
-        答题记录
+  <view class="section">
+    <text class="label">暂不开放</text>
+    <view class="cardsWrapper">
+      <view class="disabledCard" wx:for="{{unavailable}}" wx:for-item="subj">
+        <image src="images/{{subj}}.png" class="icon" mode="widthFix"/>
+        <text class="subjectLabel">{{subj}}</text>
       </view>
     </view>
-    <scroll-view scroll-y="true" class="scroll">
-      <view class="scrollItem" wx:for="{{records}}" wx:for-item="record">
-        <text style="display: block; font-size: 11pt;">每日三题{{record.questionID}}</text>
-        <text style="font-size: 10pt; color: #555555;">{{record.subject}}</text>
-      </view>
-    </scroll-view>
   </view>
--->
+  <view class="section">
+    <text class="label">规则</text>
+    <text class="label">反馈</text>
+  </view>
 </view>
