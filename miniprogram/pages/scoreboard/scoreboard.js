@@ -18,12 +18,14 @@ Page({
       rank: 0
   },
 
-  onLoad: function (options) {
-    let that = this
+  onLoad: function () {
     wx.cloud.init({
       env: 'shsid-3tx38'
     })
+  },
 
+  onShow: function () {
+    let that = this
     if (typeof app.globalData.openid === 'undefined') app.globalData.openid = ''
     db.collection('userInfo')
       .where({_openid:app.globalData.openid})
@@ -96,16 +98,32 @@ Page({
 
   getRanking: function (grade, day) {
     let that = this
+    wx.cloud.callFunction({
+      name: 'getRanking',
+      data: {grade: grade},
+      success: res => {
+        var arr = res.result
+        arr.sort((a, b) => b.totalCorrect - a.totalCorrect)
+        that.setData({ totalRanking: arr })
+        var totalRank = arr.map((a) => a._openid).indexOf(app.globalData.openid) + 1
+        that.setData({ rank: totalRank })
+        arr.sort((a, b) => b['dailyScore' + day] - a['dailyScore' + day])
+        that.setData({ monthRanking: arr })
+      },
+    })
+
+    /* 
+    let that = this
     var arr = []          // 定义空数据 用来存储之后的数据
     var fetches = 0
     //初次循环获取云端数据库的分次数的promise数组
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 15; i++) {
       db.collection('userInfo').where({userGrade: grade}).skip(i*20).get({
         success: function (res) {
           fetches++
           arr = arr.concat(res.data)
         
-          if(fetches === 20){
+          if(fetches === 15){
             arr.sort((a, b) => b.totalCorrect - a.totalCorrect)
             that.setData({ totalRanking: arr })
             var totalRank = arr.map((a) => a._openid).indexOf(app.globalData.openid) + 1
@@ -117,7 +135,11 @@ Page({
         }
       })
       
-    }    
+    } */   
+
+  },
+
+  onShareAppMessage: function () {
 
   },
 

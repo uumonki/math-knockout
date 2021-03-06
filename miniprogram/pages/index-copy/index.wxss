@@ -188,10 +188,6 @@ page {
   font-size: 12pt;
 }
 
-.rulesview{
-
-}
-
 .textcontent{
   position: relative;
   top: 10px;

@@ -60,26 +60,32 @@ Page({
       name: 'getQuestions',
       data: {type: qType},
       success: res => {
-        var qData = res.result.data
+        var allQuestions = res.result.data
         db.collection('userInfo')
           .where({_openid: app.globalData.openid})
           .get({
             success: function (res2) {
+
+              if (typeof res2.data[0][qType + 'Bank'] === 'undefined') { // check if questions already generated
+                var qData = getRandom(allQuestions, 10)
+                if (qType === 'geometry') db.collection('userInfo').where({_openid: app.globalData.openid}).update({data: {geometryBank: qData}})
+                else if (qType === 'concept') db.collection('userInfo').where({_openid: app.globalData.openid}).update({data: {conceptBank: qData}})
+              } else qData = res2.data[0][qType + 'Bank']
+
               var exists = that.checkRecord(res2, qData[0]._id)
               if (exists) clearTimeout(that.data.timerId)
-              that.setData({
+              that.setData({ // write in question data
+                questions: qData,
+                question: qData[0],
+                img: qData[0].imgUrl,
+                imgWidth: (typeof qData[0].imgUrl === 'undefined') ? 'height: 0; width: 0' : 'width: 100%',
+                choicesList: qData.map((a) => [a.choice1, a.choice2, a.choice3, a.choice4]),
+                choices: [qData[0].choice1, qData[0].choice2, qData[0].choice3, qData[0].choice4],
+                qIds: qData.map((a) => a._id),
                 unNextable: !exists
+
               })
             }
-          })
-          that.setData({    // write in question data
-            questions: qData,
-            question: qData[0],
-            img: qData[0].imgUrl,
-            imgWidth: (typeof qData[0].imgUrl === 'undefined') ? 'height: 0; width: 0' : 'width: 100%',
-            choicesList: qData.map((a) => [a.choice1, a.choice2, a.choice3, a.choice4]),
-            choices: [qData[0].choice1, qData[0].choice2, qData[0].choice3, qData[0].choice4],
-            qIds: qData.map((a) => a._id),
           })
           clearTimeout(this.data.timerId)
           this.setData({ timer: 31 })
@@ -87,6 +93,7 @@ Page({
           this.startSetInter()
       }
     })
+    wx.hideShareMenu()
   },
 
   onShow: function () {
@@ -267,5 +274,17 @@ function addRecord(correct, id, subject) {
  
 }
 
-
+function getRandom(arr, n) {
+    var result = new Array(n),
+        len = arr.length,
+        taken = new Array(len);
+    if (n > len)
+        throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+        var x = Math.floor(Math.random() * len);
+        result[n] = arr[x in taken ? taken[x] : x];
+        taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+}
 

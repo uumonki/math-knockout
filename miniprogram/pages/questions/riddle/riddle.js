@@ -32,26 +32,31 @@ Page({
       name: 'getQuestions',
       data: {type: 'riddle'},
       success: res => {
-        var qData = res.result.data
+        var allQuestions = res.result.data
         db.collection('userInfo')
           .where({_openid: app.globalData.openid})
           .get({
             success: function (res2) {
+
+              if (typeof res2.data[0].riddleBank === 'undefined') { // check if questions already generated
+                var qData = getRandom(allQuestions, 10)
+                db.collection('userInfo').where({_openid: app.globalData.openid}).update({data: {riddleBank: qData}})
+              } else qData = res2.data[0].riddleBank
+
               var exists = that.checkRecord(res2, qData[0]._id)
               if (exists) clearTimeout(that.data.timerId)
-              that.setData({
+              var lets = qData[0].riddleKey.map((a) => a[0])
+              that.setData({ // write in question data
+                questions: qData,
+                question: qData[0],
+                img: qData[0].imgUrl,
+                letters: lets,
+                qIds: qData.map((a) => a._id),
+                input: new Array(lets.length).fill(''),
                 unNextable: !exists
               })
+
             }
-          })
-          var lets = qData[0].riddleKey.map((a) => a[0])
-          that.setData({    // write in question data
-            questions: qData,
-            question: qData[0],
-            img: qData[0].imgUrl,
-            letters: lets,
-            qIds: qData.map((a) => a._id),
-            input: new Array(lets.length).fill('')
           })
           clearTimeout(this.data.timerId)
           this.setData({ timer: 181 })
@@ -87,7 +92,7 @@ Page({
   submit: function (skip) {
     let that = this
     var inputData = this.data.input
-    if (!inputData.includes('') || skip) { // check if all filled in or if time is up
+    if (!inputData.includes('') || typeof skip !== 'object') { // check if all filled in or if time is up
       clearTimeout(this.data.timerId)
       var qId = this.data.question._id
       this.setData({unNextable: false})
@@ -134,6 +139,7 @@ Page({
         }
       })
     }
+    wx.hideShareMenu()
   },
 
   startSetInter: function () {
@@ -250,5 +256,17 @@ function addRecord(correct, id, subject) {
   })
 }
 
-
+function getRandom(arr, n) {
+  var result = new Array(n),
+      len = arr.length,
+      taken = new Array(len);
+  if (n > len)
+      throw new RangeError("getRandom: more elements taken than available");
+  while (n--) {
+      var x = Math.floor(Math.random() * len);
+      result[n] = arr[x in taken ? taken[x] : x];
+      taken[x] = --len in taken ? taken[len] : len;
+  }
+  return result;
+}
 

@@ -10,14 +10,12 @@ Page({
    */
   data: {
     unavailable: [],
+    today: -1,
     rules: false,
-    feedback: true
+    feedback: false
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+  onShow: function () {
     let that = this
     wx.cloud.init({
       env: 'shsid-3tx38'
@@ -34,6 +32,7 @@ Page({
         })
           .get({
             success: function (res) {
+              that.incompleteInfo()
               // if the user openid is not in database
               if (res.data.length == 0) {
                 // create new user object in database
@@ -54,7 +53,6 @@ Page({
                   success: function (res) {
                     //if success, log the new userinfo object
                     console.log(res)
-                    that.incompleteInfo()
                   }
                 })
               }
@@ -72,8 +70,10 @@ Page({
         var array = [0, 1, 2, 3, 4]
         if (parseInt(res.data[0].value) > -1) array.splice(array.indexOf(parseInt(res.data[0].value)), 1)
         const u = array.map((a) => subjects[a])
-        console.log(u)
-        that.setData({ unavailable: u })
+        that.setData({ 
+          unavailable: u,
+          today: parseInt(res.data[0].value)
+        })
       }
     })
   },
@@ -94,7 +94,7 @@ Page({
           }
         },
         fail: () => {
-          that.onLoad()
+          that.incompleteInfo()
         }
       })
   },
@@ -106,11 +106,45 @@ Page({
   },
 
   redirectToday: function () {
-    console.log("BITCH")
+    const day = this.data.today
+    switch (day) {
+      case 0:
+        wx.navigateTo({
+          url: '../questions/24points/24points'
+        })
+        break
+      case 1:
+        wx.navigateTo({
+          url: '../questions/mentalMath/mentalMath'
+        })
+        break
+      case 2: 
+        wx.navigateTo({
+          url: '../questions/mathKnockout/mathKnockout?type=concept'
+        })
+        break
+      case 3:
+        wx.navigateTo({
+          url: '../questions/mathKnockout/mathKnockout?type=geometry'
+        })
+        break
+      case 4:
+        wx.navigateTo({
+          url: '../questions/riddle/riddle'
+        })
+        break
+      case -1:
+        console.log('NOT TODAY')
+        break
+    }
   },
 
   showRules: function () {
     this.setData({rules: true})
+  },
+
+  showFeedback: function () {
+    this.setData({feedback: true})
   },
 
   hide: function () {
@@ -121,13 +155,15 @@ Page({
   },
 
   submitFeedback: function (e) {
-    console.log(e.detail.value)
     const t = e.detail.value.feedback
     const c = e.detail.value.contact
     if (!(t === '' && c === ''))
-      console.log("1")
       this.returnFeedback(t, c)
       this.hide()
+  },
+
+  onShareAppMessage: function () {
+
   },
 
   returnFeedback: function (t, c) {
@@ -137,7 +173,6 @@ Page({
       success: function (res) {
         db.collection('feedback').add({
           data: {
-            _openid: app.globalData.openid,
             userData: res.data[0],
             text: t,
             contact: c

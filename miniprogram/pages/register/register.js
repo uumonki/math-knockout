@@ -41,7 +41,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-
+    wx.hideHomeButton()
   },
 
   /**
@@ -72,12 +72,6 @@ Page({
 
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
   userNameInput: function(e) {
     console.log(e.detail.value)
     this.setData({

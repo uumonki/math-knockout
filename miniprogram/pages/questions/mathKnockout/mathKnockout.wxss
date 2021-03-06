@@ -172,12 +172,12 @@ page {
 
 .nextImg {
   filter: invert(1);
-  height: 15px;
-  width: 15px;
+  height: 30px;
+  width: 30px;
   position: absolute;
   right: 50%;
   top: 50%;
-  transform: translate(55%, -50%);
+  transform: translate(50%, -50%);
 }
 
 .disabled-true {
