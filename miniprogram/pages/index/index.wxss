@@ -38,7 +38,7 @@ page {
 }
 
 .body {
-  margin: -5px 20px;
+  margin: -5px 20px 20px 20px;
 }
 
 .section {
@@ -81,7 +81,7 @@ page {
   display: block;
   margin: 0 auto;
   z-index: 0;
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 .subjectLabel{
@@ -89,8 +89,131 @@ page {
   text-align: center;
   margin: -5px auto 5px auto;
   font-size: 25rpx;
-  opacity: 0.5;
+  opacity: 0.6;
   z-index: 1;
+}
+
+.link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.next {
+  flex-basis: 30px;
+  height: 30px;
+  width: 30px;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+
+.overlay {
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 90;
+}
+
+.rules {
+  height: 60%;
+  width: calc(100% - 100px);
+  min-width: 250px;
+  max-width: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+}
+
+.popup {
+  background: white;
+  z-index: 91;
+  position: fixed;
+}
+
+.popupTitle {
+  font-family: 'chinese';
+  font-size: 40pt;
+  letter-spacing: -1.5px;
+  margin: 5px 0px 0px 18.5px;
+}
+
+.closePopup {
+  width: 20px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  opacity: 0.3;
+}
+
+.rulesText {
+  margin: -5px 20px 0px 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 77px);
+  font-size: 10pt;
+  line-height: 13pt;
+}
+
+.feedback {
+  width: 100%;
+  height: 345px;
+  bottom: 0;
+  border-radius: 20px 20px 0 0;
+}
+
+.feedbackForm {
+  margin: -5px 20px 0px 20px;
+  width: calc(100% - 40px);
+}
+
+.contact {
+  width: calc(100% - 55px) !important;
+  display: block;
+  margin: auto;
+  line-height: 35px;
+  height: 35px;
+  border-radius: 17.5px;
+  background: #eee;
+  padding-left: 17.5px
+}
+
+.feedbackText {
+  width: calc(100% - 70px) !important;
+  height: 150px;
+  display: block;
+  margin: auto;
+  border-radius: 17.5px;
+  background: #eee;
+  padding: 15px 17.5px;
+  margin-top: 10px;
+  font-size: 11pt;
+  line-height: 14pt;
+}
+
+.submit {
+  height: 35px !important;
+  width: 100px !important;
+  background: rgb(47,133,252);
+  color: white;
+  font-size: 12pt;
+  padding: 0px;
+  line-height: 35px;
+  border-radius: 17.5px;
+  margin-top: 10px;
+}
+
+.b {
+  display: inline;
+  font-weight: 700;
+  background-color: rgb(255, 255, 212);
+  border-radius: 5pt;
+}
+
+.br {
+  display: block;
+  width: 100%;
+  height: 10px;
 }
 
 @font-face {

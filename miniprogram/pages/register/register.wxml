@@ -1,19 +1,19 @@
 <!--miniprogram/pages/register.wxml-->
 
 <view class="container">
-  <view class="text_style_1"><text>Math Knockout</text></view>
-  <view class="text_style_2"><text>请务必按照自己学校里真实的姓名，班级，和G账号填写以确保正确计分</text></view>
+  <view class="text_style_1"><text>学生信息注册</text></view>
+  <view class="text_style_2"><text>请务必按照真实的姓名，班级，和G账号填写以确保正确计分</text></view>
   <view class="text_dsec_style">
     <label>姓名</label>
     <input name="userName" class="input_text" placeholder= "中文/英文姓名" adjust-position="true" bindblur= "userNameInput" ></input>
   </view>
   <view class="text_dsec_style">
     <label>年级</label>
-    <input name ="userGrade" class="input_text" placeholder= "请填入数字 如：11" type="number" adjust-position="true" bindblur= "userGradeInput" maxlength="2"></input>
+    <input name ="userGrade" class="input_text" placeholder= "请填入数字 如: 9" type="number" adjust-position="true" bindblur= "userGradeInput" maxlength="2"></input>
   </view>
   <view class="text_dsec_style">
     <label>班级</label>
-    <input name ="userClass" class="input_text" placeholder= "请填入数字 如：2" type="number" adjust-position="true" bindblur= "userClassInput" maxlength="2"></input>
+    <input name ="userClass" class="input_text" placeholder= "请填入数字 如: 1" type="number" adjust-position="true" bindblur= "userClassInput" maxlength="2"></input>
   </view>
   <view class="text_dsec_style">
     <label>学生号 (G no.）</label>

@@ -9,7 +9,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    unavailable: []
+    unavailable: [],
+    rules: false,
+    feedback: true
   },
 
   /**
@@ -17,7 +19,6 @@ Page({
    */
   onLoad: function (options) {
     let that = this
-    this.getUserData()
     wx.cloud.init({
       env: 'shsid-3tx38'
     })
@@ -53,6 +54,7 @@ Page({
                   success: function (res) {
                     //if success, log the new userinfo object
                     console.log(res)
+                    that.incompleteInfo()
                   }
                 })
               }
@@ -68,7 +70,7 @@ Page({
     .get({
       success: function (res) {
         var array = [0, 1, 2, 3, 4]
-        array.splice(array.indexOf(parseInt(res.data[0].value)), 1)
+        if (parseInt(res.data[0].value) > -1) array.splice(array.indexOf(parseInt(res.data[0].value)), 1)
         const u = array.map((a) => subjects[a])
         console.log(u)
         that.setData({ unavailable: u })
@@ -76,48 +78,77 @@ Page({
     })
   },
 
-  getUserData: function () {
-    let that = this
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          wx.getUserInfo({
-            success: res => {
-              //info stored into global data; can be called anytime
-              app.globalData.userInfo = res.userInfo
-            }
-          })
+  incompleteInfo: function () {
+    var that = this
+    wx.cloud.init({
+      env: 'shsid-3tx38'
+    })
+    const openid = app.globalData.openid
+    db.collection('userInfo')
+      .where({_openid: openid})
+      .get({
+        success: function (res) {
+          var verified = res.data[0].verified
+          if ((typeof verified === 'undefined' || verified === null || verified === false) && !app.globalData.justVerified) {
+            that.collectInfo()
+          }
+        },
+        fail: () => {
+          that.onLoad()
         }
-      }
+      })
+  },
+
+  collectInfo: function () {
+    wx.redirectTo({
+      url: '../register/register',
     })
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  redirectToday: function () {
+    console.log("BITCH")
   },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  showRules: function () {
+    this.setData({rules: true})
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  hide: function () {
+    this.setData({
+      rules: false,
+      feedback: false
+    })
   },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
+  submitFeedback: function (e) {
+    console.log(e.detail.value)
+    const t = e.detail.value.feedback
+    const c = e.detail.value.contact
+    if (!(t === '' && c === ''))
+      console.log("1")
+      this.returnFeedback(t, c)
+      this.hide()
   },
+
+  returnFeedback: function (t, c) {
+    db.collection('userInfo')
+    .where({_openid: app.globalData.openid})
+    .get({
+      success: function (res) {
+        db.collection('feedback').add({
+          data: {
+            _openid: app.globalData.openid,
+            userData: res.data[0],
+            text: t,
+            contact: c
+          },
+          success: function () {
+            wx.showToast({
+              title: '反馈成功!',
+            })
+          }
+        })
+      }
+    })
+  }
 })

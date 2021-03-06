@@ -66,22 +66,13 @@ page {
 }
 
 .input {
-  width: calc(100% - 80px) !important;
+  width: calc(100% - 35px) !important;
   height: 32px !important;
   display: inline-block;
   margin-right: 10px;
   background: white;
   border-radius: 17.5px;
   padding: 0 17.5px;
-}
-
-.submit {
-  display: inline-block;
-  position: absolute;
-  background: rgb(30, 205,151);
-  height: 35px !important;
-  width: 35px !important;
-  border-radius: 17.5px;
 }
 
 .check {

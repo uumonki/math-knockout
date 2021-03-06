@@ -151,7 +151,6 @@ Page({
       success: () => {
         wx.getUserInfo({
           success: res => {
-            console.log(res)
             //info stored into global data; can be called anytime
             app.globalData.userInfo = res.userInfo
             db.collection('userInfo')
@@ -175,7 +174,9 @@ Page({
           console.log("已授权=====")
           that.InputuserInfo()
           that.getUserData()
-          wx.navigateBack()
+          wx.switchTab({
+            url: '../index/index',
+          })
           // 已经授权，可以直接调用 getUserInfo 获取头像昵称
         } else {
           console.log("未授权=====")

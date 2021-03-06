@@ -9,7 +9,6 @@ Page({
   data: {
     exp: "", // question expression
     ans: "", // answer to question
-    error: "", // controls shaking the input box when error
     inputVal: "", // value of user input
     inputFocus: true, // controls focus of input box
     timer: 61, // timer seconds 
@@ -174,16 +173,11 @@ Page({
     return [num2 + " ÷ " + num1, ans, true]
   },
 
-  submitInput: function(data) { // checks answer
-    this.setData({error: ""})
-    var input = data.detail.value.ans
+  submitInput: function(e) { // checks answer
+    var input = e.detail.value
     if (Math.abs(parseFloat(input) - this.data.ans) < 0.0001) { // checks if input is equal answer
       if (this.data.timer > 0) this.setData({score: this.data.score + (this.data.operation ? 100 : 90)})
       this.generateExpression()
-      this.clear()
-    }
-    else {
-      this.setData({error: "error"})
       this.clear()
     }
   },

@@ -229,8 +229,8 @@ function addRecord(correct, id, subject) {
       var totalScore = res.data[0].totalCorrect
       var updatedScore = res.data[0].dailyScore4
       if (correct) {
-        totalScore += 15 * (correct)
-        updatedScore += 15 * (correct)
+        totalScore += 20 * (correct)
+        updatedScore += 20 * (correct)
       }
       db.collection('userInfo')
         .where({ _openid: app.globalData.openid })
