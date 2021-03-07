@@ -103,13 +103,13 @@ Page({
   onHide: function () {
     clearTimeout(this.data.timerId)
     if (this.data.unNextable)
-      addRecord(false, this.data.question._id, this.data.question.title)
+      addRecord(false, this.data.question._id, this.data.title)
   },
 
   onUnload: function () {
     clearTimeout(this.data.timerId)
     if (this.data.unNextable)
-      addRecord(false, this.data.question._id, this.data.question.title)
+      addRecord(false, this.data.question._id, this.data.title)
   },
 
 
@@ -126,7 +126,7 @@ Page({
 
   submit: function (skip) {
     let that = this
-    if (this.data.userChoice > -1 || skip) { // check if anything chosen or if time is up
+    if (this.data.userChoice > -1 || typeof skip !== 'object') { // check if anything chosen or if time is up
       clearTimeout(this.data.timerId)
       var qId = this.data.question._id
       var correct = this.data.choices[this.data.userChoice] === this.data.question.answer // check answer correct

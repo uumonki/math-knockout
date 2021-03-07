@@ -171,6 +171,7 @@ page {
   width: calc(100% - 55px) !important;
   display: block;
   margin: auto;
+  font-size: 11pt;
   line-height: 35px;
   height: 35px;
   border-radius: 17.5px;

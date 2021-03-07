@@ -8,7 +8,7 @@
   <view class="body">
     <view class="section">
       <text class="label">今日游戏</text>
-      <image src="../../images/0.jpg" mode="widthFix" class="today" bindtap="redirectToday"/>
+      <image src="images/{{today}}.jpg" mode="widthFix" class="today" bindtap="redirectToday"/>
     </view>
     <view class="section" style="margin-top: 15px;">
       <text class="label">暂不开放</text>
@@ -38,11 +38,11 @@
   <text class="popupTitle">须知</text>
   <image src="images/x.svg" bindtap="hide" class="closePopup" mode="widthFix"/>
   <scroll-view scroll-y="true" class="rulesText">
-    1. Math Knockout活动预选在3.14至3.19间举行。<view class="br"/>
+    1. Math Knockout活动预选赛在3.14至3.19间举行。<view class="br"/>
     2. 预选轮共有5个小游戏，具体开放时间如下：
     <image style="width: 60%; display: block; margin: 8px auto;" mode="widthFix" src="images/schedule.png"/><view class="br"/>
     3. 24点将会考察你的计算技巧，要求对四个整数进行混合运算，求得24。该游戏计时两分钟，答对一题得100分。开放时间内可无限尝试，最终分数取两天最高分。输入表达式可通过屏幕下方键盘，也可通过点击屏幕中央的卡片。游戏过程中可按右上角箭头跳过当前题目，但所有题目均有解。<view class="br"/>
-    4. 速算则考察你四则运算的速度。该游戏计时一分钟，屏幕中央会显示一道运算题，只有答对才能到下一题。加减法题目答对一题得90分，乘除得100分。与24点相同，速算最终分数取开放当天最高分。<view class="br"/>
+    4. 速算则考察你四则运算的速度。该游戏计时一分钟，屏幕中央会显示一道运算题，只有答对才能到下一题。加减法题目答对一题得70分，乘除得80分。与24点相同，速算最终分数取开放当天最高分。<view class="br"/>
     5. 概念与几何将会考察直到9年级的数学知识。你将会随机获得10题，每题30秒，答对一题得100分。每题只有<view class="b">一次尝试机会</view>。如答题时中途退出，当前题目将不能再次作答，之后的题目仍能作答。<view class="br"/>
     6. 数字谜将会考察你的观察、逻辑推理、和计算能力。同样，你会随机获得10题，各只有<view class="b">一次尝试机会</view>。中途退出，该题将不能再作答。数字谜游戏形式特殊，每题会有一个竖式，数字被字母代替。每个字母对应了一个0~9之间的数字。在同一题中，每个字母只代表一个数字，不同的字母不能代表同一数字。你需要做的是在三分钟内解出尽可能多的字母。例题如下：
     <image style="width: 80%; display: block; margin: 8px auto;" mode="widthFix" src="images/example.png"/>
@@ -56,7 +56,7 @@
   <image src="images/x.svg" bindtap="hide" class="closePopup" mode="widthFix"/>
   <form bindsubmit="submitFeedback" class="feedbackForm">
     <input placeholder="微信号" class="contact" name="contact"></input> 
-    <textarea class="feedbackText" maxlength="2000" placeholder="请输入你的建议或反馈" name="feedback"></textarea>
+    <textarea class="feedbackText" maxlength="2000" placeholder="请输入你的建议或反馈" name="feedback" disable-default-padding="true"></textarea>
     <button class="submit" form-type="submit">提交</button>
   </form>
 </view>

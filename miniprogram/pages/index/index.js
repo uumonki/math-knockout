@@ -10,7 +10,7 @@ Page({
    */
   data: {
     unavailable: [],
-    today: -1,
+    today: -2,
     rules: false,
     feedback: false
   },
@@ -32,13 +32,11 @@ Page({
         })
           .get({
             success: function (res) {
-              that.incompleteInfo()
               // if the user openid is not in database
               if (res.data.length == 0) {
                 // create new user object in database
                 db.collection('userInfo').add({
                   data: {
-                    wechatInfo: app.globalData.userInfo,
                     monthAnswer: 0, //number answered every month
                     monthCorrect: 0, // number of questions answered correctly every month
                     totalAnswer: 0, //total number of questions answered
@@ -53,9 +51,11 @@ Page({
                   success: function (res) {
                     //if success, log the new userinfo object
                     console.log(res)
+                    that.incompleteInfo()
                   }
                 })
-              }
+              } else that.incompleteInfo()
+              
             }
           })
         },
@@ -134,7 +134,11 @@ Page({
         })
         break
       case -1:
-        console.log('NOT TODAY')
+        wx.showToast({
+          title: '敬请期待!',
+          icon: 'none',
+          duration: 1500
+        })
         break
     }
   },
