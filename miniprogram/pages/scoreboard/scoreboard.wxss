@@ -57,7 +57,7 @@ page {
   top: 10px;
   padding-top: 10px;
   width:100%;
-  height: calc(100vh - 20px); /*90px should be determined based on the UI for scoreboard  */
+  height: calc(100vh - 200px); /*90px should be determined based on the UI for scoreboard  */
   z-index: 0; /* z-index高 在overlapp的时候会出现在前面*/
   position: relative;
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.16);
