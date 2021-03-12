@@ -10,6 +10,7 @@ Page({
    */
   data: {
     unavailable: [],
+    subjects: ['24点', '速算', '概念', '几何', '数字谜'],
     today: -2,
     rules: false,
     feedback: false
@@ -69,9 +70,8 @@ Page({
       success: function (res) {
         var array = [0, 1, 2, 3, 4]
         if (parseInt(res.data[0].value) > -1) array.splice(array.indexOf(parseInt(res.data[0].value)), 1)
-        const u = array.map((a) => subjects[a])
         that.setData({ 
-          unavailable: u,
+          unavailable: array,
           today: parseInt(res.data[0].value)
         })
       }

@@ -14,8 +14,8 @@
       <text class="label">暂不开放</text>
       <view class="cardsWrapper">
         <view class="disabledCard" wx:for="{{unavailable}}" wx:for-item="subj">
-          <image src="images/{{subj}}.png" class="icon" mode="widthFix"/>
-          <text class="subjectLabel">{{subj}}</text>
+          <image src="images/{{subj}}-small.png" class="icon" mode="widthFix"/>
+          <text class="subjectLabel">{{subjects[subj]}}</text>
         </view>
       </view>
     </view>
