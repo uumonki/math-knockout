@@ -94,7 +94,7 @@ Page({
   },
 
   generateExpression: function() {
-    var selection = Math.random() 
+    var selection = 0.9 // Math.random() 
     var expression, answer, op
 
     // makes selection of operation based on weights and random number
@@ -170,7 +170,7 @@ Page({
       num1 = (num1 / (10 ** n1)).toFixed(n1)
       num2 = (num2 / (10 ** n2)).toFixed(n2)
     }
-    return [num2 + " ÷ " + num1, ans, true]
+    return [num2 + " ÷ " + num1, num2 / num1, true]
   },
 
   submitInput: function(e) { // checks answer

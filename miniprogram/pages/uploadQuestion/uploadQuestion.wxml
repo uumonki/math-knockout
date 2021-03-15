@@ -18,3 +18,5 @@
   <input name="answerKey" style="border: solid 1px gray" placeholder="b2 a1" value="{{o}}" hidden="{{!type}}"/>
   <button form-type="submit" style="border: 1px solid gray; margin-top: 10px;">提交问题</button>
 </form>
+
+<button bindtap="get">CHECK</button>

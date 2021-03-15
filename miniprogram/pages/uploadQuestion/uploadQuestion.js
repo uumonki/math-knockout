@@ -81,6 +81,17 @@ Page({
       }
     })
     
+  },
+
+  get: function () {
+    db.collection('userInfo')
+    .orderBy('dailyScore0', 'desc')
+    .limit(1)
+    .get({
+      success: function (res) {
+        console.log(res)
+      }
+    })
   }
 })
 
